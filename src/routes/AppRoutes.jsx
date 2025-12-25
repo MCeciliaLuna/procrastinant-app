@@ -6,7 +6,6 @@ import ProtectedRoute from './ProtectedRoute';
 // Páginas públicas
 import Inicio from '../pages/Inicio';
 import PaginaError from '../pages/PaginaError';
-import FAQs from '../pages/FAQs';
 
 // Feature: Autenticación
 import { PaginaLogin, PaginaRegistro, PaginaRecuperacion } from '../features/autenticacion';
@@ -28,7 +27,6 @@ function AppRoutes() {
         <Route path="/recuperar-contrasena" element={<PaginaRecuperacion />} />
         <Route path="/error" element={<PaginaError />} />
         <Route path="*" element={<Navigate to="/error" replace />} />
-        <Route path="/faqs" element={<FAQs />} />
       </Route>
 
       {/* Rutas Privadas */}

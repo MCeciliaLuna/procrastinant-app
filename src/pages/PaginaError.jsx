@@ -1,9 +1,14 @@
+import BotonSimple from "../shared/components/BotonSimple";
+import NavbarPublic from "../shared/components/NavbarPublic";
+
 function PaginaError() {
   return (
-    <div>
-      <h1>Error 404</h1>
-      <p>Página no encontrada</p>
-    </div>
+    <>
+    <NavbarPublic />
+      <h1>Ufa!</h1>
+      <p>La página que buscas no existe</p>
+      <BotonSimple>Ok! Volvamos</BotonSimple>
+    </>
   );
 }
 

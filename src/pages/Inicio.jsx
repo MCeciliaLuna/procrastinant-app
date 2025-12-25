@@ -1,8 +1,19 @@
+import LogoApp from '../shared/components/LogoApp';
+import NavbarPublic from '../shared/components/NavbarPublic';
+import Frase from '../shared/components/Frase';
+import BotonSimple from '../shared/components/BotonSimple';
+
 function Inicio() {
   return (
-    <div>
-      <h1>Bienvenido a Procrastinant App</h1>
-    </div>
+    <>
+      <NavbarPublic />
+      <LogoApp />
+      <Frase />
+      <div>
+        <BotonSimple>Iniciar sesión</BotonSimple>
+        <BotonSimple>Registrarse</BotonSimple>
+      </div>
+    </>
   );
 }
 

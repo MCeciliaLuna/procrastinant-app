@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import Navegacion from '../shared/components/Navegacion';
 import Footer from '../shared/components/Footer';
 
 function PrivateLayout() {

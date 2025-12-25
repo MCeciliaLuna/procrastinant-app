@@ -2,7 +2,18 @@ function Footer() {
   return (
     <footer>
       <div>
-        <p>&copy; 2025 Procrastinant App - To-Do List</p>
+        <p>
+          ¡Vos podés! ✔ <span>Procrastinant App</span> por{' '}
+          <strong>
+            <a
+              href="https://mcecilialuna-dev.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ceci :)
+            </a>
+          </strong>
+        </p>
       </div>
     </footer>
   );
