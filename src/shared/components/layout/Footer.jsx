@@ -1,19 +1,20 @@
-import {Link} from 'react-router-dom';
 import Parrafo from '@/shared/components/layout/Parrafo';
 
 function Footer() {
   return (
-    <footer>
-      <Parrafo>
-        ¡Vos podés! ✔ <span>Procrastinant App</span> por{' '}
+    <footer className="bg-lightsecondary h-20 flex items-center justify-center">
+      <Parrafo className="font-secondary text-center text-[0.8rem]">
+        ¡Vos podés! ✔{' '}
+        <strong className="text-orange font-primary text-lg">Procrastinant App</strong> por{' '}
         <strong>
-          <Link
+          <a
             href="https://mcecilialuna-dev.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"
+            className="text-orange font-primary text-lg"
           >
             Ceci :)
-          </Link>
+          </a>
         </strong>
       </Parrafo>
     </footer>

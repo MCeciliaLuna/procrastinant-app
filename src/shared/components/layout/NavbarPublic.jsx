@@ -3,9 +3,9 @@ import LogoApp from '@/shared/components/layout/LogoApp';
 
 function NavbarPublic() {
   return (
-    <nav>
+    <nav className="flex items-center justify-start p-4 bg-light">
       <Link to="/">
-        <LogoApp width="50px" />
+        <LogoApp width="45px" />
       </Link>
     </nav>
   );

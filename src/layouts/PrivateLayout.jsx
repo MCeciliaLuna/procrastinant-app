@@ -8,7 +8,7 @@ function PrivateLayout() {
     <div>
       <NavbarDesktop />
       <NavbarMobile />
-      <main>
+      <main className="min-h-screen">
         <Outlet />
       </main>
       <Footer />
