@@ -20,7 +20,7 @@ function PrivateLayout() {
           <Outlet />
         </div>
       </main>
-      <Footer />
+      <Footer className="relative" />
     </>
   );
 }
