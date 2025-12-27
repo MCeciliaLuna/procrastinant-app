@@ -1,0 +1,38 @@
+/* Importar Tailwind CSS */
+@import 'tailwindcss';
+
+/* Definir fuentes personalizadas */
+@font-face {
+  font-family: 'Mynerve-Regular';
+  src: url('./assets/fonts/Mynerve-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CourierPrime-Regular';
+  src: url('./assets/fonts/CourierPrime-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Estilos base globales usando Tailwind v4 */
+@layer base {
+  body {
+    font-family: 'Mynerve-Regular', sans-serif;
+    color: #37371f;
+  }
+}
+
+/* Utilidades personalizadas */
+@layer utilities {
+  .font-primary {
+    font-family: 'Mynerve-Regular', sans-serif;
+  }
+
+  .font-secondary {
+    font-family: 'CourierPrime-Regular', monospace;
+  }
+}
