@@ -9,7 +9,7 @@ function Inicio() {
       <div className="flex flex-col items-center justify-center">
         <Title
           level={1}
-          className="text-shadow-xs font-primary text-[2.5em] text-orange pb-5 mt-5"
+          className="text-shadow-xs text-shadow-white font-primary text-[2.5em] text-orange pb-5 mt-5"
         >
           Procrastinan&apos;t App
         </Title>
@@ -19,12 +19,12 @@ function Inicio() {
       </div>
       <div className="flex items-center justify-center gap-5 pt-5">
         <Link to="/login">
-          <BotonSimple className="bg-green font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out">
+          <BotonSimple className="bg-green font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white">
             Iniciar sesión
           </BotonSimple>
         </Link>
         <Link to="/registro">
-          <BotonSimple className="bg-orange font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out">
+          <BotonSimple className="bg-orange font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white">
             Registrarse
           </BotonSimple>
         </Link>

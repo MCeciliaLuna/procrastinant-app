@@ -2,7 +2,7 @@ import BotonSimple from "@/shared/components/layout/BotonSimple";
 
 function FormConfiguracionUsuario() {
   return (
-    <form className="flex flex-col gap-5 bg-light rounded shadow mx-4 py-5 justify-center items-center px-5 w-[90vw]">
+    <form className="flex flex-col gap-5 bg-light rounded shadow mx-4 py-5 justify-center items-center px-5 w-[90vw] md:w-150">
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
         type="text"

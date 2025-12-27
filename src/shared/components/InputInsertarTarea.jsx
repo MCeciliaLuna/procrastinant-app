@@ -4,7 +4,7 @@ import CrearIcon from "@/assets/icons/crear-icon.svg";
 
 function InputInsertarTarea() {
   return (
-    <form className="flex bg-light rounded shadow mx-4 justify-between items-center p-2 w-[90vw]">
+    <form className="flex bg-light rounded shadow mx-4 justify-between items-center p-2 w-[90vw] md:w-150">
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
         type="text"
@@ -15,11 +15,11 @@ function InputInsertarTarea() {
       <div className="flex gap-2 justify-around p-1">
         <BotonConIcono
           icon={MicrofonoIcon}
-          className="ml-1 active:bg-orange rounded-4xl flex align-center justify-center w-10 h-10"
+          className="ml-1 active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 hover:bg-lightsecondary cursor-pointer"
         />
         <BotonConIcono
           icon={CrearIcon}
-          className="active:bg-orange rounded-4xl flex align-center justify-center w-10 h-10"
+          className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 hover:bg-lightsecondary cursor-pointer"
         />
       </div>
     </form>

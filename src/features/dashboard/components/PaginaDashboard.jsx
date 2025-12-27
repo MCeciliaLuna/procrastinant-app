@@ -13,7 +13,7 @@ function PaginaDashboard() {
         Hola! [nombre]
       </Title>
       <InputInsertarTarea />
-      {/* <InputTareaCreada /> */}
+      <InputTareaCreada />
       <Frase className="font-secondary py-10 text-[1.2em]" />
     </div>
   );

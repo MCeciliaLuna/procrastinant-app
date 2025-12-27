@@ -6,7 +6,7 @@ function PaginaRegistro() {
     <div className="min-h-[85vh] flex flex-col items-center justify-center">
       <Title
         level={1}
-        className="text-shadow-xs font-primary text-[2.1em] text-orange pb-5 pt-5 text-center"
+        className="text-shadow-xs text-shadow-white font-primary text-[2.1em] text-orange pb-5 pt-5 text-center"
       >
         Registro
       </Title>

@@ -1,9 +1,9 @@
 import Parrafo from "@/shared/components/layout/Parrafo";
 
-function Footer({ className }) {
+function Footer() {
   return (
     <footer
-      className={`bg-lightsecondary h-[20vh] flex items-center justify-center ${className}`}
+      className="relative bg-lightsecondary h-[20vh] flex items-center justify-center"
     >
       <Parrafo className="font-secondary text-center text-[0.8rem]">
         ¡Vos podés! ✔{" "}
