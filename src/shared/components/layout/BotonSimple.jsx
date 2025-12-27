@@ -1,6 +1,6 @@
-function BotonSimple({children, onClick, type = 'button', disabled = false}) {
+function BotonSimple({children, onClick, type = 'button', disabled = false, className}) {
   return (
-    <button type={type} onClick={onClick} disabled={disabled}>
+    <button type={type} onClick={onClick} disabled={disabled} className={className}>
       {children}
     </button>
   );

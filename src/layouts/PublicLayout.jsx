@@ -8,10 +8,10 @@ function PublicLayout() {
     <>
       <NavbarPublic />
       <main
-        className="relative min-h-screen bg-cover bg-center bg-no-repeat saturate-150"
+        className="relative min-h-[90vh] bg-cover bg-center bg-no-repeat "
         style={{backgroundImage: `url(${backgroundImage})`}}
       >
-        <div className="absolute inset-0 bg-black/40 z-0"></div>
+        <div className="absolute inset-0 bg-lightsecondary/20 z-0 saturate-150"></div>
         <div className="relative z-10">
           <Outlet />
         </div>

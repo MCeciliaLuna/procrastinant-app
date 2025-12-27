@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['google', 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
+  extends: ['standard', 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',

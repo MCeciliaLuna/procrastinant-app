@@ -21,7 +21,6 @@ Este proyecto utiliza **React 18.3.1** en lugar de React 19 debido a una vulnera
 - **React DOM**: 18.3.1
 - **Vite**: 6.0.5
 - **ESLint**: 8.57.1 con configuración Google Style
-- **Prettier**: 3.4.2
 
 ### Herramientas de Desarrollo
 
@@ -116,17 +115,6 @@ Ejecuta ESLint para analizar el código y detectar problemas.
 npm run lint
 ```
 
-### `npm run format`
-
-Ejecuta Prettier para formatear automáticamente el código.
-
-- Aplica el estilo de código consistente
-- Formatea archivos `.js`, `.jsx`, `.json`, `.css` y `.md` en la carpeta `src/`
-
-```bash
-npm run format
-```
-
 ## 📁 Estructura del Proyecto
 
 ```
@@ -153,7 +141,6 @@ procrastinant-app/
 │   ├── main.jsx           # Punto de entrada de la aplicación
 │   └── index.css          # Estilos globales
 ├── .eslintrc.cjs          # Configuración de ESLint (Google Style)
-├── .prettierrc            # Configuración de Prettier
 ├── .gitignore             # Archivos ignorados por Git
 ├── index.html             # Plantilla HTML principal
 ├── package.json           # Dependencias y scripts del proyecto
@@ -276,9 +263,7 @@ graph TD
 - **Archivos de componentes**: `.jsx` extension
 - **Exports centralizados**: `index.js` en cada feature para barrel exports
 
-## ⚙️ Configuración de ESLint y Prettier
-
-### ESLint
+## ⚙️ Configuración de ESLint
 
 El proyecto está configurado con:
 
@@ -293,27 +278,12 @@ Principales reglas personalizadas:
 - No requiere JSDoc en todas las funciones
 - React en JSX scope desactivado (no necesario en React 17+)
 
-### Prettier
-
-Configuración de formateo:
-
-- **Ancho de impresión**: 100 caracteres
-- **Punto y coma**: Obligatorio
-- **Comillas**: Simples
-- **Indentación**: 2 espacios
-- **Comas finales**: ES5
-- **Espaciado en llaves**: Activado
-- **Paréntesis en funciones flecha**: Siempre
-
-Para mantener el código consistente, se recomienda ejecutar `npm run format` antes de cada commit.
-
 ## 🔄 Flujo de Trabajo Recomendado
 
 1. **Desarrollo**: Ejecuta `npm run dev` para iniciar el servidor de desarrollo
-2. **Formateo**: Ejecuta `npm run format` para formatear el código
-3. **Linting**: Ejecuta `npm run lint` para verificar problemas de código
-4. **Build**: Ejecuta `npm run build` para compilar la versión de producción
-5. **Previsualización**: Ejecuta `npm run preview` para probar el build local
+2. **Linting**: Ejecuta `npm run lint` para verificar problemas de código
+3. **Build**: Ejecuta `npm run build` para compilar la versión de producción
+4. **Previsualización**: Ejecuta `npm run preview` para probar el build local
 
 ## 📝 Próximos Pasos
 
@@ -330,7 +300,6 @@ Esta es solo la **Etapa 1: Configuración del Entorno de Desarrollo**. Las sigui
 
 - **VS Code**: Se recomienda instalar las extensiones:
   - ESLint
-  - Prettier - Code formatter
   - ES7+ React/Redux/React-Native snippets
 
 - **Antigravity de Google**: Compatible con configuración estándar
