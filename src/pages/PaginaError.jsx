@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 function PaginaError() {
   return (
     <div className="flex flex-col items-center justify-center h-[90vh]">
-      <Title level={1} className="font-primary text-[5em] text-orange pb-5">
+      <Title
+        level={1}
+        className="text-shadow-xs font-primary text-[5em] text-orange pb-5"
+      >
         Ufa!
       </Title>
       <Parrafo className="text-center font-secondary text-dark px-5">

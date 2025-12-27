@@ -9,7 +9,7 @@ function Inicio() {
       <div className="flex flex-col items-center justify-center">
         <Title
           level={1}
-          className="font-primary text-[2.5em] text-orange pb-5 mt-5"
+          className="text-shadow-xs font-primary text-[2.5em] text-orange pb-5 mt-5"
         >
           Procrastinan&apos;t App
         </Title>
