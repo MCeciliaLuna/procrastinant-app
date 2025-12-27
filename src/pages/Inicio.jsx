@@ -1,4 +1,3 @@
-import LogoApp from "@/shared/components/layout/LogoApp";
 import Frase from "@/shared/components/Frase";
 import BotonSimple from "@/shared/components/layout/BotonSimple";
 import Title from "@/shared/components/layout/Title";
@@ -10,25 +9,22 @@ function Inicio() {
       <div className="flex flex-col items-center justify-center">
         <Title
           level={1}
-          className="font-primary text-5xl text-orange pb-5 mt-10"
+          className="font-primary text-[2.5em] text-orange pb-5 mt-5"
         >
           Procrastinan&apos;t App
         </Title>
-      </div>
-      <div className="w-screen flex items-center justify-center">
-        <LogoApp width="200px" />
       </div>
       <div className="py-5 mt-2">
         <Frase className="font-secondary text-[1.2em]" />
       </div>
       <div className="flex items-center justify-center gap-5 pt-5">
         <Link to="/login">
-          <BotonSimple className="bg-green font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none transition-all">
+          <BotonSimple className="bg-green font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out">
             Iniciar sesión
           </BotonSimple>
         </Link>
-        <Link to="/register">
-          <BotonSimple className="bg-orange font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none transition-all">
+        <Link to="/registro">
+          <BotonSimple className="bg-orange font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out">
             Registrarse
           </BotonSimple>
         </Link>
