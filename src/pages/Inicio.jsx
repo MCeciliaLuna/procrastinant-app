@@ -1,18 +1,18 @@
-import LogoApp from '../shared/components/LogoApp';
-import NavbarPublic from '../shared/components/NavbarPublic';
-import Frase from '../shared/components/Frase';
-import BotonSimple from '../shared/components/BotonSimple';
+import LogoApp from '@/shared/components/layout/LogoApp';
+import Frase from '@/shared/components/Frase';
+import BotonSimple from '@/shared/components/layout/BotonSimple';
+import Title from '@/shared/components/layout/Title';
 
 function Inicio() {
   return (
     <>
-      <NavbarPublic />
+      <Title level={1}>Procrastinant App</Title>
       <LogoApp />
       <Frase />
-      <div>
+      <>
         <BotonSimple>Iniciar sesión</BotonSimple>
         <BotonSimple>Registrarse</BotonSimple>
-      </div>
+      </>
     </>
   );
 }

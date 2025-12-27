@@ -1,4 +1,4 @@
-function Modal({ isOpen, onClose, children, title }) {
+function Modal({isOpen, onClose, children, title}) {
   if (!isOpen) return null;
 
   return (

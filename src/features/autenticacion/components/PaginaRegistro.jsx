@@ -1,8 +1,12 @@
+import Title from '@/shared/components/layout/Title';
+import RegisterForm from '@/shared/components/RegisterForm';
+
 function PaginaRegistro() {
   return (
-    <div>
-      <h1>Registro</h1>
-    </div>
+    <>
+      <Title level={1}>Registro</Title>
+      <RegisterForm />
+    </>
   );
 }
 

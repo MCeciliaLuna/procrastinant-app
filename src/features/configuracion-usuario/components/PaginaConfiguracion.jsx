@@ -1,8 +1,15 @@
+import Title from '@/shared/components/layout/Title';
+import FormConfiguracionUsuario from '@/shared/components/FormConfiguracionUsuario';
+import FormCambioContraseña from '@/shared/components/FormCambioContraseña';
+
 function PaginaConfiguracion() {
   return (
-    <div>
-      <h1>Configuración</h1>
-    </div>
+    <>
+      <Title level={1}>Configuración de usuario</Title>
+      <FormConfiguracionUsuario />
+      <hr />
+      <FormCambioContraseña />
+    </>
   );
 }
 

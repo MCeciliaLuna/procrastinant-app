@@ -1,4 +1,4 @@
-function Frase({frase="Frase cambiable"}) {
+function Frase({frase='Frase cambiable'}) {
   return <div>{frase}</div>;
 }
 

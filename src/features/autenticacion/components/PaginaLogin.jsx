@@ -1,8 +1,12 @@
+import LoginForm from '@/shared/components/LoginForm';
+import Title from '@/shared/components/layout/Title';
+
 function PaginaLogin() {
   return (
-    <div>
-      <h1>Login</h1>
-    </div>
+    <>
+      <Title level={1}>Ingresa a tu cuenta</Title>
+      <LoginForm />
+    </>
   );
 }
 

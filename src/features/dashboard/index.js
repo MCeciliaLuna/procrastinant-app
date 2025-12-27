@@ -1,1 +1,1 @@
-export { default as PaginaDashboard } from './components/PaginaDashboard';
+export {default as PaginaDashboard} from './components/PaginaDashboard';

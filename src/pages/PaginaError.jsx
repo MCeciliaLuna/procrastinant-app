@@ -1,12 +1,12 @@
-import BotonSimple from "../shared/components/BotonSimple";
-import NavbarPublic from "../shared/components/NavbarPublic";
+import BotonSimple from '@/shared/components/layout/BotonSimple';
+import Title from '@/shared/components/layout/Title';
+import Parrafo from '@/shared/components/layout/Parrafo';
 
 function PaginaError() {
   return (
     <>
-    <NavbarPublic />
-      <h1>Ufa!</h1>
-      <p>La página que buscas no existe</p>
+      <Title level={1}>Ufa!</Title>
+      <Parrafo>La página que buscas no está disponible</Parrafo>
       <BotonSimple>Ok! Volvamos</BotonSimple>
     </>
   );

@@ -1,1 +1,1 @@
-export { default as PaginaConfiguracion } from './components/PaginaConfiguracion';
+export {default as PaginaConfiguracion} from './components/PaginaConfiguracion';
