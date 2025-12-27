@@ -11,14 +11,18 @@ function PaginaConfiguracion() {
       >
         Configuración de usuario
       </Title>
-      <FormConfiguracionUsuario />
+      <div className="w-screen flex justify-center">
+        <FormConfiguracionUsuario />
+      </div>
       <Title
         level={2}
         className="text-shadow-xs text-shadow-white font-primary text-[1.5em] text-orange pb-5 mt-10 text-center"
       >
         Cambio de contraseña
       </Title>
-      <FormCambioContraseña />
+      <div className="w-screen flex justify-center">
+        <FormCambioContraseña />
+      </div>
     </div>
   );
 }

@@ -20,7 +20,7 @@ function NavbarDesktop() {
             className="text-dark cursor-pointer font-secondary"
           ></BotonConIcono>
         </NavLink>
-        <BotonSimple className="bg-orange font-secondary p-3 rounded shadow w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out">
+        <BotonSimple className="bg-orange font-secondary p-3 rounded shadow w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white">
           Cerrar Sesión
         </BotonSimple>
       </div>
