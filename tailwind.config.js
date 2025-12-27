@@ -27,13 +27,6 @@ export default {
       boxShadow: {
         DEFAULT: '0px -1px 21px -3px rgba(0,0,0,0.49)',
       },
-      transitionDuration: {
-        DEFAULT: '500ms',
-        500: '500ms',
-      },
-      transitionTimingFunction: {
-        DEFAULT: 'ease-in-out',
-      },
     },
   },
   plugins: [],

@@ -1,7 +1,5 @@
-/* Importar Tailwind CSS */
 @import "tailwindcss";
 
-/* Definir tema personalizado para Tailwind v4 */
 @theme {
   --color-orange: #ea9010;
   --color-green: #90be6d;
@@ -18,7 +16,6 @@
   --transition-timing-function: ease-in-out;
 }
 
-/* Definir fuentes personalizadas */
 @font-face {
   font-family: "Mynerve-Regular";
   src: url("./assets/fonts/Mynerve-Regular.ttf") format("truetype");
@@ -35,7 +32,6 @@
   font-display: swap;
 }
 
-/* Estilos base globales usando Tailwind v4 */
 @layer base {
   body {
     position: relative;
@@ -46,13 +42,8 @@
     background-image: url("./assets/images/background-home.webp");
     color: #37371f;
   }
-  /* main{
-    min-height: 80vh;
-  } */
 }
 
-
-/* Utilidades personalizadas */
 @layer utilities {
   .font-primary {
     font-family: "Mynerve-Regular", sans-serif;

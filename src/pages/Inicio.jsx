@@ -1,4 +1,4 @@
-import Frase from "@/shared/components/Frase";
+import Frase from "@/shared/components/layout/Frase";
 import BotonSimple from "@/shared/components/layout/BotonSimple";
 import Title from "@/shared/components/layout/Title";
 import { Link } from "react-router-dom";

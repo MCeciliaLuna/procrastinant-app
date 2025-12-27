@@ -1,4 +1,4 @@
-import Frase from '@/shared/components/Frase';
+import Frase from '@/shared/components/layout/Frase';
 import Title from '@/shared/components/layout/Title';
 import InputInsertarTarea from '@/shared/components/InputInsertarTarea';
 import InputTareaCreada from '@/shared/components/InputTareaCreada';
