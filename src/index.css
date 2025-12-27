@@ -38,9 +38,19 @@
 /* Estilos base globales usando Tailwind v4 */
 @layer base {
   body {
+    position: relative;
+    min-height: 90vh;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-image: url("./assets/images/background-home.webp");
     color: #37371f;
   }
+  /* main{
+    min-height: 80vh;
+  } */
 }
+
 
 /* Utilidades personalizadas */
 @layer utilities {

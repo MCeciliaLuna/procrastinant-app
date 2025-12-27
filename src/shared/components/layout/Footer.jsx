@@ -2,7 +2,7 @@ import Parrafo from '@/shared/components/layout/Parrafo';
 
 function Footer() {
   return (
-    <footer className="bg-lightsecondary h-20 flex items-center justify-center">
+    <footer className="bg-lightsecondary h-[20vh] flex items-center justify-center">
       <Parrafo className="font-secondary text-center text-[0.8rem]">
         ¡Vos podés! ✔{' '}
         <strong className="text-orange font-primary text-lg">Procrastinant App</strong> por{' '}
