@@ -9,6 +9,8 @@ function FormConfiguracionUsuario() {
         name="nombre"
         id="nombre"
         defaultValue="Nombre"
+        autoComplete="given-name"
+        aria-label="Nombre o nombres"
       />
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
@@ -16,6 +18,8 @@ function FormConfiguracionUsuario() {
         name="apellido"
         id="apellido"
         defaultValue="Apellido"
+        autoComplete="family-name"
+        aria-label="Apellido o apellidos"
       />
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
@@ -23,6 +27,8 @@ function FormConfiguracionUsuario() {
         name="alias"
         id="alias"
         defaultValue="Alias"
+        autoComplete="nickname"
+        aria-label="Alias o apodo"
       />
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
@@ -30,8 +36,13 @@ function FormConfiguracionUsuario() {
         name="email"
         id="email"
         defaultValue="Email@mail.com"
+        autoComplete="email"
+        aria-label="Correo electrónico"
       />
-      <BotonSimple className="bg-orange font-secondary p-3 rounded shadow-xl w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white">
+      <BotonSimple
+        type="submit"
+        className="bg-orange font-secondary p-3 rounded shadow-xl w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
+      >
         Guardar Cambios
       </BotonSimple>
     </form>

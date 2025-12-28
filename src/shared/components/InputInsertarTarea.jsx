@@ -11,15 +11,20 @@ function InputInsertarTarea() {
         name="tarea"
         id="tarea"
         placeholder="Tarea"
+        aria-label="Nueva tarea"
       />
       <div className="flex gap-2 justify-around p-1">
         <BotonConIcono
           icon={MicrofonoIcon}
           className="ml-1 active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 hover:bg-lightsecondary cursor-pointer"
+          aria-label="Grabar tarea por voz"
+          type="button"
         />
         <BotonConIcono
           icon={CrearIcon}
           className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 hover:bg-lightsecondary cursor-pointer"
+          aria-label="Crear nueva tarea"
+          type="button"
         />
       </div>
     </form>

@@ -25,6 +25,9 @@ function RegisterForm() {
         name="nombre"
         id="nombre"
         placeholder="Nombre/s"
+        required
+        autoComplete="given-name"
+        aria-label="Nombre o nombres"
       />
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
@@ -32,6 +35,9 @@ function RegisterForm() {
         name="apellido"
         id="apellido"
         placeholder="Apellido/s"
+        required
+        autoComplete="family-name"
+        aria-label="Apellido o apellidos"
       />
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
@@ -39,6 +45,9 @@ function RegisterForm() {
         name="alias"
         id="alias"
         placeholder="Alias"
+        required
+        autoComplete="nickname"
+        aria-label="Alias o apodo"
       />
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
@@ -46,24 +55,54 @@ function RegisterForm() {
         name="email"
         id="email"
         placeholder="Correo electrónico"
+        required
+        autoComplete="email"
+        aria-label="Correo electrónico"
       />
-      <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
-        <input
-          className="w-full"
-          type={mostrarContrasena ? "text" : "password"}
-          placeholder="Contraseña"
-        />
-        <BotonConIcono
-          className="ml-2 cursor-pointer"
-          icon={mostrarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon}
-          onClick={toggleMostrarContrasena}
-        ></BotonConIcono>
+      <div className="w-full">
+        <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
+          <input
+            className="w-full"
+            type={mostrarContrasena ? "text" : "password"}
+            name="password"
+            id="password"
+            placeholder="Contraseña"
+            required
+            minLength="8"
+            autoComplete="new-password"
+            aria-label="Contraseña"
+            aria-describedby="password-requirements"
+          />
+          <BotonConIcono
+            className="ml-2 cursor-pointer"
+            icon={
+              mostrarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon
+            }
+            onClick={toggleMostrarContrasena}
+            aria-label={
+              mostrarContrasena ? "Ocultar contraseña" : "Mostrar contraseña"
+            }
+            type="button"
+          ></BotonConIcono>
+        </div>
+        <p
+          id="password-requirements"
+          className="text-xs text-dark/70 mt-1 px-1"
+        >
+          Mínimo 8 caracteres
+        </p>
       </div>
       <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
         <input
           className="w-full"
           type={mostrarConfirmarContrasena ? "text" : "password"}
+          name="confirmPassword"
+          id="confirmPassword"
           placeholder="Confirmar contraseña"
+          required
+          minLength="8"
+          autoComplete="new-password"
+          aria-label="Confirmar contraseña"
         />
         <BotonConIcono
           className="ml-2 cursor-pointer"
@@ -73,9 +112,18 @@ function RegisterForm() {
               : VerContraseniaIcon
           }
           onClick={toggleMostrarConfirmarContrasena}
+          aria-label={
+            mostrarConfirmarContrasena
+              ? "Ocultar confirmación de contraseña"
+              : "Mostrar confirmación de contraseña"
+          }
+          type="button"
         ></BotonConIcono>
       </div>
-      <BotonSimple className="bg-orange font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white">
+      <BotonSimple
+        type="submit"
+        className="bg-orange font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
+      >
         Registrarse
       </BotonSimple>
     </form>

@@ -7,13 +7,15 @@ function BotonConIcono({
   disabled = false,
   className = "",
   iconSize = "24",
+  "aria-label": ariaLabel,
 }) {
   const renderIcon = () => {
     if (typeof icon === "string") {
       return (
         <img
           src={icon}
-          alt="icon"
+          alt=""
+          role="presentation"
           width={iconSize}
           height={iconSize}
           className="inline-block"
@@ -29,6 +31,7 @@ function BotonConIcono({
       onClick={onClick}
       disabled={disabled}
       className={`inline-flex items-center gap-2 ${className}`}
+      aria-label={ariaLabel}
     >
       {icon && iconPosition === "left" && renderIcon()}
       {children}

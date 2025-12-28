@@ -6,6 +6,7 @@ import MenuIcon from "@/assets/icons/menu-icon.svg";
 import ConfigurationIcon from "@/assets/icons/configuration-icon.svg";
 import BotonSimple from "./BotonSimple";
 import CloseIcon from "@/assets/icons/close-icon.svg";
+import DashboardIcon from "@/assets/icons/dashboard-icon.svg";
 
 function NavbarMobile() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -50,8 +51,20 @@ function NavbarMobile() {
         </div>
         <div className="flex flex-col gap-4">
           <NavLink
+            to="/dashboard"
+            className="flex align-center justify-start w-full"
+            onClick={closeSidebar}
+          >
+            <BotonConIcono
+              icon={DashboardIcon}
+              className="text-dark cursor-pointer font-secondary mb-5 pr-5"
+            >
+              Dashboard
+            </BotonConIcono>
+          </NavLink>
+          <NavLink
             to="/configuracion"
-            className="flex align-center justify-end w-full"
+            className="flex align-center justify-start w-full"
             onClick={closeSidebar}
           >
             <BotonConIcono

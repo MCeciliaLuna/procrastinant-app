@@ -8,17 +8,18 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* Global Loading Indicator */}
       {isLoading && (
-        <div className="global-loading">
-          <div className="spinner"></div>
+        <div
+          className="global-loading"
+          role="status"
+          aria-live="polite"
+          aria-label="Cargando..."
+        >
+          <div className="spinner" aria-hidden="true"></div>
+          <span className="sr-only">Cargando contenido...</span>
         </div>
       )}
-
-      {/* Toast Notifications */}
       <Toast />
-
-      {/* Application Routes */}
       <AppRoutes />
     </BrowserRouter>
   );

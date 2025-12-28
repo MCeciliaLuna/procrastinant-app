@@ -13,14 +13,24 @@ function NavbarDesktop() {
       <div className="flex align-center justify-end gap-4 w-100">
         <NavLink
           to="/configuracion"
-          className="flex align-center justify-center"
+          className={({ isActive }) => `
+            flex align-center justify-center
+            ${isActive ? "bg-orange/10 rounded-lg p-2" : ""}
+          `}
+          aria-current={({ isActive }) => (isActive ? "page" : undefined)}
         >
-          <BotonConIcono
-            icon={ConfigurationIcon}
-            className="text-dark cursor-pointer font-secondary"
-          ></BotonConIcono>
+          {({ isActive }) => (
+            <BotonConIcono
+              icon={ConfigurationIcon}
+              className="text-dark cursor-pointer font-secondary"
+              aria-label="Configuración"
+            />
+          )}
         </NavLink>
-        <BotonSimple className="bg-orange font-secondary p-3 rounded shadow w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white">
+        <BotonSimple
+          className="bg-orange font-secondary p-3 rounded shadow w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
+          aria-label="Cerrar sesión"
+        >
           Cerrar Sesión
         </BotonSimple>
       </div>

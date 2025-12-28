@@ -1,4 +1,3 @@
-import Frase from "@/shared/components/layout/Frase";
 import BotonSimple from "@/shared/components/layout/BotonSimple";
 import Title from "@/shared/components/layout/Title";
 import { Link } from "react-router-dom";
@@ -13,9 +12,6 @@ function Inicio() {
         >
           Procrastinan&apos;t App
         </Title>
-      </div>
-      <div className="py-5 mt-2">
-        <Frase className="font-secondary text-[1.2em]" />
       </div>
       <div className="flex items-center justify-center gap-5 pt-5">
         <Link to="/login">
