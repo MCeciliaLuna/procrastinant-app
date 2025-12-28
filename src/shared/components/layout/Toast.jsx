@@ -1,21 +1,10 @@
-/**
- * Componente Toast
- *
- * Componente de notificaciones toast que se muestra en la parte superior de la pantalla.
- * Se suscribe al store de UI para mostrar todos los toasts activos.
- */
-
 import { useEffect } from "react";
-import { useUIStore } from "../../stores/uiStore";
+import { useUIStore } from "../../../stores/uiStore";
 
-/**
- * Componente de Toast individual
- */
 const ToastItem = ({ toast }) => {
   const { removeToast } = useUIStore();
 
   useEffect(() => {
-    // Auto-eliminar el toast después de su duración
     const timer = setTimeout(() => {
       removeToast(toast.id);
     }, toast.duration);
@@ -23,7 +12,6 @@ const ToastItem = ({ toast }) => {
     return () => clearTimeout(timer);
   }, [toast.id, toast.duration, removeToast]);
 
-  // Estilos según el tipo de toast
   const getToastClass = () => {
     const baseClass = "toast-item";
     switch (toast.type) {
@@ -53,9 +41,6 @@ const ToastItem = ({ toast }) => {
   );
 };
 
-/**
- * Contenedor de Toasts
- */
 export const Toast = () => {
   const { toasts } = useUIStore();
 
