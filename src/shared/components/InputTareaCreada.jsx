@@ -1,6 +1,7 @@
 import BotonConIcono from "@/shared/components/layout/BotonConIcono";
 import CheckIcono from "@/assets/icons/check-icon.svg";
 import TrashIcono from "@/assets/icons/trash-icon.svg";
+import DragIcono from "@/assets/icons/drag-icon.svg";
 
 function InputTareaCreada() {
   return (
@@ -20,6 +21,10 @@ function InputTareaCreada() {
         <BotonConIcono
           className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-lightsecondary"
           icon={TrashIcono}
+        />
+        <BotonConIcono
+          className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-lightsecondary"
+          icon={DragIcono}
         />
       </div>
     </div>

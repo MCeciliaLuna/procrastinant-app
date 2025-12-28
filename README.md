@@ -6,8 +6,7 @@ Una aplicación simple y eficiente de to-do list desarrollada con React y Vite.
 
 Este proyecto utiliza **React 18.3.1** en lugar de React 19 debido a una vulnerabilidad crítica de seguridad:
 
-> [!WARNING]
-> **CVE-2025-55182 (React2Shell)**
+> [!WARNING] > **CVE-2025-55182 (React2Shell)**
 >
 > Las versiones de React 19.0, 19.1.0, 19.1.1 y 19.2.0 contienen una vulnerabilidad crítica que permite ejecución remota de código (RCE) sin autenticación en aplicaciones con React Server Components. Por esta razón, hemos optado por usar React 18.3.1, que es una versión estable y segura.
 
@@ -63,9 +62,202 @@ npm install
 
 Este comando instalará todas las dependencias necesarias especificadas en `package.json`.
 
-### 3. Configuración de variables de entorno (opcional)
+### 3. Configuración de variables de entorno
 
-Actualmente el proyecto no requiere variables de entorno adicionales.
+Crea un archivo `.env` en la raíz del proyecto basándote en `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Edita el archivo `.env` y configura las siguientes variables:
+
+```env
+# API Configuration
+VITE_API_BASE_URL=http://localhost:3000/api
+
+# External APIs
+VITE_MOTIVATIONAL_API_URL=https://api.quotable.io
+
+# Environment
+VITE_APP_ENV=development
+```
+
+> [!IMPORTANT]
+> El archivo `.env` contiene configuración sensible y no debe ser commiteado a Git. Asegúrate de que esté en tu `.gitignore`.
+
+## 📚 Bibliotecas Principales
+
+### Axios - Cliente HTTP
+
+**Versión**: Última estable compatible con React 18.3.1
+
+Axios se utiliza para todas las comunicaciones con el backend. El proyecto incluye una configuración centralizada con interceptors.
+
+**Características**:
+
+- Instancia configurada con base URL desde variables de entorno
+- Interceptors para agregar automáticamente token de autenticación
+- Manejo centralizado de errores HTTP
+- Integración con estados de carga globales
+
+**Ubicación**: `src/config/axios.js`
+
+**Ejemplo de uso**:
+
+```javascript
+import apiClient from "@/config/axios";
+
+const fetchData = async () => {
+  const response = await apiClient.get("/endpoint");
+  return response.data;
+};
+```
+
+### Zustand - Gestión de Estado
+
+**Versión**: Última estable
+
+Zustand es la solución de gestión de estado global del proyecto. Se utilizan múltiples stores pequeños para mejor organización.
+
+**Stores disponibles**:
+
+1. **authStore** - Maneja autenticación y datos de usuario
+   - Estado: `user`, `token`, `isAuthenticated`
+   - Acciones: `login()`, `logout()`, `updateUser()`
+2. **tareasStore** - Maneja la lista de tareas
+   - Estado: `tareas`, `searchQuery`, `currentPage`, `customOrder`
+   - Acciones: `setTareas()`, `addTarea()`, `updateTarea()`, `deleteTarea()`, `reorderTareas()`
+   - **Persistencia**: Solo el orden personalizado se guarda en localStorage
+3. **uiStore** - Maneja estado de UI global
+   - Estado: `isLoading`, `toasts`, `modals`
+   - Acciones: `setLoading()`, `addToast()`, `removeToast()`, `openModal()`, `closeModal()`
+
+**Ubicación**: `src/stores/`
+
+**Ejemplo de uso**:
+
+```javascript
+import { useAuthStore } from "@/stores/authStore";
+
+function MyComponent() {
+  const { user, isAuthenticated, login } = useAuthStore();
+
+  // Usar el estado y acciones...
+}
+```
+
+### React Hook Form - Manejo de Formularios
+
+**Versión**: Última estable
+
+React Hook Form se utiliza para todos los formularios de la aplicación con validación nativa.
+
+**Características**:
+
+- Validación nativa (sin bibliotecas externas)
+- Mensajes de error en español
+- Patrones de validación predefinidos
+- Integración con custom hooks del proyecto
+
+**Templates de formularios disponibles**:
+
+- `LoginForm.jsx` - Formulario de inicio de sesión
+- `RegisterForm.jsx` - Formulario de registro
+- `TareaForm.jsx` - Formulario para crear/editar tareas
+- `ProfileForm.jsx` - Formulario de perfil de usuario
+- `PasswordForm.jsx` - Formulario de cambio de contraseña
+
+**Ubicación**: `src/features/[feature]/forms/`
+
+**Ejemplo de uso**:
+
+```javascript
+import { useForm } from "react-hook-form";
+import { VALIDATION_MESSAGES, VALIDATION_PATTERNS } from "@/config/constants";
+
+function MyForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input
+        {...register("email", {
+          required: VALIDATION_MESSAGES.required,
+          pattern: {
+            value: VALIDATION_PATTERNS.EMAIL,
+            message: VALIDATION_MESSAGES.email,
+          },
+        })}
+      />
+      {errors.email && <span>{errors.email.message}</span>}
+    </form>
+  );
+}
+```
+
+## 🪝 Custom Hooks
+
+El proyecto incluye custom hooks para simplificar el uso de las bibliotecas principales:
+
+### useAuth
+
+Hook para manejar autenticación:
+
+```javascript
+import { useAuth } from "@/hooks/useAuth";
+
+const { user, isAuthenticated, login, register, logout } = useAuth();
+```
+
+### useToast
+
+Hook para mostrar notificaciones toast:
+
+```javascript
+import { useToast } from "@/hooks/useToast";
+
+const { showSuccess, showError, showInfo, showWarning } = useToast();
+
+// Usar
+showSuccess("¡Operación exitosa!");
+showError("Ocurrió un error");
+```
+
+### useApi
+
+Hook wrapper de Axios con estados locales:
+
+```javascript
+import { useApi } from "@/hooks/useApi";
+import * as service from "@/services/myService";
+
+const { data, error, isLoading, execute } = useApi();
+
+const handleAction = async () => {
+  await execute(service.myFunction, arg1, arg2);
+};
+```
+
+## 🔧 Configuración y Constantes
+
+### Constants (`src/config/constants.js`)
+
+Define constantes globales del proyecto:
+
+- **TOAST_DURATION**: Duración de notificaciones (3000ms)
+- **VALIDATION_MESSAGES**: Mensajes de validación en español
+- **TOAST_TYPES**: Tipos de toast disponibles
+- **API_ENDPOINTS**: Endpoints de la API REST
+- **VALIDATION_PATTERNS**: Expresiones regulares para validación
 
 ## 🛠️ Scripts Disponibles
 
@@ -174,11 +366,13 @@ features/[nombre-feature]/
 #### Features del Proyecto
 
 1. **autenticacion** - Maneja login, registro y recuperación de contraseña
+
    - `PaginaLogin.jsx`
    - `PaginaRegistro.jsx`
    - `PaginaRecuperacion.jsx`
 
 2. **dashboard** - Panel principal de tareas del usuario
+
    - `PaginaDashboard.jsx`
 
 3. **configuracion-usuario** - Configuración y preferencias del usuario
@@ -299,6 +493,7 @@ Esta es solo la **Etapa 1: Configuración del Entorno de Desarrollo**. Las sigui
 ## 👥 Editores Recomendados
 
 - **VS Code**: Se recomienda instalar las extensiones:
+
   - ESLint
   - ES7+ React/Redux/React-Native snippets
 
