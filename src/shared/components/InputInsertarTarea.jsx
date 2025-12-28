@@ -22,7 +22,7 @@ function InputInsertarTarea() {
         />
         <BotonConIcono
           icon={CrearIcon}
-          className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 hover:bg-lightsecondary cursor-pointer"
+          className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 hover:bg-orange cursor-pointer"
           aria-label="Crear nueva tarea"
           type="button"
         />

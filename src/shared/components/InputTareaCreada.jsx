@@ -37,14 +37,14 @@ function InputTareaCreada({
       />{" "}
       <div className="flex gap-2 justify-around p-1">
         <BotonConIcono
-          className="ml-1 active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-lightsecondary"
+          className="ml-1 active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-orange"
           icon={CheckIcono}
           onClick={onComplete}
           aria-label="Marcar como completada"
           type="button"
         />
         <BotonConIcono
-          className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-lightsecondary"
+          className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-red-300"
           icon={TrashIcono}
           onClick={onDelete}
           aria-label="Eliminar tarea"
