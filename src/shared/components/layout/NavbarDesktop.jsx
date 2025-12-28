@@ -6,17 +6,14 @@ import BotonSimple from "./BotonSimple";
 
 function NavbarDesktop() {
   return (
-    <nav className="flex items-center justify-between py-4 px-6 bg-transparent w-screen h-[10vh] fixed z-50">
+    <nav className="bg-lightsecondary saturate-120 flex items-center justify-between py-4 px-6 w-screen h-[10vh] fixed z-50">
       <Link to="/dashboard">
         <LogoApp width="50px" />
       </Link>
       <div className="flex align-center justify-end gap-4 w-100">
         <NavLink
           to="/configuracion"
-          className={({ isActive }) => `
-            flex align-center justify-center
-            ${isActive ? "bg-orange/10 rounded-lg p-2" : ""}
-          `}
+          className="flex align-center justify-center"
           aria-current={({ isActive }) => (isActive ? "page" : undefined)}
         >
           {({ isActive }) => (

@@ -21,7 +21,7 @@ function NavbarMobile() {
 
   return (
     <>
-      <nav className="flex items-center justify-between py-4 px-6 bg-transparent w-screen h-[10vh] fixed z-50">
+      <nav className="bg-lightsecondary saturate-120 flex items-center justify-between py-4 px-6 w-screen h-[10vh] fixed z-50">
         <Link to="/dashboard">
           <LogoApp width="45px" />
         </Link>
@@ -34,7 +34,7 @@ function NavbarMobile() {
 
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-dark/50 z-40 transition-opacity duration-300"
+          className="fixed inset-0 z-40 transition-opacity duration-300"
           onClick={closeSidebar}
         ></div>
       )}

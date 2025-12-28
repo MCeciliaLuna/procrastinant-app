@@ -15,7 +15,7 @@ function PrivateLayout() {
       </div>
       <div className="h-[10vh]"></div>
       <main className="flex-1 min-h-[70vh] relative">
-        <div className="absolute inset-0 bg-lightsecondary/70 z-0 saturate-150"></div>
+        <div className="absolute inset-0 bg-lightsecondary/50 z-0 saturate-150"></div>
         <div className="relative z-10">
           <Outlet />
         </div>

@@ -7,7 +7,7 @@ function PaginaConfiguracion() {
     <div className="flex flex-col justify-center align-center">
       <Title
         level={1}
-        className="text-shadow-xs text-shadow-white font-primary text-[2em] text-orange pb-5 pt-5 text-center"
+        className="py-5 mt-5 text-shadow-xs text-shadow-white font-primary text-[2em] text-orange pb-5 pt-5 text-center"
       >
         Configuración de usuario
       </Title>

@@ -7,7 +7,7 @@ function PublicLayout() {
     <div className="min-h-screen flex flex-col">
       <NavbarPublic />
       <main className="flex-1 min-h-[80vh] relative">
-        <div className="absolute inset-0 bg-lightsecondary/70 z-0 saturate-150"></div>
+        <div className="absolute inset-0 bg-lightsecondary/50 z-0 saturate-150"></div>
         <div className="relative z-10">
           <Outlet />
         </div>
