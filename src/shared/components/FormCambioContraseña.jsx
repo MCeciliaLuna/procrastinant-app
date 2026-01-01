@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BotonSimple from "@/shared/components/layout/BotonSimple";
 import BotonConIcono from "./layout/BotonConIcono";
+import Modal from "@/shared/components/layout/Modal";
 import VerContraseniaIcon from "@/assets/icons/visibilidad-on-icon.svg";
 import OcultarContraseniaIcon from "@/assets/icons/visibilidad-off-icon.svg";
 
@@ -9,6 +10,7 @@ function FormCambioContraseña() {
   const [mostrarNuevaContrasena, setMostrarNuevaContrasena] = useState(false);
   const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
     useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const toggleMostrarContrasenaActual = () => {
     setMostrarContrasenaActual(!mostrarContrasenaActual);
@@ -20,6 +22,19 @@ function FormCambioContraseña() {
 
   const toggleMostrarConfirmarContrasena = () => {
     setMostrarConfirmarContrasena(!mostrarConfirmarContrasena);
+  };
+
+  const handleChangePassword = () => {
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmChange = () => {
+    // Funcionalidad de cambio de contraseña pendiente
+    setShowConfirmModal(false);
+  };
+
+  const handleCancelChange = () => {
+    setShowConfirmModal(false);
   };
 
   return (
@@ -70,9 +85,38 @@ function FormCambioContraseña() {
           onClick={toggleMostrarConfirmarContrasena}
         ></BotonConIcono>
       </div>
-      <BotonSimple className="bg-orange font-secondary p-3 rounded shadow-xl w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white">
+      <BotonSimple
+        onClick={handleChangePassword}
+        className="bg-orange font-secondary p-3 rounded shadow-xl w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
+      >
         Cambiar Contraseña
       </BotonSimple>
+
+      <Modal
+        isOpen={showConfirmModal}
+        onClose={handleCancelChange}
+        title="Cambio de contraseña"
+      >
+        <div className="flex flex-col gap-4">
+          <p className="font-secondary text-dark">
+            ¿Estás segur@ que deseas cambiarla?
+          </p>
+          <div className="flex gap-3 justify-end">
+            <BotonSimple
+              onClick={handleCancelChange}
+              className="bg-light font-secondary px-4 py-2 rounded shadow hover:shadow-none transition text-dark active:bg-lightsecondary"
+            >
+              No
+            </BotonSimple>
+            <BotonSimple
+              onClick={handleConfirmChange}
+              className="bg-orange font-secondary px-4 py-2 rounded shadow hover:shadow-none transition text-white active:bg-lightsecondary"
+            >
+              Sí
+            </BotonSimple>
+          </div>
+        </div>
+      </Modal>
     </form>
   );
 }

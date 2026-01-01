@@ -1,8 +1,9 @@
 import { useState } from "react";
 import BotonConIcono from "@/shared/components/layout/BotonConIcono";
+import BotonSimple from "@/shared/components/layout/BotonSimple";
+import Modal from "@/shared/components/layout/Modal";
 import CheckIcono from "@/assets/icons/check-icon.svg";
 import TrashIcono from "@/assets/icons/trash-icon.svg";
-import DragIcono from "@/assets/icons/drag-icon.svg";
 
 function InputTareaCreada({
   defaultValue = "Tarea creada",
@@ -12,6 +13,8 @@ function InputTareaCreada({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(defaultValue);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleBlur = () => {
     setIsEditing(false);
@@ -20,44 +23,92 @@ function InputTareaCreada({
     }
   };
 
+  const handleComplete = () => {
+    setIsCompleted(!isCompleted);
+    if (onComplete) {
+      onComplete();
+    }
+  };
+
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    setShowDeleteModal(false);
+    if (onDelete) {
+      onDelete();
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+  };
+
   return (
-    <div className="flex bg-light rounded shadow mx-4 justify-between items-center p-2 w-[90vw] md:w-150 mt-2">
-      <input
-        className={`w-full bg-light rounded h-10 font-secondary p-3 ${
-          isEditing ? "focus:bg-lightsecondary" : "cursor-default"
-        }`}
-        type="text"
-        name="tarea"
-        id="tarea"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onFocus={() => setIsEditing(true)}
-        onBlur={handleBlur}
-        aria-label="Nombre de la tarea"
-      />{" "}
-      <div className="flex gap-2 justify-around p-1">
-        <BotonConIcono
-          className="ml-1 active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-orange"
-          icon={CheckIcono}
-          onClick={onComplete}
-          aria-label="Marcar como completada"
-          type="button"
-        />
-        <BotonConIcono
-          className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-red-300"
-          icon={TrashIcono}
-          onClick={onDelete}
-          aria-label="Eliminar tarea"
-          type="button"
-        />
-        <BotonConIcono
-          className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-lightsecondary"
-          icon={DragIcono}
-          aria-label="Arrastrar para reordenar"
-          type="button"
-        />
+    <>
+      <div
+        className={`flex rounded shadow mx-4 justify-between items-center p-2 w-[90vw] md:w-150 mt-2 ${
+          isCompleted ? "bg-orange" : "bg-light"
+        } ${isEditing ? "focus:bg-lightsecondary" : "cursor-default"}`}
+      >
+        <input
+          className={`w-full rounded h-10 font-secondary p-3 ${
+            isCompleted ? "bg-orange" : "bg-light"
+          } ${isEditing ? "focus:bg-lightsecondary" : "cursor-default"}`}
+          type="text"
+          name="tarea"
+          id="tarea"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onFocus={() => setIsEditing(true)}
+          onBlur={handleBlur}
+          aria-label="Nombre de la tarea"
+        />{" "}
+        <div className="flex gap-2 justify-around p-1">
+          <BotonConIcono
+            className="ml-1 active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-orange"
+            icon={CheckIcono}
+            onClick={handleComplete}
+            aria-label="Marcar como completada"
+            type="button"
+          />
+          <BotonConIcono
+            className="active:bg-red-300 rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-red-300"
+            icon={TrashIcono}
+            onClick={handleDeleteClick}
+            aria-label="Eliminar tarea"
+            type="button"
+          />
+        </div>
       </div>
-    </div>
+
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={handleCancelDelete}
+        title="Eliminar tarea"
+      >
+        <div className="flex flex-col gap-4">
+          <p className="font-secondary text-dark">
+            ¿Estás segur@ que deseas eliminarla?
+          </p>
+          <div className="flex gap-3 justify-end">
+            <BotonSimple
+              onClick={handleCancelDelete}
+              className="bg-light font-secondary px-4 py-2 rounded shadow hover:shadow-none transition text-dark active:bg-lightsecondary"
+            >
+              No
+            </BotonSimple>
+            <BotonSimple
+              onClick={handleConfirmDelete}
+              className="bg-red-500 text-white font-secondary px-4 py-2 rounded shadow hover:shadow-none transition active:text-dark active:bg-lightsecondary"
+            >
+              Sí
+            </BotonSimple>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 }
 export default InputTareaCreada;

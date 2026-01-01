@@ -37,7 +37,7 @@ function Modal({ isOpen, onClose, children, title }) {
 
       <div
         ref={modalRef}
-        className="relative bg-light rounded-lg shadow-xl p-6 max-w-md w-full mx-4 z-10"
+        className="relative bg-lightsecondary rounded-lg shadow-xl p-6 max-w-md w-full mx-4 z-10"
       >
         {title && (
           <h2
