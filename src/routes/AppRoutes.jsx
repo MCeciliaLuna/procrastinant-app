@@ -18,19 +18,19 @@ function AppRoutes() {
         <Route path="/error" element={<PaginaError />} />
         <Route path="*" element={<Navigate to="/error" replace />} />
       </Route>
-{/* 
+
       <Route
         element={
           <ProtectedRoute>
             <PrivateLayout />
           </ProtectedRoute>
         }
-      > */}
+      >
         <Route element={<PrivateLayout />}>
           <Route path="/dashboard" element={<PaginaDashboard />} />
           <Route path="/configuracion" element={<PaginaConfiguracion />} />
         </Route>
-      {/* </Route> */}
+      </Route>
     </Routes>
   );
 }

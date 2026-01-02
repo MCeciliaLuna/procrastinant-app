@@ -5,7 +5,8 @@ import { API_BASE_URL } from "./env";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000, // 10 segundos
+  timeout: 10000,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,13 +14,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = useAuthStore.getState().token;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
     useUIStore.getState().setLoading(true);
-
     return config;
   },
   (error) => {
@@ -36,10 +31,16 @@ apiClient.interceptors.response.use(
   (error) => {
     useUIStore.getState().setLoading(false);
     if (error.response) {
+      const isAuthEndpoint =
+        error.config?.url?.includes("/auth/login") ||
+        error.config?.url?.includes("/auth/register");
+
       switch (error.response.status) {
         case 401:
-          console.error("Sesión expirada o no autenticado");
-          useAuthStore.getState().logout();
+          if (!isAuthEndpoint) {
+            console.error("Sesión expirada o no autenticado");
+            useAuthStore.getState().logout();
+          }
           break;
 
         case 403:
@@ -48,6 +49,10 @@ apiClient.interceptors.response.use(
 
         case 404:
           console.error("Recurso no encontrado");
+          break;
+
+        case 429:
+          console.error("Demasiadas peticiones. Por favor, intenta más tarde.");
           break;
 
         case 500:

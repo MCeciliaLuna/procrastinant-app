@@ -1,32 +1,29 @@
 import apiClient from "../../../config/axios";
 import { API_ENDPOINTS } from "../../../config/constants";
+
 export const getProfile = async () => {
   try {
-    console.log("Fetching user profile...");
+    const response = await apiClient.get(API_ENDPOINTS.GET_PROFILE);
 
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    if (response.data.success && response.data.data?.user) {
+      return response.data.data.user;
+    }
 
-    return {
-      nombre: "Usuario",
-      apellido: "Demo",
-      alias: "demo",
-      email: "usuario@demo.com",
-    };
+    return null;
   } catch (error) {
     console.error("Error al obtener perfil:", error);
     throw new Error(error.response?.data?.message || "Error al obtener perfil");
   }
 };
+
 export const updateProfile = async (userData) => {
   try {
-    console.log("Updating user profile:", userData);
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    const response = await apiClient.put(
+      API_ENDPOINTS.UPDATE_PROFILE,
+      userData
+    );
 
-    return {
-      success: true,
-      user: userData,
-      message: "Perfil actualizado exitosamente",
-    };
+    return response.data;
   } catch (error) {
     console.error("Error al actualizar perfil:", error);
     throw new Error(
@@ -34,15 +31,20 @@ export const updateProfile = async (userData) => {
     );
   }
 };
-export const changePassword = async (currentPassword, newPassword) => {
-  try {
-    console.log("Changing password...");
-    await new Promise((resolve) => setTimeout(resolve, 700));
 
-    return {
-      success: true,
-      message: "Contraseña actualizada exitosamente",
-    };
+export const changePassword = async (
+  currentPassword,
+  newPassword,
+  confirmPassword
+) => {
+  try {
+    const response = await apiClient.put(API_ENDPOINTS.CHANGE_PASSWORD, {
+      currentPassword,
+      newPassword,
+      confirmPassword,
+    });
+
+    return response.data;
   } catch (error) {
     console.error("Error al cambiar contraseña:", error);
     throw new Error(
@@ -50,16 +52,17 @@ export const changePassword = async (currentPassword, newPassword) => {
     );
   }
 };
-export const deleteAccount = async () => {
+
+export const deleteAccount = async (password) => {
   try {
-    console.log("Deleting user account...");
+    const response = await apiClient.delete(API_ENDPOINTS.DELETE_ACCOUNT, {
+      data: {
+        password,
+        confirmacion: "ELIMINAR",
+      },
+    });
 
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
-    return {
-      success: true,
-      message: "Cuenta eliminada exitosamente",
-    };
+    return response.data;
   } catch (error) {
     console.error("Error al eliminar cuenta:", error);
     throw new Error(

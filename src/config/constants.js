@@ -28,6 +28,7 @@ export const API_ENDPOINTS = {
   GET_TAREAS: "/tareas",
   CREATE_TAREA: "/tareas",
   UPDATE_TAREA: (id) => `/tareas/${id}`,
+  TOGGLE_TAREA: (id) => `/tareas/${id}/toggle`,
   DELETE_TAREA: (id) => `/tareas/${id}`,
   REORDER_TAREAS: "/tareas/reorder",
 
@@ -35,6 +36,9 @@ export const API_ENDPOINTS = {
   UPDATE_PROFILE: "/user/profile",
   CHANGE_PASSWORD: "/user/password",
   DELETE_ACCOUNT: "/user/account",
+  VERIFY_AUTH: "/user/verify",
+
+  HEALTH_CHECK: "/health",
 };
 
 export const VALIDATION_PATTERNS = {

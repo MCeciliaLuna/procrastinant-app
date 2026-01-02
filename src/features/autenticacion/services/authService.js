@@ -3,40 +3,27 @@ import { API_ENDPOINTS } from "../../../config/constants";
 
 export const login = async (email, password) => {
   try {
-    console.log("Login intent:", { email });
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const response = await apiClient.post(API_ENDPOINTS.LOGIN, {
+      email,
+      password,
+    });
 
-    return {
-      success: true,
-      user: {
-        nombre: "Usuario",
-        apellido: "Demo",
-        alias: "demo",
-        email: email,
-      },
-      token: "mock-jwt-token-12345",
-    };
+    console.log("[authService] Respuesta COMPLETA de axios:", response);
+    console.log("[authService] response.data:", response.data);
+    console.log("[authService] response.data.data:", response.data.data);
+
+    return response.data;
   } catch (error) {
     console.error("Error en login:", error);
     throw new Error(error.response?.data?.message || "Error al iniciar sesión");
   }
 };
+
 export const register = async (userData) => {
   try {
-    console.log("Register intent:", userData);
+    const response = await apiClient.post(API_ENDPOINTS.REGISTER, userData);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    return {
-      success: true,
-      user: {
-        nombre: userData.nombre,
-        apellido: userData.apellido,
-        alias: userData.alias || "",
-        email: userData.email,
-      },
-      token: "mock-jwt-token-67890",
-    };
+    return response.data;
   } catch (error) {
     console.error("Error en registro:", error);
     throw new Error(
@@ -45,11 +32,25 @@ export const register = async (userData) => {
   }
 };
 
+
 export const logout = async () => {
   try {
-    console.log("Logout successful");
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await apiClient.post(API_ENDPOINTS.LOGOUT);
   } catch (error) {
     console.error("Error en logout:", error);
+    // No lanzamos error porque el logout local siempre debe funcionar
+  }
+};
+
+
+export const verifyAuth = async () => {
+  try {
+    const response = await apiClient.get(API_ENDPOINTS.VERIFY_AUTH);
+    return response.data;
+  } catch (error) {
+    console.error("Error en verifyAuth:", error);
+    throw new Error(
+      error.response?.data?.message || "Error al verificar autenticación"
+    );
   }
 };

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { saveToken, removeToken, getToken } from "../utils/tokenManager";
 
 export const useAuthStore = create((set) => ({
   user: {
@@ -13,15 +14,22 @@ export const useAuthStore = create((set) => ({
 
   setUser: (user) => set({ user, isAuthenticated: true }),
 
-  setToken: (token) => set({ token }),
+  setToken: (token) => {
+    saveToken(token);
+    set({ token });
+  },
 
-  login: (user, token) =>
+  login: (user) => {
+    console.log("[AuthStore] Login llamado con usuario:", user?.email);
     set({
       user,
-      token,
       isAuthenticated: true,
-    }),
-  logout: () =>
+    });
+    console.log("[AuthStore] Estado actualizado, isAuthenticated: true");
+  },
+
+  logout: () => {
+    removeToken();
     set({
       user: {
         nombre: "",
@@ -31,7 +39,9 @@ export const useAuthStore = create((set) => ({
       },
       token: null,
       isAuthenticated: false,
-    }),
+    });
+  },
+
   updateUser: (userData) =>
     set((state) => ({
       user: {
@@ -39,4 +49,11 @@ export const useAuthStore = create((set) => ({
         ...userData,
       },
     })),
+
+  hydrate: () => {
+    const token = getToken();
+    if (token) {
+      set({ token });
+    }
+  },
 }));

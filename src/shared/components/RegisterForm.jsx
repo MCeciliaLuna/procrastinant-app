@@ -1,13 +1,20 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import BotonSimple from "@/shared/components/layout/BotonSimple";
 import BotonConIcono from "./layout/BotonConIcono";
 import VerContraseniaIcon from "@/assets/icons/visibilidad-on-icon.svg";
 import OcultarContraseniaIcon from "@/assets/icons/visibilidad-off-icon.svg";
+import { register } from "@/features/autenticacion/services/authService";
+import { useAuthStore } from "@/stores/authStore";
 
 function RegisterForm() {
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
   const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
     useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const loginStore = useAuthStore((state) => state.login);
 
   const toggleMostrarContrasena = () => {
     setMostrarContrasena(!mostrarContrasena);
@@ -17,8 +24,54 @@ function RegisterForm() {
     setMostrarConfirmarContrasena(!mostrarConfirmarContrasena);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const formData = new FormData(e.target);
+    const nombre = formData.get("nombre");
+    const apellido = formData.get("apellido");
+    const alias = formData.get("alias");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+      toast.error("Las contraseñas no coinciden");
+      return;
+    }
+
+    try {
+      const result = await register({
+        nombre,
+        apellido,
+        alias,
+        email,
+        password,
+      });
+
+      if (result.success && result.data?.user) {
+        loginStore(result.data.user);
+        toast.success("Registro exitoso");
+        navigate("/dashboard");
+      } else {
+        const errorMsg = result.message || "Error al registrarse";
+        setError(errorMsg);
+        toast.error(errorMsg);
+      }
+    } catch (err) {
+      const errorMsg = err.message || "Error al conectar con el servidor";
+      setError(errorMsg);
+      toast.error(errorMsg);
+    }
+  };
+
   return (
-    <form className="flex flex-col gap-5 bg-light rounded shadow mx-4 py-5 justify-center items-center px-5 w-[90vw] md:w-150">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-5 bg-light rounded shadow mx-4 py-5 justify-center items-center px-5 w-[90vw] md:w-150"
+    >
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
         type="text"
@@ -89,7 +142,7 @@ function RegisterForm() {
           id="password-requirements"
           className="text-xs text-dark/70 mt-1 px-1"
         >
-          Mínimo 8 caracteres
+          Mínimo 8 caracteres, 1 mayúscula y 1 número
         </p>
       </div>
       <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">

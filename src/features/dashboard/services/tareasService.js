@@ -1,65 +1,57 @@
 import apiClient from "../../../config/axios";
 import { API_ENDPOINTS } from "../../../config/constants";
+import {
+  backendToFrontend,
+  backendArrayToFrontend,
+} from "../../../services/mappers/tareaMapper";
 
-export const getTareas = async () => {
+export const getTareas = async (filters = {}) => {
   try {
-    console.log("Fetching tareas...");
+    const params = new URLSearchParams(filters);
+    const response = await apiClient.get(
+      `${API_ENDPOINTS.GET_TAREAS}?${params}`
+    );
+    if (response.data.success && response.data.data?.tareas) {
+      return backendArrayToFrontend(response.data.data.tareas);
+    }
 
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    return [
-      {
-        id: "1",
-        descripcion: "Completar documentación del proyecto",
-        order: 0,
-        createdAt: new Date().toISOString(),
-      },
-      {
-        id: "2",
-        descripcion: "Revisar código de la feature de login",
-        order: 1,
-        createdAt: new Date().toISOString(),
-      },
-      {
-        id: "3",
-        descripcion: "Preparar presentación para el equipo",
-        order: 2,
-        createdAt: new Date().toISOString(),
-      },
-    ];
+    return [];
   } catch (error) {
     console.error("Error al obtener tareas:", error);
     throw new Error(error.response?.data?.message || "Error al obtener tareas");
   }
 };
 
-export const createTarea = async (descripcion) => {
+export const createTarea = async (descripcion, numeroOrden = 0) => {
   try {
-    console.log("Creating tarea:", { descripcion });
-    await new Promise((resolve) => setTimeout(resolve, 600));
-
-    return {
-      id: `${Date.now()}`,
+    const response = await apiClient.post(API_ENDPOINTS.CREATE_TAREA, {
       descripcion,
-      order: 0,
-      createdAt: new Date().toISOString(),
-    };
+      numeroOrden,
+      listo: false,
+    });
+    if (response.data.success && response.data.data?.tarea) {
+      return backendToFrontend(response.data.data.tarea);
+    }
+
+    return null;
   } catch (error) {
     console.error("Error al crear tarea:", error);
     throw new Error(error.response?.data?.message || "Error al crear tarea");
   }
 };
 
-export const updateTarea = async (id, descripcion) => {
+export const updateTarea = async (id, updates) => {
   try {
-    console.log("Updating tarea:", { id, descripcion });
+    const response = await apiClient.put(
+      API_ENDPOINTS.UPDATE_TAREA(id),
+      updates
+    );
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    if (response.data.success && response.data.data?.tarea) {
+      return backendToFrontend(response.data.data.tarea);
+    }
 
-    return {
-      id,
-      descripcion,
-      updatedAt: new Date().toISOString(),
-    };
+    return null;
   } catch (error) {
     console.error("Error al actualizar tarea:", error);
     throw new Error(
@@ -67,25 +59,33 @@ export const updateTarea = async (id, descripcion) => {
     );
   }
 };
+
+export const toggleTarea = async (id, listo = null) => {
+  try {
+    const body = listo !== null ? { listo } : undefined;
+    const response = await apiClient.patch(
+      API_ENDPOINTS.TOGGLE_TAREA(id),
+      body
+    );
+
+    if (response.data.success && response.data.data?.tarea) {
+      return backendToFrontend(response.data.data.tarea);
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Error al cambiar estado de tarea:", error);
+    throw new Error(
+      error.response?.data?.message || "Error al cambiar estado de tarea"
+    );
+  }
+};
+
 export const deleteTarea = async (id) => {
   try {
-    console.log("Deleting tarea:", { id });
-
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await apiClient.delete(API_ENDPOINTS.DELETE_TAREA(id));
   } catch (error) {
     console.error("Error al eliminar tarea:", error);
     throw new Error(error.response?.data?.message || "Error al eliminar tarea");
-  }
-};
-export const reorderTareas = async (newOrder) => {
-  try {
-    console.log("Reordering tareas:", newOrder);
-
-    await new Promise((resolve) => setTimeout(resolve, 400));
-  } catch (error) {
-    console.error("Error al reordenar tareas:", error);
-    throw new Error(
-      error.response?.data?.message || "Error al reordenar tareas"
-    );
   }
 };
