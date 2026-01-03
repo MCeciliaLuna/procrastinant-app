@@ -1,9 +1,11 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import BotonSimple from "@/shared/components/layout/BotonSimple";
 import BotonConIcono from "./layout/BotonConIcono";
 import Modal from "@/shared/components/layout/Modal";
 import VerContraseniaIcon from "@/assets/icons/visibilidad-on-icon.svg";
 import OcultarContraseniaIcon from "@/assets/icons/visibilidad-off-icon.svg";
+import { changePassword } from "@/features/configuracion-usuario/services/userService";
 
 function FormCambioContraseña() {
   const [mostrarContrasenaActual, setMostrarContrasenaActual] = useState(false);
@@ -11,6 +13,12 @@ function FormCambioContraseña() {
   const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
     useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const [formData, setFormData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
   const toggleMostrarContrasenaActual = () => {
     setMostrarContrasenaActual(!mostrarContrasenaActual);
@@ -24,13 +32,63 @@ function FormCambioContraseña() {
     setMostrarConfirmarContrasena(!mostrarConfirmarContrasena);
   };
 
-  const handleChangePassword = () => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (
+      !formData.currentPassword ||
+      !formData.newPassword ||
+      !formData.confirmPassword
+    ) {
+      toast.error("Todos los campos son obligatorios");
+      return;
+    }
+
+    if (formData.newPassword !== formData.confirmPassword) {
+      toast.error("Las contraseñas nuevas no coinciden");
+      return;
+    }
+
+    if (formData.newPassword.length < 8) {
+      toast.error("La contraseña debe tener al menos 8 caracteres");
+      return;
+    }
+
     setShowConfirmModal(true);
   };
 
-  const handleConfirmChange = () => {
-    // Funcionalidad de cambio de contraseña pendiente
+  const handleConfirmChange = async () => {
     setShowConfirmModal(false);
+
+    try {
+      const promise = changePassword(
+        formData.currentPassword,
+        formData.newPassword,
+        formData.confirmPassword
+      );
+
+      await toast.promise(promise, {
+        loading: "Cambiando contraseña...",
+        success: "Contraseña actualizada exitosamente",
+        error: (err) => err.message || "Error al cambiar contraseña",
+      });
+
+      setFormData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      console.error("Error al cambiar contraseña:", error);
+    }
   };
 
   const handleCancelChange = () => {
@@ -38,12 +96,19 @@ function FormCambioContraseña() {
   };
 
   return (
-    <form className="flex flex-col gap-5 bg-light rounded shadow mx-4 py-5 justify-center items-center px-5 w-[90vw] md:w-150 mb-5">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-5 bg-light rounded shadow mx-4 py-5 justify-center items-center px-5 w-[90vw] md:w-150 mb-5"
+    >
       <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
         <input
-          className="w-full"
+          className="w-full bg-transparent"
           type={mostrarContrasenaActual ? "text" : "password"}
+          name="currentPassword"
+          value={formData.currentPassword}
+          onChange={handleChange}
           placeholder="Contraseña actual"
+          autoComplete="current-password"
         />
         <BotonConIcono
           className="ml-2 cursor-pointer"
@@ -53,13 +118,18 @@ function FormCambioContraseña() {
               : VerContraseniaIcon
           }
           onClick={toggleMostrarContrasenaActual}
+          type="button"
         ></BotonConIcono>
       </div>
       <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
         <input
-          className="w-full"
+          className="w-full bg-transparent"
           type={mostrarNuevaContrasena ? "text" : "password"}
+          name="newPassword"
+          value={formData.newPassword}
+          onChange={handleChange}
           placeholder="Nueva contraseña"
+          autoComplete="new-password"
         />
         <BotonConIcono
           className="ml-2 cursor-pointer"
@@ -67,13 +137,21 @@ function FormCambioContraseña() {
             mostrarNuevaContrasena ? OcultarContraseniaIcon : VerContraseniaIcon
           }
           onClick={toggleMostrarNuevaContrasena}
+          type="button"
         ></BotonConIcono>
       </div>
+      <p className="text-xs text-dark/70 -mt-3 px-1 self-start">
+        Mínimo 8 caracteres, 1 mayúscula y 1 número
+      </p>
       <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
         <input
-          className="w-full"
+          className="w-full bg-transparent"
           type={mostrarConfirmarContrasena ? "text" : "password"}
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
           placeholder="Confirmar contraseña"
+          autoComplete="new-password"
         />
         <BotonConIcono
           className="ml-2 cursor-pointer"
@@ -83,10 +161,11 @@ function FormCambioContraseña() {
               : VerContraseniaIcon
           }
           onClick={toggleMostrarConfirmarContrasena}
+          type="button"
         ></BotonConIcono>
       </div>
       <BotonSimple
-        onClick={handleChangePassword}
+        type="submit"
         className="bg-orange font-secondary p-3 rounded shadow-xl w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
       >
         Cambiar Contraseña

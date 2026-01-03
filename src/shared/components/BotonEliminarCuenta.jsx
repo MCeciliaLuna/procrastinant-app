@@ -1,33 +1,73 @@
-import { useState } from "react";import BotonConIcono from "@/shared/components/layout/BotonConIcono";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import BotonConIcono from "@/shared/components/layout/BotonConIcono";
 import Modal from "@/shared/components/layout/Modal";
 import BotonSimple from "@/shared/components/layout/BotonSimple";
+import VerContraseniaIcon from "@/assets/icons/visibilidad-on-icon.svg";
+import OcultarContraseniaIcon from "@/assets/icons/visibilidad-off-icon.svg";
 import DangerIcono from "@/assets/icons/peligro-white-icon.svg";
+import { useAuthStore } from "@/stores/authStore";
+import { deleteAccount } from "@/features/configuracion-usuario/services/userService";
 
 const BotonEliminarCuenta = () => {
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [password, setPassword] = useState("");
+  const [mostrarContrasena, setMostrarContrasena] = useState(false);
 
   const handleDeleteAccount = () => {
     setShowDeleteModal(true);
   };
 
-  const handleConfirmDelete = () => {
-    if (deleteConfirmText === "ELIMINAR") {
-      // Funcionalidad de eliminación pendiente
+  const handleConfirmDelete = async () => {
+    if (deleteConfirmText !== "ELIMINAR") {
+      toast.error('Debes escribir "ELIMINAR" para confirmar');
+      return;
+    }
+
+    if (!password) {
+      toast.error("Debes ingresar tu contraseña");
+      return;
+    }
+
+    try {
+      const promise = deleteAccount(password);
+
+      await toast.promise(promise, {
+        loading: "Eliminando cuenta...",
+        success: "Cuenta eliminada exitosamente",
+        error: (err) => err.message || "Error al eliminar cuenta",
+      });
+
       setShowDeleteModal(false);
       setDeleteConfirmText("");
+      setPassword("");
+
+      logout();
+      navigate("/");
+    } catch (error) {
+      console.error("Error al eliminar cuenta:", error);
     }
   };
 
   const handleCancelDelete = () => {
     setShowDeleteModal(false);
     setDeleteConfirmText("");
+    setPassword("");
   };
+
+  const toggleMostrarContrasena = () => {
+    setMostrarContrasena(!mostrarContrasena);
+  };
+
   return (
     <>
       <BotonConIcono
         icon={DangerIcono}
-        text="Cerrar sesión"
+        text="Eliminar cuenta"
         className="bg-red-500 font-bold font-secondary p-3 rounded shadow-xl w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
         aria-label="Eliminar cuenta"
         type="button"
@@ -44,7 +84,7 @@ const BotonEliminarCuenta = () => {
         <div className="flex flex-col gap-4">
           <p className="font-secondary text-dark">
             Esta acción es irreversible. Para confirmarla, escribe{" "}
-            <strong>ELIMINAR</strong> abajo:
+            <strong>ELIMINAR</strong> abajo y tu contraseña:
           </p>
           <input
             type="text"
@@ -54,6 +94,36 @@ const BotonEliminarCuenta = () => {
             placeholder="Escribe ELIMINAR"
             aria-label="Confirmación de eliminación"
           />
+          <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
+            <input
+              className="w-full bg-transparent outline-none"
+              type={mostrarContrasena ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Tu contraseña"
+              autoComplete="current-password"
+              aria-label="Contraseña actual"
+            />
+            <button
+              type="button"
+              className="ml-2 cursor-pointer shrink-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleMostrarContrasena();
+              }}
+              aria-label="Mostrar/Ocultar contraseña"
+            >
+              <img
+                src={
+                  mostrarContrasena
+                    ? OcultarContraseniaIcon
+                    : VerContraseniaIcon
+                }
+                alt=""
+                className="w-5 h-5"
+              />
+            </button>
+          </div>
           <div className="flex gap-3 justify-end">
             <BotonSimple
               onClick={handleCancelDelete}
@@ -63,9 +133,9 @@ const BotonEliminarCuenta = () => {
             </BotonSimple>
             <BotonSimple
               onClick={handleConfirmDelete}
-              disabled={deleteConfirmText !== "ELIMINAR"}
+              disabled={deleteConfirmText !== "ELIMINAR" || !password}
               className={`font-secondary px-4 py-2 rounded shadow transition text-white ${
-                deleteConfirmText === "ELIMINAR"
+                deleteConfirmText === "ELIMINAR" && password
                   ? "bg-red-500 hover:shadow-none cursor-pointer active:bg-orange"
                   : "bg-red-300 cursor-not-allowed text-dark"
               }`}

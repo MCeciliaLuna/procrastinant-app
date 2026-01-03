@@ -2,7 +2,7 @@ import BotonConIcono from "@/shared/components/layout/BotonConIcono";
 import LogoApp from "@/shared/components/layout/LogoApp";
 import { Link, NavLink } from "react-router-dom";
 import ConfigurationIcon from "@/assets/icons/configuration-icon.svg";
-import BotonSimple from "./BotonSimple";
+import BotonCerrarSesión from "./BotonCerrarSesión";
 
 function NavbarDesktop() {
   return (
@@ -24,12 +24,9 @@ function NavbarDesktop() {
             />
           )}
         </NavLink>
-        <BotonSimple
-          className="bg-orange font-secondary p-3 rounded shadow w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
-          aria-label="Cerrar sesión"
-        >
-          Cerrar Sesión
-        </BotonSimple>
+        <div className="w-50">
+          <BotonCerrarSesión />
+        </div>
       </div>
     </nav>
   );

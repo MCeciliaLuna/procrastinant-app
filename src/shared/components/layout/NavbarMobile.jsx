@@ -4,9 +4,9 @@ import LogoApp from "@/shared/components/layout/LogoApp";
 import { Link, NavLink } from "react-router-dom";
 import MenuIcon from "@/assets/icons/menu-icon.svg";
 import ConfigurationIcon from "@/assets/icons/configuration-icon.svg";
-import BotonSimple from "./BotonSimple";
 import CloseIcon from "@/assets/icons/close-icon.svg";
 import DashboardIcon from "@/assets/icons/dashboard-icon.svg";
+import BotonCerrarSesión from "./BotonCerrarSesión";
 
 function NavbarMobile() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -74,9 +74,7 @@ function NavbarMobile() {
               Configuración
             </BotonConIcono>
           </NavLink>
-          <BotonSimple className="bg-orange font-secondary p-3 rounded shadow-xl w-full cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white">
-            Cerrar Sesión
-          </BotonSimple>
+          <BotonCerrarSesión />
         </div>
       </div>
     </>

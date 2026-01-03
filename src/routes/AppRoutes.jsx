@@ -26,10 +26,8 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       >
-        <Route element={<PrivateLayout />}>
-          <Route path="/dashboard" element={<PaginaDashboard />} />
-          <Route path="/configuracion" element={<PaginaConfiguracion />} />
-        </Route>
+        <Route path="/dashboard" element={<PaginaDashboard />} />
+        <Route path="/configuracion" element={<PaginaConfiguracion />} />
       </Route>
     </Routes>
   );

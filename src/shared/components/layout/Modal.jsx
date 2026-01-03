@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 function Modal({ isOpen, onClose, children, title }) {
   const modalRef = useRef(null);
@@ -18,11 +19,11 @@ function Modal({ isOpen, onClose, children, title }) {
         document.body.style.overflow = "unset";
       };
     }
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
       aria-labelledby={title ? "modal-title" : undefined}
@@ -38,6 +39,7 @@ function Modal({ isOpen, onClose, children, title }) {
       <div
         ref={modalRef}
         className="relative bg-lightsecondary rounded-lg shadow-xl p-6 max-w-md w-full mx-4 z-10"
+        onClick={(e) => e.stopPropagation()}
       >
         {title && (
           <h2
@@ -74,6 +76,8 @@ function Modal({ isOpen, onClose, children, title }) {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
 
 export default Modal;

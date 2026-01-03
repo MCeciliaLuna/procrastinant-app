@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Title from "@/shared/components/layout/Title";
 import FormConfiguracionUsuario from "@/shared/components/FormConfiguracionUsuario";
 import FormCambioContraseña from "@/shared/components/FormCambioContraseña";
