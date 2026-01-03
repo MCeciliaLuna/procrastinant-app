@@ -1,52 +1,38 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
-export const useTareasStore = create(
-  persist(
-    (set, get) => ({
-      tareas: [],
-      searchQuery: "",
+export const useTareasStore = create((set, get) => ({
+  tareas: [],
+  searchQuery: "",
 
-      customOrder: {},
-      setTareas: (tareas) => set({ tareas }),
+  setTareas: (tareas) => set({ tareas }),
 
-      addTarea: (tarea) =>
-        set((state) => ({
-          tareas: [...state.tareas, tarea],
-        })),
-      updateTarea: (id, data) =>
-        set((state) => ({
-          tareas: state.tareas.map((tarea) =>
-            tarea.id === id ? { ...tarea, ...data } : tarea
-          ),
-        })),
-      deleteTarea: (id) =>
-        set((state) => ({
-          tareas: state.tareas.filter((tarea) => tarea.id !== id),
-        })),
-      reorderTareas: (newOrder) => set({ customOrder: newOrder }),
-      setSearchQuery: (query) => set({ searchQuery: query, currentPage: 1 }),
+  addTarea: (tarea) =>
+    set((state) => ({
+      tareas: [...state.tareas, tarea],
+    })),
 
-      setCurrentPage: (page) => set({ currentPage: page }),
+  updateTarea: (id, data) =>
+    set((state) => ({
+      tareas: state.tareas.map((tarea) =>
+        tarea.id === id ? { ...tarea, ...data } : tarea
+      ),
+    })),
 
-      getOrderedTareas: () => {
-        const state = get();
-        const { tareas, customOrder } = state;
+  deleteTarea: (id) =>
+    set((state) => ({
+      tareas: state.tareas.filter((tarea) => tarea.id !== id),
+    })),
 
-        if (Object.keys(customOrder).length === 0) {
-          return tareas;
-        }
+  setSearchQuery: (query) => set({ searchQuery: query }),
 
-        return [...tareas].sort((a, b) => {
-          const orderA = customOrder[a.id] ?? Infinity;
-          const orderB = customOrder[b.id] ?? Infinity;
-          return orderA - orderB;
-        });
-      },
-    }),
-    {
-      name: "tareas-storage",
-      partialize: (state) => ({ customOrder: state.customOrder }),
-    }
-  )
-);
+  getFilteredTareas: () => {
+    const state = get();
+    const { tareas, searchQuery } = state;
+
+    if (!searchQuery) return tareas;
+
+    return tareas.filter((tarea) =>
+      tarea.descripcion.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  },
+}));

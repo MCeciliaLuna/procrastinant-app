@@ -1,16 +1,33 @@
+import { useState } from "react";
 import BotonConIcono from "@/shared/components/layout/BotonConIcono";
 import MicrofonoIcon from "@/assets/icons/microfono-icon.svg";
 import CrearIcon from "@/assets/icons/crear-icon.svg";
 
-function InputInsertarTarea() {
+function InputInsertarTarea({ onCreate }) {
+  const [value, setValue] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!value.trim()) return;
+
+    onCreate(value.trim());
+    setValue("");
+  };
+
   return (
-    <form className="flex bg-light rounded shadow mx-4 justify-between items-center p-2 w-[90vw] md:w-150">
+    <form
+      onSubmit={handleSubmit}
+      className="flex bg-light rounded shadow mx-4 justify-between items-center p-2 w-[90vw] md:w-150"
+    >
       <input
         className="w-full bg-lightsecondary rounded h-10 font-secondary p-3"
         type="text"
         name="tarea"
         id="tarea"
         placeholder="Tarea"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         aria-label="Nueva tarea"
       />
       <div className="flex gap-2 justify-around p-1">
@@ -22,9 +39,10 @@ function InputInsertarTarea() {
         />
         <BotonConIcono
           icon={CrearIcon}
+          onClick={handleSubmit}
           className="active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 hover:bg-orange cursor-pointer"
           aria-label="Crear nueva tarea"
-          type="button"
+          type="submit"
         />
       </div>
     </form>

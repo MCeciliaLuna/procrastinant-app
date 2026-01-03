@@ -1,33 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BotonConIcono from "@/shared/components/layout/BotonConIcono";
 import BotonSimple from "@/shared/components/layout/BotonSimple";
 import Modal from "@/shared/components/layout/Modal";
 import CheckIcono from "@/assets/icons/check-icon.svg";
 import TrashIcono from "@/assets/icons/trash-icon.svg";
 
-function InputTareaCreada({
-  defaultValue = "Tarea creada",
-  onSave,
-  onDelete,
-  onComplete,
-}) {
+function InputTareaCreada({ tarea, onUpdate, onToggle, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState(defaultValue);
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [value, setValue] = useState(tarea.descripcion);
+  const [isCompleted, setIsCompleted] = useState(tarea.listo || false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  useEffect(() => {
+    setValue(tarea.descripcion);
+    setIsCompleted(tarea.listo || false);
+  }, [tarea]);
 
   const handleBlur = () => {
     setIsEditing(false);
-    if (onSave && value !== defaultValue) {
-      onSave(value);
+
+    if (value.trim() && value !== tarea.descripcion) {
+      onUpdate(tarea.id, { descripcion: value.trim() });
+    } else if (!value.trim()) {
+      setValue(tarea.descripcion);
     }
   };
 
   const handleComplete = () => {
-    setIsCompleted(!isCompleted);
-    if (onComplete) {
-      onComplete();
-    }
+    onToggle(tarea.id, isCompleted);
   };
 
   const handleDeleteClick = () => {
@@ -36,9 +36,7 @@ function InputTareaCreada({
 
   const handleConfirmDelete = () => {
     setShowDeleteModal(false);
-    if (onDelete) {
-      onDelete();
-    }
+    onDelete(tarea.id);
   };
 
   const handleCancelDelete = () => {
@@ -54,15 +52,20 @@ function InputTareaCreada({
       >
         <input
           className={`w-full rounded h-10 font-secondary p-3 ${
-            isCompleted ? "bg-orange" : "bg-light"
+            isCompleted ? "bg-orange line-through" : "bg-light"
           } ${isEditing ? "focus:bg-lightsecondary" : "cursor-default"}`}
           type="text"
           name="tarea"
-          id="tarea"
+          id={`tarea-${tarea.id}`}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => setIsEditing(true)}
           onBlur={handleBlur}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.target.blur();
+            }
+          }}
           aria-label="Nombre de la tarea"
         />{" "}
         <div className="flex gap-2 justify-around p-1">
