@@ -62,7 +62,8 @@ export const updateTarea = async (id, updates) => {
 
 export const toggleTarea = async (id, listo = null) => {
   try {
-    const body = listo !== null ? { listo } : undefined;
+    const body = listo !== null ? { listo } : {};
+
     const response = await apiClient.patch(
       API_ENDPOINTS.TOGGLE_TAREA(id),
       body
