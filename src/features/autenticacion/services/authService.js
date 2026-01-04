@@ -38,7 +38,6 @@ export const logout = async () => {
     await apiClient.post(API_ENDPOINTS.LOGOUT);
   } catch (error) {
     console.error("Error en logout:", error);
-    // No lanzamos error porque el logout local siempre debe funcionar
   }
 };
 

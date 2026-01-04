@@ -1,7 +1,15 @@
 import LoginForm from "@/shared/components/LoginForm";
 import Title from "@/shared/components/layout/Title";
+import { Navigate } from "react-router-dom";
+import { useAuthStore } from "@/stores/authStore";
 
 function PaginaLogin() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
     <div className="h-[80vh] flex flex-col items-center justify-center">
       <section aria-labelledby="login-title">

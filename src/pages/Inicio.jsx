@@ -1,8 +1,15 @@
 import BotonSimple from "@/shared/components/layout/BotonSimple";
 import Title from "@/shared/components/layout/Title";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuthStore } from "@/stores/authStore";
 
 function Inicio() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
     <div className="h-[80vh] flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center">
