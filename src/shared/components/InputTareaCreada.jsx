@@ -77,7 +77,7 @@ function InputTareaCreada({ tarea, onUpdate, onToggle, onDelete }) {
             type="button"
           />
           <BotonConIcono
-            className="active:bg-red-300 rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-red-300"
+            className="active:bg-red-300 rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-red-500"
             icon={TrashIcono}
             onClick={handleDeleteClick}
             aria-label="Eliminar tarea"

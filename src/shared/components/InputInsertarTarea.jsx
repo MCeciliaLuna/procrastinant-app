@@ -1,10 +1,35 @@
-import { useState } from "react";
-import BotonConIcono from "@/shared/components/layout/BotonConIcono";
-import MicrofonoIcon from "@/assets/icons/microfono-icon.svg";
-import CrearIcon from "@/assets/icons/crear-icon.svg";
+import {useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
+import BotonConIcono from '@/shared/components/layout/BotonConIcono';
+import MicrofonoIcon from '@/assets/icons/microfono-icon.svg';
+import CrearIcon from '@/assets/icons/crear-icon.svg';
+import useSpeechRecognition from '@/hooks/useSpeechRecognition';
 
-function InputInsertarTarea({ onCreate }) {
-  const [value, setValue] = useState("");
+function InputInsertarTarea({onCreate}) {
+  const [value, setValue] = useState('');
+
+  const {
+    isListening,
+    isSupported,
+    transcript,
+    error,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechRecognition();
+
+  useEffect(() => {
+    if (transcript) {
+      setValue(transcript);
+    }
+  }, [transcript]);
+
+  useEffect(() => {
+    if (error) {
+      console.error('Speech Recognition Error:', error);
+      alert(error);
+    }
+  }, [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +37,21 @@ function InputInsertarTarea({ onCreate }) {
     if (!value.trim()) return;
 
     onCreate(value.trim());
-    setValue("");
+    setValue('');
+    resetTranscript();
+  };
+
+  const handleMicrophoneClick = () => {
+    if (!isSupported) {
+      alert('Tu navegador no soporta reconocimiento de voz');
+      return;
+    }
+
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
   };
 
   return (
@@ -33,9 +72,20 @@ function InputInsertarTarea({ onCreate }) {
       <div className="flex gap-2 justify-around p-1">
         <BotonConIcono
           icon={MicrofonoIcon}
-          className="ml-1 active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 hover:bg-lightsecondary cursor-pointer"
-          aria-label="Grabar tarea por voz"
+          onClick={handleMicrophoneClick}
+          className={
+            `ml-1 rounded-4xl flex align-center justify-center ` +
+            `w-10 h-10 cursor-pointer transition-colors ${
+              isListening ?
+                'bg-orange hover:bg-orange' :
+                'active:bg-lightsecondary hover:bg-lightsecondary'
+            } ${!isSupported && 'opacity-50 cursor-not-allowed'}`
+          }
+          aria-label={
+            isListening ? 'Detener grabación' : 'Grabar tarea por voz'
+          }
           type="button"
+          disabled={!isSupported}
         />
         <BotonConIcono
           icon={CrearIcon}
@@ -48,4 +98,9 @@ function InputInsertarTarea({ onCreate }) {
     </form>
   );
 }
+
+InputInsertarTarea.propTypes = {
+  onCreate: PropTypes.func.isRequired,
+};
+
 export default InputInsertarTarea;

@@ -116,8 +116,8 @@ function PaginaDashboard() {
             <span className="sr-only">Cargando tareas...</span>
           </div>
         ) : tareas.length === 0 ? (
-          <p className="text-center text-dark/70 mt-8 font-secondary">
-            No tienes tareas aún. ¡Crea tu primera tarea arriba!
+          <p className="text-center text-dark/70 mt-8 font-primary">
+            ¡Todo comienza con un primer paso!
           </p>
         ) : (
           tareas.map((tarea) => (

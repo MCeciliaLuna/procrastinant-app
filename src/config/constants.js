@@ -2,43 +2,43 @@ export const TOAST_DURATION = 3000;
 export const TASK_COMPLETION_DELAY = 5000;
 
 export const VALIDATION_MESSAGES = {
-  required: "Este campo es requerido",
-  email: "Ingresa un email válido",
+  required: 'Este campo es requerido',
+  email: 'Ingresa un email válido',
   minLength: (min) => `Debe tener al menos ${min} caracteres`,
   maxLength: (max) => `No puede exceder ${max} caracteres`,
   password:
-    "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número",
-  passwordMatch: "Las contraseñas no coinciden",
-  onlyLetters: "Solo se permiten letras",
-  alphanumeric: "Solo se permiten letras y números",
+    'La contraseña debe tener al menos 8 caracteres, una mayúscula y un número',
+  passwordMatch: 'Las contraseñas no coinciden',
+  onlyLetters: 'Solo se permiten letras',
+  alphanumeric: 'Solo se permiten letras y números',
 };
 
 export const TOAST_TYPES = {
-  SUCCESS: "success",
-  ERROR: "error",
-  INFO: "info",
-  WARNING: "warning",
+  SUCCESS: 'success',
+  ERROR: 'error',
+  INFO: 'info',
+  WARNING: 'warning',
 };
 
 export const API_ENDPOINTS = {
-  LOGIN: "/auth/login",
-  REGISTER: "/auth/register",
-  LOGOUT: "/auth/logout",
+  LOGIN: '/auth/login',
+  REGISTER: '/auth/register',
+  LOGOUT: '/auth/logout',
 
-  GET_TAREAS: "/tareas",
-  CREATE_TAREA: "/tareas",
+  GET_TAREAS: '/tareas',
+  CREATE_TAREA: '/tareas',
   UPDATE_TAREA: (id) => `/tareas/${id}`,
   TOGGLE_TAREA: (id) => `/tareas/${id}/toggle`,
   DELETE_TAREA: (id) => `/tareas/${id}`,
-  REORDER_TAREAS: "/tareas/reorder",
+  REORDER_TAREAS: '/tareas/reorder',
 
-  GET_PROFILE: "/user/profile",
-  UPDATE_PROFILE: "/user/profile",
-  CHANGE_PASSWORD: "/user/password",
-  DELETE_ACCOUNT: "/user/account",
-  VERIFY_AUTH: "/user/verify",
+  GET_PROFILE: '/user/profile',
+  UPDATE_PROFILE: '/user/profile',
+  CHANGE_PASSWORD: '/user/password',
+  DELETE_ACCOUNT: '/user/account',
+  VERIFY_AUTH: '/user/verify',
 
-  HEALTH_CHECK: "/health",
+  HEALTH_CHECK: '/health',
 };
 
 export const VALIDATION_PATTERNS = {
@@ -46,4 +46,22 @@ export const VALIDATION_PATTERNS = {
   PASSWORD: /^(?=.*[A-Z])(?=.*\d).{8,}$/,
   ONLY_LETTERS: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
   ALPHANUMERIC: /^[a-zA-Z0-9]+$/,
+};
+
+export const SPEECH_RECOGNITION_CONFIG = {
+  LANGUAGE: 'es-ES',
+  MAX_ALTERNATIVES: 1,
+  INTERIM_RESULTS: true,
+  CONTINUOUS: false,
+  SILENCE_TIMEOUT: 2000,
+};
+
+export const SPEECH_RECOGNITION_MESSAGES = {
+  NOT_SUPPORTED: 'Tu navegador no soporta reconocimiento de voz',
+  PERMISSION_DENIED: 'Se requiere permiso para usar el micrófono',
+  NO_SPEECH: 'No se detectó ninguna voz. Por favor, intenta de nuevo',
+  NETWORK_ERROR: 'Error de red. Verifica tu conexión',
+  ABORTED: 'Reconocimiento de voz cancelado',
+  LISTENING: 'Escuchando...',
+  PROCESSING: 'Procesando...',
 };

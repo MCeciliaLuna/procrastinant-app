@@ -73,15 +73,15 @@ function App() {
         toastOptions={{
           duration: 3000,
           style: {
-            background: "#363636",
-            color: "#fff",
-            fontSize: "14px",
+            background: "var(--color-light)",
+            color: "var(--color-dark)",
+            fontSize: "1rem",
             fontFamily: "inherit",
           },
           success: {
             iconTheme: {
-              primary: "#4ade80",
-              secondary: "#fff",
+              primary: "var(--color-green)",
+              secondary: "var(--color-light)",
             },
           },
           error: {
