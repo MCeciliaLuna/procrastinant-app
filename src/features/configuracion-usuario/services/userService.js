@@ -35,7 +35,7 @@ export const updateProfile = async (userData) => {
 export const changePassword = async (
   currentPassword,
   newPassword,
-  confirmPassword
+  confirmPassword,
 ) => {
   try {
     const response = await apiClient.put(API_ENDPOINTS.CHANGE_PASSWORD, {
@@ -48,7 +48,7 @@ export const changePassword = async (
   } catch (error) {
     console.error("Error al cambiar contraseña:", error);
     throw new Error(
-      error.response?.data?.message || "Error al cambiar contraseña"
+      error.response?.data?.message || "Error al cambiar contraseña",
     );
   }
 };
@@ -66,7 +66,7 @@ export const deleteAccount = async (password) => {
   } catch (error) {
     console.error("Error al eliminar cuenta:", error);
     throw new Error(
-      error.response?.data?.message || "Error al eliminar cuenta"
+      error.response?.data?.message || "Error al eliminar cuenta",
     );
   }
 };

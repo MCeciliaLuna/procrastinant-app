@@ -5,7 +5,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    "eslint:recommended",
+    "standard",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
   ],

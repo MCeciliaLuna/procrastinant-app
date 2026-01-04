@@ -38,9 +38,16 @@ apiClient.interceptors.response.use(
       const isDeleteAccountEndpoint =
         error.config?.url?.includes("/user/account");
 
+      const isChangePasswordEndpoint =
+        error.config?.url?.includes("/user/password");
+
       switch (error.response.status) {
         case 401:
-          if (!isAuthEndpoint && !isDeleteAccountEndpoint) {
+          if (
+            !isAuthEndpoint &&
+            !isDeleteAccountEndpoint &&
+            !isChangePasswordEndpoint
+          ) {
             console.error("Sesión expirada o no autenticado");
             useAuthStore.getState().logout();
           }
