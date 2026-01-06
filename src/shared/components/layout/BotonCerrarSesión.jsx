@@ -8,19 +8,30 @@ import { useState } from "react";
 
 const BotonCerrarSesión = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
 
   const handleLogout = async () => {
+    setIsLoading(true);
+
     try {
-      await logoutService();
+      const promise = logoutService();
+
+      await toast.promise(promise, {
+        loading: "Cerrando sesión...",
+        success: "Sesión cerrada exitosamente",
+        error: "Error al cerrar sesión",
+      });
+
       logout();
-      toast.success("Sesión cerrada exitosamente");
       navigate("/");
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
       logout();
       navigate("/");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -43,15 +54,25 @@ const BotonCerrarSesión = () => {
           <div className="flex gap-3 justify-end">
             <BotonSimple
               onClick={() => setShowConfirmModal(false)}
-              className="bg-light font-secondary px-4 py-2 rounded shadow hover:shadow-none transition text-dark active:bg-lightsecondary"
+              disabled={isLoading}
+              className={`bg-light font-secondary px-4 py-2 rounded shadow transition text-dark ${
+                isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:shadow-none active:bg-lightsecondary"
+              }`}
             >
               No
             </BotonSimple>
             <BotonSimple
               onClick={handleLogout}
-              className="bg-orange font-secondary px-4 py-2 rounded shadow hover:shadow-none transition text-white active:bg-lightsecondary"
+              disabled={isLoading}
+              className={`bg-orange font-secondary px-4 py-2 rounded shadow transition text-white ${
+                isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:shadow-none active:bg-lightsecondary"
+              }`}
             >
-              Sí
+              {isLoading ? "Cerrando..." : "Sí"}
             </BotonSimple>
           </div>
         </div>

@@ -17,6 +17,7 @@ const BotonEliminarCuenta = () => {
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDeleteAccount = () => {
     setShowDeleteModal(true);
@@ -32,6 +33,8 @@ const BotonEliminarCuenta = () => {
       toast.error("Debes ingresar tu contraseña");
       return;
     }
+
+    setIsDeleting(true);
 
     try {
       const promise = deleteAccount(password);
@@ -50,6 +53,8 @@ const BotonEliminarCuenta = () => {
       navigate("/");
     } catch (error) {
       console.error("Error al eliminar cuenta:", error);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -127,20 +132,27 @@ const BotonEliminarCuenta = () => {
           <div className="flex gap-3 justify-end">
             <BotonSimple
               onClick={handleCancelDelete}
-              className="bg-light font-secondary px-4 py-2 rounded shadow hover:shadow-none transition text-dark active:bg-lightsecondary"
+              disabled={isDeleting}
+              className={`bg-light font-secondary px-4 py-2 rounded shadow transition text-dark ${
+                isDeleting
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:shadow-none active:bg-lightsecondary"
+              }`}
             >
               Cancelar
             </BotonSimple>
             <BotonSimple
               onClick={handleConfirmDelete}
-              disabled={deleteConfirmText !== "ELIMINAR" || !password}
+              disabled={
+                deleteConfirmText !== "ELIMINAR" || !password || isDeleting
+              }
               className={`font-secondary px-4 py-2 rounded shadow transition text-white ${
-                deleteConfirmText === "ELIMINAR" && password
+                deleteConfirmText === "ELIMINAR" && password && !isDeleting
                   ? "bg-red-500 hover:shadow-none cursor-pointer active:bg-orange"
-                  : "bg-red-300 cursor-not-allowed text-dark"
+                  : "bg-red-300 cursor-not-allowed text-dark opacity-50"
               }`}
             >
-              Confirmar
+              {isDeleting ? "Eliminando..." : "Confirmar"}
             </BotonSimple>
           </div>
         </div>

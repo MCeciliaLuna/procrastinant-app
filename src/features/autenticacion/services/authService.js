@@ -8,10 +8,6 @@ export const login = async (email, password) => {
       password,
     });
 
-    console.log("[authService] Respuesta COMPLETA de axios:", response);
-    console.log("[authService] response.data:", response.data);
-    console.log("[authService] response.data.data:", response.data.data);
-
     return response.data;
   } catch (error) {
     console.error("Error en login:", error);
@@ -32,7 +28,6 @@ export const register = async (userData) => {
   }
 };
 
-
 export const logout = async () => {
   try {
     await apiClient.post(API_ENDPOINTS.LOGOUT);
@@ -40,7 +35,6 @@ export const logout = async () => {
     console.error("Error en logout:", error);
   }
 };
-
 
 export const verifyAuth = async () => {
   try {

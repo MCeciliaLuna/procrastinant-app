@@ -20,12 +20,10 @@ export const useAuthStore = create((set) => ({
   },
 
   login: (user) => {
-    console.log("[AuthStore] Login llamado con usuario:", user?.email);
     set({
       user,
       isAuthenticated: true,
     });
-    console.log("[AuthStore] Estado actualizado, isAuthenticated: true");
   },
 
   logout: () => {

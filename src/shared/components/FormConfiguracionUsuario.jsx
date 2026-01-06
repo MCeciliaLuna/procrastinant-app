@@ -6,6 +6,7 @@ import { updateProfile } from "@/features/configuracion-usuario/services/userSer
 
 function FormConfiguracionUsuario() {
   const { user, updateUser } = useAuthStore();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -51,6 +52,8 @@ function FormConfiguracionUsuario() {
       updates.apellido = formData.apellido;
     if (formData.alias !== user.alias) updates.alias = formData.alias;
 
+    setIsLoading(true);
+
     try {
       const promise = updateProfile(updates);
 
@@ -65,6 +68,8 @@ function FormConfiguracionUsuario() {
       }
     } catch (error) {
       console.error("Error al actualizar perfil:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -120,9 +125,14 @@ function FormConfiguracionUsuario() {
       />
       <BotonSimple
         type="submit"
-        className="bg-orange font-secondary p-3 rounded shadow-xl w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
+        disabled={isLoading}
+        className={`bg-orange font-secondary p-3 rounded shadow-xl w-50 transition delay-50 duration-150 ease-in-out text-white ${
+          isLoading
+            ? "opacity-50 cursor-not-allowed"
+            : "cursor-pointer hover:shadow-none active:bg-light"
+        }`}
       >
-        Guardar Cambios
+        {isLoading ? "Guardando..." : "Guardar Cambios"}
       </BotonSimple>
     </form>
   );

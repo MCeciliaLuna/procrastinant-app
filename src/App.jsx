@@ -14,20 +14,15 @@ function App() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        console.log("[App] Verificando autenticación...");
         const result = await verifyAuth();
-
-        console.log("[App] Resultado de verificación:", result);
 
         if (
           result.success &&
           result.data?.isAuthenticated &&
           result.data?.user
         ) {
-          console.log("[App] Usuario autenticado, restaurando sesión");
           setUser(result.data.user);
         } else {
-          console.log("[App] No autenticado");
           logout();
         }
       } catch (error) {

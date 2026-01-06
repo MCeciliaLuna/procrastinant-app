@@ -11,6 +11,7 @@ import { useAuthStore } from "@/stores/authStore";
 function LoginForm() {
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const loginStore = useAuthStore((state) => state.login);
 
@@ -21,38 +22,34 @@ function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
 
     try {
-      const result = await login(email, password);
+      const promise = login(email, password);
 
-      console.log("[LoginForm] Respuesta completa del login:", result);
-      console.log("[LoginForm] result.success:", result.success);
-      console.log("[LoginForm] result.data:", result.data);
-      console.log("[LoginForm] result.data?.token:", result.data?.token);
-      console.log("[LoginForm] result.data?.user:", result.data?.user);
+      const result = await toast.promise(promise, {
+        loading: "Iniciando sesión...",
+        success: "¡Bienvenid@ a Procrastinant!",
+        error: (err) => err.message || "Error al iniciar sesión",
+      });
 
       if (result.success && result.data?.user) {
-        console.log("[LoginForm] Condición exitosa, llamando loginStore...");
         loginStore(result.data.user);
-        console.log("[LoginForm] loginStore ejecutado, mostrando toast...");
-        toast.success("Inicio de sesión exitoso");
-        console.log("[LoginForm] Toast mostrado, navegando a dashboard...");
         navigate("/dashboard");
-        console.log("[LoginForm] Navigate ejecutado");
       } else {
         const errorMsg = result.message || "Error al iniciar sesión";
         setError(errorMsg);
-        toast.error(errorMsg);
       }
     } catch (err) {
       console.error("[LoginForm] Error en handleSubmit:", err);
       const errorMsg = err.message || "Error al conectar con el servidor";
       setError(errorMsg);
-      toast.error(errorMsg);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -95,9 +92,14 @@ function LoginForm() {
       </div>
       <BotonSimple
         type="submit"
-        className="bg-orange font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
+        disabled={isLoading}
+        className={`bg-orange font-secondary p-3 rounded shadow-xl w-40 transition delay-50 duration-150 ease-in-out text-white ${
+          isLoading
+            ? "opacity-50 cursor-not-allowed"
+            : "cursor-pointer hover:shadow-none active:bg-light"
+        }`}
       >
-        Iniciar Sesión
+        {isLoading ? "Cargando..." : "Iniciar Sesión"}
       </BotonSimple>
     </form>
   );

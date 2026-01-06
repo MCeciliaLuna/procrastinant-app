@@ -13,6 +13,7 @@ function FormCambioContraseña() {
   const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
     useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     currentPassword: "",
@@ -67,6 +68,7 @@ function FormCambioContraseña() {
 
   const handleConfirmChange = async () => {
     setShowConfirmModal(false);
+    setIsLoading(true);
 
     try {
       const promise = changePassword(
@@ -88,6 +90,8 @@ function FormCambioContraseña() {
       });
     } catch (error) {
       console.error("Error al cambiar contraseña:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -166,9 +170,14 @@ function FormCambioContraseña() {
       </div>
       <BotonSimple
         type="submit"
-        className="bg-orange font-secondary p-3 rounded shadow-xl w-50 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
+        disabled={isLoading}
+        className={`bg-orange font-secondary p-3 rounded shadow-xl w-50 transition delay-50 duration-150 ease-in-out text-white ${
+          isLoading
+            ? "opacity-50 cursor-not-allowed"
+            : "cursor-pointer hover:shadow-none active:bg-light"
+        }`}
       >
-        Cambiar Contraseña
+        {isLoading ? "Procesando..." : "Cambiar Contraseña"}
       </BotonSimple>
 
       <Modal
@@ -183,15 +192,25 @@ function FormCambioContraseña() {
           <div className="flex gap-3 justify-end">
             <BotonSimple
               onClick={handleCancelChange}
-              className="bg-light font-secondary px-4 py-2 rounded shadow hover:shadow-none transition text-dark active:bg-lightsecondary"
+              disabled={isLoading}
+              className={`bg-light font-secondary px-4 py-2 rounded shadow transition text-dark ${
+                isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:shadow-none active:bg-lightsecondary"
+              }`}
             >
               No
             </BotonSimple>
             <BotonSimple
               onClick={handleConfirmChange}
-              className="bg-orange font-secondary px-4 py-2 rounded shadow hover:shadow-none transition text-white active:bg-lightsecondary"
+              disabled={isLoading}
+              className={`bg-orange font-secondary px-4 py-2 rounded shadow transition text-white ${
+                isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:shadow-none active:bg-lightsecondary"
+              }`}
             >
-              Sí
+              {isLoading ? "Procesando..." : "Sí"}
             </BotonSimple>
           </div>
         </div>

@@ -10,6 +10,8 @@ function InputTareaCreada({ tarea, onUpdate, onToggle, onDelete }) {
   const [value, setValue] = useState(tarea.descripcion);
   const [isCompleted, setIsCompleted] = useState(tarea.listo || false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isTogglingTask, setIsTogglingTask] = useState(false);
+  const [isDeletingTask, setIsDeletingTask] = useState(false);
 
   useEffect(() => {
     setValue(tarea.descripcion);
@@ -26,17 +28,27 @@ function InputTareaCreada({ tarea, onUpdate, onToggle, onDelete }) {
     }
   };
 
-  const handleComplete = () => {
-    onToggle(tarea.id, isCompleted);
+  const handleComplete = async () => {
+    setIsTogglingTask(true);
+    try {
+      await onToggle(tarea.id, isCompleted);
+    } finally {
+      setIsTogglingTask(false);
+    }
   };
 
   const handleDeleteClick = () => {
     setShowDeleteModal(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     setShowDeleteModal(false);
-    onDelete(tarea.id);
+    setIsDeletingTask(true);
+    try {
+      await onDelete(tarea.id);
+    } finally {
+      setIsDeletingTask(false);
+    }
   };
 
   const handleCancelDelete = () => {
@@ -70,16 +82,26 @@ function InputTareaCreada({ tarea, onUpdate, onToggle, onDelete }) {
         />{" "}
         <div className="flex gap-2 justify-around p-1">
           <BotonConIcono
-            className="ml-1 active:bg-lightsecondary rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-orange"
+            className={`ml-1 rounded-4xl flex align-center justify-center w-10 h-10 ${
+              isTogglingTask
+                ? "opacity-50 cursor-not-allowed"
+                : "cursor-pointer active:bg-lightsecondary hover:bg-orange"
+            }`}
             icon={CheckIcono}
             onClick={handleComplete}
+            disabled={isTogglingTask}
             aria-label="Marcar como completada"
             type="button"
           />
           <BotonConIcono
-            className="active:bg-red-300 rounded-4xl flex align-center justify-center w-10 h-10 cursor-pointer hover:bg-red-500"
+            className={`rounded-4xl flex align-center justify-center w-10 h-10 ${
+              isDeletingTask
+                ? "opacity-50 cursor-not-allowed"
+                : "cursor-pointer active:bg-red-300 hover:bg-red-500"
+            }`}
             icon={TrashIcono}
             onClick={handleDeleteClick}
+            disabled={isDeletingTask || showDeleteModal}
             aria-label="Eliminar tarea"
             type="button"
           />

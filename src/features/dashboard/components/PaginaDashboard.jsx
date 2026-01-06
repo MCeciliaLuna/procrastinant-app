@@ -60,40 +60,54 @@ function PaginaDashboard() {
 
   const handleUpdateTarea = async (id, updates) => {
     try {
-      const tareaActualizada = await updateTarea(id, updates);
+      const promise = updateTarea(id, updates);
+
+      const tareaActualizada = await toast.promise(promise, {
+        loading: "Actualizando...",
+        success: "Tarea actualizada",
+        error: "Error al actualizar tarea",
+      });
+
       if (tareaActualizada) {
         updateTareaStore(id, tareaActualizada);
-        toast.success("Tarea actualizada");
       }
     } catch (error) {
       console.error("Error al actualizar tarea:", error);
-      toast.error("Error al actualizar tarea");
     }
   };
 
   const handleToggleTarea = async (id, currentStatus) => {
     try {
-      const tareaActualizada = await toggleTarea(id);
+      const promise = toggleTarea(id);
+
+      const tareaActualizada = await toast.promise(promise, {
+        loading: "Actualizando estado...",
+        success: (result) =>
+          result.listo ? "¡Tarea completada! 🎉" : "Tarea pendiente",
+        error: "Error al cambiar estado de tarea",
+      });
+
       if (tareaActualizada) {
         updateTareaStore(id, tareaActualizada);
-        toast.success(
-          tareaActualizada.listo ? "¡Tarea completada! 🎉" : "Tarea pendiente"
-        );
       }
     } catch (error) {
       console.error("Error al cambiar estado:", error);
-      toast.error("Error al cambiar estado de tarea");
     }
   };
 
   const handleDeleteTarea = async (id) => {
     try {
-      await deleteTarea(id);
+      const promise = deleteTarea(id);
+
+      await toast.promise(promise, {
+        loading: "Eliminando...",
+        success: "Tarea eliminada",
+        error: "Error al eliminar tarea",
+      });
+
       deleteTareaStore(id);
-      toast.success("Tarea eliminada");
     } catch (error) {
       console.error("Error al eliminar tarea:", error);
-      toast.error("Error al eliminar tarea");
     }
   };
 

@@ -2,18 +2,8 @@ const TOKEN_KEY = "authToken";
 
 export const saveToken = (token) => {
   if (token) {
-    console.log(
-      "[TokenManager] Guardando token en localStorage:",
-      token.substring(0, 20) + "..."
-    );
     try {
       localStorage.setItem(TOKEN_KEY, token);
-      console.log("[TokenManager] Token guardado exitosamente");
-      const saved = localStorage.getItem(TOKEN_KEY);
-      console.log(
-        "[TokenManager] Verificación - Token guardado:",
-        saved ? "SÍ" : "NO"
-      );
     } catch (error) {
       console.error("[TokenManager] Error al guardar token:", error);
     }

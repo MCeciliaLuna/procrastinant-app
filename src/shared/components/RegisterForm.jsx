@@ -13,6 +13,7 @@ function RegisterForm() {
   const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
     useState(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const loginStore = useAuthStore((state) => state.login);
 
@@ -42,8 +43,10 @@ function RegisterForm() {
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      const result = await register({
+      const promise = register({
         nombre,
         apellido,
         alias,
@@ -51,19 +54,24 @@ function RegisterForm() {
         password,
       });
 
+      const result = await toast.promise(promise, {
+        loading: "Creando cuenta...",
+        success: "¡Cuenta creada exitosamente!",
+        error: (err) => err.message || "Error al registrarse",
+      });
+
       if (result.success && result.data?.user) {
         loginStore(result.data.user);
-        toast.success("Registro exitoso");
         navigate("/dashboard");
       } else {
         const errorMsg = result.message || "Error al registrarse";
         setError(errorMsg);
-        toast.error(errorMsg);
       }
     } catch (err) {
       const errorMsg = err.message || "Error al conectar con el servidor";
       setError(errorMsg);
-      toast.error(errorMsg);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -175,9 +183,14 @@ function RegisterForm() {
       </div>
       <BotonSimple
         type="submit"
-        className="bg-orange font-secondary p-3 rounded shadow-xl w-40 cursor-pointer hover:shadow-none active:bg-light transition delay-50 duration-150 ease-in-out text-white"
+        disabled={isLoading}
+        className={`bg-orange font-secondary p-3 rounded shadow-xl w-40 transition delay-50 duration-150 ease-in-out text-white ${
+          isLoading
+            ? "opacity-50 cursor-not-allowed"
+            : "cursor-pointer hover:shadow-none active:bg-light"
+        }`}
       >
-        Registrarse
+        {isLoading ? "Cargando..." : "Registrarse"}
       </BotonSimple>
     </form>
   );
