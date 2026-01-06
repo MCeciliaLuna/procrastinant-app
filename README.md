@@ -19,12 +19,24 @@ Este proyecto utiliza **React 18.3.1** en lugar de React 19 debido a una vulnera
 - **React**: 18.3.1
 - **React DOM**: 18.3.1
 - **Vite**: 6.0.5
-- **ESLint**: 8.57.1 con configuración Google Style
+- **Tailwind CSS**: 4.1.18 con @tailwindcss/vite
+- **React Router DOM**: 6.30.2
+- **ESLint**: 8.57.1 con configuración Standard Style
+
+### Bibliotecas de Gestión de Estado y UI
+
+- **Zustand**: 5.0.9 (gestión de estado global)
+- **React Hook Form**: 7.69.0 (manejo de formularios)
+- **react-hot-toast**: 2.6.0 (sistema de notificaciones)
+- **Axios**: 1.13.2 (cliente HTTP)
 
 ### Herramientas de Desarrollo
 
 - **@vitejs/plugin-react**: 4.3.4
-- **eslint-config-google**: 0.14.0
+- **eslint-config-standard**: 17.1.0
+- **eslint-plugin-import**: 2.32.0
+- **eslint-plugin-n**: 17.23.1
+- **eslint-plugin-promise**: 7.2.1
 - **eslint-plugin-react**: 7.37.2
 - **eslint-plugin-react-hooks**: 4.6.2
 - **eslint-plugin-react-refresh**: 0.4.14
@@ -70,17 +82,11 @@ Crea un archivo `.env` en la raíz del proyecto basándote en `.env.example`:
 cp .env.example .env
 ```
 
-Edita el archivo `.env` y configura las siguientes variables:
+Edita el archivo `.env` y configura la URL base de tu API:
 
 ```env
 # API Configuration
 VITE_API_BASE_URL=http://localhost:3000/api
-
-# External APIs
-VITE_MOTIVATIONAL_API_URL=https://api.quotable.io
-
-# Environment
-VITE_APP_ENV=development
 ```
 
 > [!IMPORTANT]
@@ -88,9 +94,24 @@ VITE_APP_ENV=development
 
 ## 📚 Bibliotecas Principales
 
+### Tailwind CSS - Framework de Estilos
+
+**Versión**: 4.1.18
+
+Tailwind CSS se utiliza como framework principal de estilos con configuración personalizada.
+
+**Configuración Custom**:
+
+- **Paleta de Colores**: orange (#ea9010ff), green (#90be6dff), light (#eaefbdff), lightsecondary (#c9e3acff), dark (#37371fff)
+- **Tipografías**: Mynerve-Regular (primary), CourierPrime-Regular (secondary)
+- **Breakpoints**: tablet (768px), desktop (1024px)
+- **Estilos Base**: border-radius (10px), box-shadow personalizado
+
+**Ubicación**: `tailwind.config.js`
+
 ### Axios - Cliente HTTP
 
-**Versión**: Última estable compatible con React 18.3.1
+**Versión**: 1.13.2
 
 Axios se utiliza para todas las comunicaciones con el backend. El proyecto incluye una configuración centralizada con interceptors.
 
@@ -116,22 +137,27 @@ const fetchData = async () => {
 
 ### Zustand - Gestión de Estado
 
-**Versión**: Última estable
+**Versión**: 5.0.9
 
 Zustand es la solución de gestión de estado global del proyecto. Se utilizan múltiples stores pequeños para mejor organización.
 
 **Stores disponibles**:
 
 1. **authStore** - Maneja autenticación y datos de usuario
+
    - Estado: `user`, `token`, `isAuthenticated`
-   - Acciones: `login()`, `logout()`, `updateUser()`
+   - Acciones: `login()`, `logout()`, `setUser()`, `checkAuth()`
+
 2. **tareasStore** - Maneja la lista de tareas
-   - Estado: `tareas`, `searchQuery`, `currentPage`, `customOrder`
-   - Acciones: `setTareas()`, `addTarea()`, `updateTarea()`, `deleteTarea()`, `reorderTareas()`
-   - **Persistencia**: Solo el orden personalizado se guarda en localStorage
+
+   - Estado: `tareas`, `searchQuery`
+   - Acciones: `setTareas()`, `addTarea()`, `updateTarea()`, `deleteTarea()`, `setSearchQuery()`, `getFilteredTareas()`
+   - **Sin persistencia**: Los datos se obtienen del backend, no se guardan en localStorage
+
 3. **uiStore** - Maneja estado de UI global
-   - Estado: `isLoading`, `toasts`, `modals`
-   - Acciones: `setLoading()`, `addToast()`, `removeToast()`, `openModal()`, `closeModal()`
+   - Estado: `isLoading`
+   - Acciones: `setIsLoading()`
+   - **Nota**: Las notificaciones se manejan con `react-hot-toast` (ver sección abajo)
 
 **Ubicación**: `src/stores/`
 
@@ -145,6 +171,32 @@ function MyComponent() {
 
   // Usar el estado y acciones...
 }
+```
+
+### react-hot-toast - Sistema de Notificaciones
+
+**Versión**: 2.6.0
+
+react-hot-toast proporciona notificaciones toast elegantes y personalizables.
+
+**Configuración global** (en `App.jsx`):
+
+- Posición: top-center
+- Duración: 3000ms
+- Estilos personalizados con variables CSS del proyecto
+- Iconos personalizados para success/error
+
+**Ubicación**: Configurado en `src/App.jsx`
+
+**Ejemplo de uso**:
+
+```javascript
+import toast from "react-hot-toast";
+
+// Mostrar notificaciones
+toast.success("¡Operación exitosa!");
+toast.error("Ocurrió un error");
+toast.loading("Cargando...");
 ```
 
 ### React Hook Form - Manejo de Formularios
@@ -247,6 +299,41 @@ const handleAction = async () => {
 };
 ```
 
+### useSpeechRecognition
+
+Hook para reconocimiento de voz usando Web Speech API:
+
+```javascript
+import useSpeechRecognition from "@/hooks/useSpeechRecognition";
+
+const {
+  isListening,
+  isSupported,
+  transcript,
+  error,
+  startListening,
+  stopListening,
+  resetTranscript,
+} = useSpeechRecognition();
+
+// Iniciar escucha
+startListening();
+
+// El texto reconocido estará en 'transcript'
+console.log(transcript);
+
+// Detener
+stopListening();
+```
+
+**Características**:
+
+- Reconocimiento de voz en español (es-ES)
+- Detección automática de soporte del navegador
+- Timeout de silencio configurable (2000ms)
+- Manejo de errores con mensajes localizados
+- Estados: `isListening`, `isSupported`, `transcript`, `error`
+
 ## 🔧 Configuración y Constantes
 
 ### Constants (`src/config/constants.js`)
@@ -254,10 +341,13 @@ const handleAction = async () => {
 Define constantes globales del proyecto:
 
 - **TOAST_DURATION**: Duración de notificaciones (3000ms)
+- **TASK_COMPLETION_DELAY**: Delay para completar tareas (5000ms)
 - **VALIDATION_MESSAGES**: Mensajes de validación en español
-- **TOAST_TYPES**: Tipos de toast disponibles
-- **API_ENDPOINTS**: Endpoints de la API REST
-- **VALIDATION_PATTERNS**: Expresiones regulares para validación
+- **TOAST_TYPES**: Tipos de toast disponibles (success, error, info, warning)
+- **API_ENDPOINTS**: Endpoints de la API REST (auth, tareas, user, health)
+- **VALIDATION_PATTERNS**: Expresiones regulares para validación (email, password, etc.)
+- **SPEECH_RECOGNITION_CONFIG**: Configuración del reconocimiento de voz (idioma, timeouts, etc.)
+- **SPEECH_RECOGNITION_MESSAGES**: Mensajes de error del reconocimiento de voz localizados
 
 ## 🛠️ Scripts Disponibles
 
@@ -300,12 +390,19 @@ npm run preview
 
 Ejecuta ESLint para analizar el código y detectar problemas.
 
-- Verifica el código contra las reglas de Google Style Guide
+- Verifica el código contra las reglas de Standard Style
 - No permite advertencias (--max-warnings 0)
 
 ```bash
 npm run lint
 ```
+
+> [!TIP]
+> Para corregir automáticamente problemas de formato, ejecuta:
+>
+> ```bash
+> npx eslint 'src/**/*.{js,jsx}' --fix
+> ```
 
 ## 📁 Estructura del Proyecto
 
@@ -313,30 +410,71 @@ npm run lint
 procrastinant-app/
 ├── node_modules/          # Dependencias instaladas
 ├── public/                # Archivos estáticos públicos
+├── dist/                  # Build de producción (generado)
 ├── src/                   # Código fuente de la aplicación
 │   ├── features/          # Features organizadas por funcionalidad
 │   │   ├── autenticacion/
+│   │   │   ├── components/
+│   │   │   ├── services/
+│   │   │   └── index.js
 │   │   ├── dashboard/
+│   │   │   ├── components/
+│   │   │   ├── services/
+│   │   │   └── index.js
 │   │   └── configuracion-usuario/
+│   │       ├── components/
+│   │       ├── services/
+│   │       └── index.js
 │   ├── layouts/           # Layouts compartidos
 │   │   ├── PublicLayout.jsx
 │   │   └── PrivateLayout.jsx
 │   ├── shared/            # Componentes compartidos
 │   │   └── components/
+│   │       ├── layout/    # Componentes de layout (Footer, Navbar, etc.)
+│   │       └── ...        # Otros componentes compartidos
 │   ├── routes/            # Sistema de rutas
 │   │   ├── AppRoutes.jsx
 │   │   ├── ProtectedRoute.jsx
 │   │   └── index.js
 │   ├── pages/             # Páginas independientes
+│   │   ├── Inicio.jsx
+│   │   └── PaginaError.jsx
+│   ├── stores/            # Stores de Zustand
+│   │   ├── authStore.js
+│   │   ├── tareasStore.js
+│   │   ├── uiStore.js
+│   │   └── __tests__/
+│   ├── hooks/             # Custom hooks
+│   │   ├── useAuth.js
+│   │   ├── useApi.js
+│   │   ├── useToast.js
+│   │   ├── useSpeechRecognition.js
+│   │   └── __tests__/
+│   ├── services/          # Servicios de API
+│   │   └── mappers/       # Transformadores de datos
+│   ├── config/            # Configuración
+│   │   ├── axios.js       # Configuración de Axios
+│   │   ├── constants.js   # Constantes globales
+│   │   └── env.js         # Variables de entorno
 │   ├── assets/            # Recursos estáticos
+│   │   ├── fonts/         # Fuentes personalizadas
+│   │   ├── icons/         # Iconos (SVG, PNG)
+│   │   └── images/        # Imágenes
+│   ├── utils/             # Utilidades generales
+│   ├── test/              # Configuración de tests
 │   ├── App.jsx            # Componente principal
 │   ├── main.jsx           # Punto de entrada de la aplicación
-│   └── index.css          # Estilos globales
-├── .eslintrc.cjs          # Configuración de ESLint (Google Style)
+│   └── index.css          # Estilos globales con Tailwind
+├── .env                   # Variables de entorno (no versionado)
+├── .env.example           # Ejemplo de variables de entorno
+├── .eslintrc.cjs          # Configuración de ESLint (Standard Style)
 ├── .gitignore             # Archivos ignorados por Git
-├── index.html             # Plantilla HTML principal
+├── index.html             # Plantilla HTML principal con meta tags SEO
 ├── package.json           # Dependencias y scripts del proyecto
+├── tailwind.config.js     # Configuración de Tailwind CSS
 ├── vite.config.js         # Configuración de Vite
+├── jsconfig.json          # Configuración de JavaScript (alias @)
+├── vercel.json            # Configuración de despliegue en Vercel
 └── README.md              # Este archivo
 ```
 
@@ -461,7 +599,7 @@ graph TD
 
 El proyecto está configurado con:
 
-- **Google Style Guide**: Base de reglas de estilo de código
+- **Standard Style**: Base de reglas de estilo de código JavaScript
 - **Plugins para React**: Verificación de mejores prácticas en React
 - **React Hooks**: Reglas para el uso correcto de Hooks
 - **React Refresh**: Soporte para Fast Refresh en desarrollo
@@ -469,10 +607,65 @@ El proyecto está configurado con:
 Principales reglas personalizadas:
 
 - Longitud máxima de línea: 100 caracteres
-- No requiere JSDoc en todas las funciones
+- Indentación: 2 espacios
+- Comillas: simples (single quotes)
+- Semicolons: sin semicolons al final de líneas (Standard style)
 - React en JSX scope desactivado (no necesario en React 17+)
 
-## 🔄 Flujo de Trabajo Recomendado
+### Reglas de Standard Style
+
+Standard Style es una guía de estilo de JavaScript que **no requiere configuración**:
+
+- ✅ Sin semicolons (excepto cuando son necesarios)
+- ✅ Comillas simples para strings
+- ✅ Indentación de 2 espacios
+- ✅ Sin espacios internos en llaves de objetos: `{foo: 'bar'}` no `{ foo: 'bar' }`
+- ✅ Trailing commas en objetos y arrays multilínea
+
+Para más información: [standardjs.com](https://standardjs.com/)
+
+## � Configuración SEO
+
+El proyecto incluye una configuración completa de SEO en el archivo `index.html`:
+
+### Meta Tags Implementados
+
+**Meta Tags Básicos**:
+
+- `charset`: UTF-8
+- `viewport`: Responsive design
+- `description`: Descripción de la aplicación para motores de búsqueda
+- `keywords`: Palabras clave relevantes (productividad, tareas, procrastinación, etc.)
+- `author`: MCeciliaLuna-dev
+
+**Open Graph (Facebook, LinkedIn)**:
+
+- `og:type`: website
+- `og:title`: Procrastinant - Vence la procrastinación
+- `og:description`: Descripción detallada de la aplicación
+- `og:image`: Logo de la aplicación
+
+**Twitter Cards**:
+
+- `twitter:card`: summary_large_image
+- `twitter:title`: Procrastinant
+- `twitter:description`: Descripción para compartir en Twitter
+
+**Otros**:
+
+- `theme-color`: #FF6B35 (color personalizado para navegadores móviles)
+- `favicon`: Logo personalizado en formato PNG
+
+### Mejores Prácticas SEO
+
+✅ Títulos descriptivos en cada página
+✅ Meta descriptions únicas
+✅ Estructura semántica HTML5
+✅ Atributos alt en imágenes
+✅ URLs amigables con React Router
+✅ Performance optimizado con Vite
+
+## �🔄 Flujo de Trabajo Recomendado
 
 1. **Desarrollo**: Ejecuta `npm run dev` para iniciar el servidor de desarrollo
 2. **Linting**: Ejecuta `npm run lint` para verificar problemas de código
