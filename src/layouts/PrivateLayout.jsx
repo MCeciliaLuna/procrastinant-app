@@ -1,9 +1,9 @@
-import { Outlet } from "react-router-dom";
-import NavbarDesktop from "@/shared/components/layout/NavbarDesktop";
-import NavbarMobile from "@/shared/components/layout/NavbarMobile";
-import Footer from "@/shared/components/layout/Footer";
+import {Outlet} from 'react-router-dom'
+import NavbarDesktop from '@/shared/components/layout/NavbarDesktop'
+import NavbarMobile from '@/shared/components/layout/NavbarMobile'
+import Footer from '@/shared/components/layout/Footer'
 
-function PrivateLayout() {
+function PrivateLayout () {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="md:hidden">
@@ -22,7 +22,7 @@ function PrivateLayout() {
       </main>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default PrivateLayout;
+export default PrivateLayout

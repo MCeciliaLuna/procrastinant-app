@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import {create} from 'zustand'
 
 export const useUIStore = create((set) => ({
   isLoading: false,
@@ -13,10 +13,10 @@ export const useUIStore = create((set) => ({
       isOpen: false,
     },
   },
-  setLoading: (isLoading) => set({ isLoading }),
+  setLoading: (isLoading) => set({isLoading}),
 
-  addToast: (message, type = "info", duration = 3000) => {
-    const id = `toast-${Date.now()}-${Math.random()}`;
+  addToast: (message, type = 'info', duration = 3000) => {
+    const id = `toast-${Date.now()}-${Math.random()}`
 
     set((state) => ({
       toasts: [
@@ -28,9 +28,9 @@ export const useUIStore = create((set) => ({
           duration,
         },
       ],
-    }));
+    }))
 
-    return id;
+    return id
   },
   removeToast: (id) =>
     set((state) => ({
@@ -52,8 +52,8 @@ export const useUIStore = create((set) => ({
         ...state.modals,
         [modalName]: {
           isOpen: false,
-          ...(modalName === "deleteTask" && { taskId: null }),
+          ...(modalName === 'deleteTask' && {taskId: null}),
         },
       },
     })),
-}));
+}))

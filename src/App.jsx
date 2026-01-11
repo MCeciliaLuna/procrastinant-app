@@ -1,40 +1,42 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import { AppRoutes } from "./routes";
-import { useUIStore } from "./stores/uiStore";
-import { useAuthStore } from "./stores/authStore";
-import { verifyAuth } from "./features/autenticacion/services/authService";
+import {useEffect, useState} from 'react'
+import {BrowserRouter} from 'react-router-dom'
+import {Toaster} from 'react-hot-toast'
+import {AppRoutes} from './routes'
+import {useUIStore} from './stores/uiStore'
+import {useAuthStore} from './stores/authStore'
+import {verifyAuth} from './features/autenticacion/services/authService'
 
-function App() {
-  const { isLoading } = useUIStore();
-  const { setUser, logout } = useAuthStore();
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+function App () {
+  const {isLoading} = useUIStore()
+  const {setUser, logout} = useAuthStore()
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
   useEffect(() => {
     const checkAuth = async () => {
+      useAuthStore.getState().hydrate()
+
       try {
-        const result = await verifyAuth();
+        const result = await verifyAuth()
 
         if (
           result.success &&
           result.data?.isAuthenticated &&
           result.data?.user
         ) {
-          setUser(result.data.user);
+          setUser(result.data.user)
         } else {
-          logout();
+          logout()
         }
       } catch (error) {
-        console.error("[App] Error al verificar autenticación:", error);
-        logout();
+        console.error('[App] Error al verificar autenticación:', error)
+        logout()
       } finally {
-        setIsCheckingAuth(false);
+        setIsCheckingAuth(false)
       }
-    };
+    }
 
-    checkAuth();
-  }, [setUser, logout]);
+    checkAuth()
+  }, [setUser, logout])
 
   if (isCheckingAuth) {
     return (
@@ -46,7 +48,7 @@ function App() {
         <div className="spinner" aria-hidden="true"></div>
         <span className="sr-only">Verificando sesión...</span>
       </div>
-    );
+    )
   }
 
   return (
@@ -68,28 +70,28 @@ function App() {
         toastOptions={{
           duration: 3000,
           style: {
-            background: "var(--color-light)",
-            color: "var(--color-dark)",
-            fontSize: "1rem",
-            fontFamily: "inherit",
+            background: 'var(--color-light)',
+            color: 'var(--color-dark)',
+            fontSize: '1rem',
+            fontFamily: 'inherit',
           },
           success: {
             iconTheme: {
-              primary: "var(--color-green)",
-              secondary: "var(--color-light)",
+              primary: 'var(--color-green)',
+              secondary: 'var(--color-light)',
             },
           },
           error: {
             iconTheme: {
-              primary: "#ef4444",
-              secondary: "#fff",
+              primary: '#ef4444',
+              secondary: '#fff',
             },
           },
         }}
       />
       <AppRoutes />
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

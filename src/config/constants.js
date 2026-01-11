@@ -1,5 +1,5 @@
-export const TOAST_DURATION = 3000;
-export const TASK_COMPLETION_DELAY = 5000;
+export const TOAST_DURATION = 3000
+export const TASK_COMPLETION_DELAY = 5000
 
 export const VALIDATION_MESSAGES = {
   required: 'Este campo es requerido',
@@ -11,14 +11,14 @@ export const VALIDATION_MESSAGES = {
   passwordMatch: 'Las contraseñas no coinciden',
   onlyLetters: 'Solo se permiten letras',
   alphanumeric: 'Solo se permiten letras y números',
-};
+}
 
 export const TOAST_TYPES = {
   SUCCESS: 'success',
   ERROR: 'error',
   INFO: 'info',
   WARNING: 'warning',
-};
+}
 
 export const API_ENDPOINTS = {
   LOGIN: '/auth/login',
@@ -39,14 +39,14 @@ export const API_ENDPOINTS = {
   VERIFY_AUTH: '/user/verify',
 
   HEALTH_CHECK: '/health',
-};
+}
 
 export const VALIDATION_PATTERNS = {
   EMAIL: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
   PASSWORD: /^(?=.*[A-Z])(?=.*\d).{8,}$/,
   ONLY_LETTERS: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
   ALPHANUMERIC: /^[a-zA-Z0-9]+$/,
-};
+}
 
 export const SPEECH_RECOGNITION_CONFIG = {
   LANGUAGE: 'es-ES',
@@ -54,7 +54,7 @@ export const SPEECH_RECOGNITION_CONFIG = {
   INTERIM_RESULTS: true,
   CONTINUOUS: false,
   SILENCE_TIMEOUT: 2000,
-};
+}
 
 export const SPEECH_RECOGNITION_MESSAGES = {
   NOT_SUPPORTED: 'Tu navegador no soporta reconocimiento de voz',
@@ -64,4 +64,4 @@ export const SPEECH_RECOGNITION_MESSAGES = {
   ABORTED: 'Reconocimiento de voz cancelado',
   LISTENING: 'Escuchando...',
   PROCESSING: 'Procesando...',
-};
+}

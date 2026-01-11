@@ -1,9 +1,9 @@
-import Title from "@/shared/components/layout/Title";
-import FormConfiguracionUsuario from "@/shared/components/FormConfiguracionUsuario";
-import FormCambioContraseña from "@/shared/components/FormCambioContraseña";
-import BotonEliminarCuenta from "@/shared/components/BotonEliminarCuenta";
+import Title from '@/shared/components/layout/Title'
+import FormConfiguracionUsuario from '@/shared/components/FormConfiguracionUsuario'
+import FormCambioContraseña from '@/shared/components/FormCambioContraseña'
+import BotonEliminarCuenta from '@/shared/components/BotonEliminarCuenta'
 
-function PaginaConfiguracion() {
+function PaginaConfiguracion () {
   return (
     <div className="flex flex-col justify-center align-center">
       <Title
@@ -29,7 +29,7 @@ function PaginaConfiguracion() {
         <BotonEliminarCuenta />
       </div>
     </div>
-  );
+  )
 }
 
-export default PaginaConfiguracion;
+export default PaginaConfiguracion

@@ -1,5 +1,5 @@
-function ContactCreator() {
-  return <div>Contact Creator</div>;
+function ContactCreator () {
+  return <div>Contact Creator</div>
 }
 
-export default ContactCreator;
+export default ContactCreator

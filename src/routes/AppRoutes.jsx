@@ -1,14 +1,14 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import PublicLayout from "../layouts/PublicLayout";
-import PrivateLayout from "../layouts/PrivateLayout";
-import ProtectedRoute from "./ProtectedRoute";
-import Inicio from "../pages/Inicio";
-import PaginaError from "../pages/PaginaError";
-import { PaginaLogin, PaginaRegistro } from "../features/autenticacion";
-import { PaginaDashboard } from "../features/dashboard";
-import { PaginaConfiguracion } from "../features/configuracion-usuario";
+import {Routes, Route, Navigate} from 'react-router-dom'
+import PublicLayout from '../layouts/PublicLayout'
+import PrivateLayout from '../layouts/PrivateLayout'
+import ProtectedRoute from './ProtectedRoute'
+import Inicio from '../pages/Inicio'
+import PaginaError from '../pages/PaginaError'
+import {PaginaLogin, PaginaRegistro} from '../features/autenticacion'
+import {PaginaDashboard} from '../features/dashboard'
+import {PaginaConfiguracion} from '../features/configuracion-usuario'
 
-function AppRoutes() {
+function AppRoutes () {
   return (
     <Routes>
       <Route element={<PublicLayout />}>
@@ -30,7 +30,7 @@ function AppRoutes() {
         <Route path="/configuracion" element={<PaginaConfiguracion />} />
       </Route>
     </Routes>
-  );
+  )
 }
 
-export default AppRoutes;
+export default AppRoutes

@@ -1,10 +1,10 @@
-import BotonConIcono from "@/shared/components/layout/BotonConIcono";
-import LogoApp from "@/shared/components/layout/LogoApp";
-import { Link, NavLink } from "react-router-dom";
-import ConfigurationIcon from "@/assets/icons/configuration-icon.svg";
-import BotonCerrarSesión from "./BotonCerrarSesión";
+import BotonConIcono from '@/shared/components/layout/BotonConIcono'
+import LogoApp from '@/shared/components/layout/LogoApp'
+import {Link, NavLink} from 'react-router-dom'
+import ConfigurationIcon from '@/assets/icons/configuration-icon.svg'
+import BotonCerrarSesión from './BotonCerrarSesión'
 
-function NavbarDesktop() {
+function NavbarDesktop () {
   return (
     <nav className="bg-lightsecondary saturate-120 flex items-center justify-between py-4 px-6 w-screen h-[10vh] fixed z-50">
       <Link to="/dashboard">
@@ -14,9 +14,9 @@ function NavbarDesktop() {
         <NavLink
           to="/configuracion"
           className="flex align-center justify-center"
-          aria-current={({ isActive }) => (isActive ? "page" : undefined)}
+          aria-current={({isActive}) => (isActive ? 'page' : undefined)}
         >
-          {({ isActive }) => (
+          {({isActive}) => (
             <BotonConIcono
               icon={ConfigurationIcon}
               className="text-dark cursor-pointer font-secondary"
@@ -29,7 +29,7 @@ function NavbarDesktop() {
         </div>
       </div>
     </nav>
-  );
+  )
 }
 
-export default NavbarDesktop;
+export default NavbarDesktop

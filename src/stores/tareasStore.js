@@ -1,10 +1,10 @@
-import { create } from "zustand";
+import {create} from 'zustand'
 
 export const useTareasStore = create((set, get) => ({
   tareas: [],
-  searchQuery: "",
+  searchQuery: '',
 
-  setTareas: (tareas) => set({ tareas }),
+  setTareas: (tareas) => set({tareas}),
 
   addTarea: (tarea) =>
     set((state) => ({
@@ -14,7 +14,7 @@ export const useTareasStore = create((set, get) => ({
   updateTarea: (id, data) =>
     set((state) => ({
       tareas: state.tareas.map((tarea) =>
-        tarea.id === id ? { ...tarea, ...data } : tarea
+        tarea.id === id ? {...tarea, ...data} : tarea,
       ),
     })),
 
@@ -23,16 +23,16 @@ export const useTareasStore = create((set, get) => ({
       tareas: state.tareas.filter((tarea) => tarea.id !== id),
     })),
 
-  setSearchQuery: (query) => set({ searchQuery: query }),
+  setSearchQuery: (query) => set({searchQuery: query}),
 
   getFilteredTareas: () => {
-    const state = get();
-    const { tareas, searchQuery } = state;
+    const state = get()
+    const {tareas, searchQuery} = state
 
-    if (!searchQuery) return tareas;
+    if (!searchQuery) return tareas
 
     return tareas.filter((tarea) =>
-      tarea.descripcion.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+      tarea.descripcion.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
   },
-}));
+}))

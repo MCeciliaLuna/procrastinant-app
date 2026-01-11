@@ -1,43 +1,43 @@
-import { create } from "zustand";
-import { saveToken, removeToken, getToken } from "../utils/tokenManager";
+import {create} from 'zustand'
+import {saveToken, removeToken, getToken} from '../utils/tokenManager'
 
 export const useAuthStore = create((set) => ({
   user: {
-    nombre: "",
-    apellido: "",
-    alias: "",
-    email: "",
+    nombre: '',
+    apellido: '',
+    alias: '',
+    email: '',
   },
   token: null,
 
   isAuthenticated: false,
 
-  setUser: (user) => set({ user, isAuthenticated: true }),
+  setUser: (user) => set({user, isAuthenticated: true}),
 
   setToken: (token) => {
-    saveToken(token);
-    set({ token });
+    saveToken(token)
+    set({token})
   },
 
   login: (user) => {
     set({
       user,
       isAuthenticated: true,
-    });
+    })
   },
 
   logout: () => {
-    removeToken();
+    removeToken()
     set({
       user: {
-        nombre: "",
-        apellido: "",
-        alias: "",
-        email: "",
+        nombre: '',
+        apellido: '',
+        alias: '',
+        email: '',
       },
       token: null,
       isAuthenticated: false,
-    });
+    })
   },
 
   updateUser: (userData) =>
@@ -49,9 +49,9 @@ export const useAuthStore = create((set) => ({
     })),
 
   hydrate: () => {
-    const token = getToken();
+    const token = getToken()
     if (token) {
-      set({ token });
+      set({token})
     }
   },
-}));
+}))

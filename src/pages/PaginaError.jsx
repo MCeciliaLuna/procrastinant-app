@@ -1,9 +1,9 @@
-import BotonSimple from "@/shared/components/layout/BotonSimple";
-import Title from "@/shared/components/layout/Title";
-import Parrafo from "@/shared/components/layout/Parrafo";
-import { Link } from "react-router-dom";
+import BotonSimple from '@/shared/components/layout/BotonSimple'
+import Title from '@/shared/components/layout/Title'
+import Parrafo from '@/shared/components/layout/Parrafo'
+import {Link} from 'react-router-dom'
 
-function PaginaError() {
+function PaginaError () {
   return (
     <div className="flex flex-col items-center justify-center h-[90vh]">
       <Title
@@ -21,7 +21,7 @@ function PaginaError() {
         </BotonSimple>
       </Link>
     </div>
-  );
+  )
 }
 
-export default PaginaError;
+export default PaginaError

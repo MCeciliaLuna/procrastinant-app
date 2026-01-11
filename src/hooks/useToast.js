@@ -1,32 +1,32 @@
-import { useUIStore } from "../stores/uiStore";
-import { TOAST_DURATION, TOAST_TYPES } from "../config/constants";
+import {useUIStore} from '../stores/uiStore'
+import {TOAST_DURATION, TOAST_TYPES} from '../config/constants'
 export const useToast = () => {
-  const { toasts, addToast, removeToast } = useUIStore();
+  const {toasts, addToast, removeToast} = useUIStore()
 
   const showToast = (
     message,
     type = TOAST_TYPES.INFO,
-    duration = TOAST_DURATION
+    duration = TOAST_DURATION,
   ) => {
-    const toastId = addToast(message, type, duration);
+    const toastId = addToast(message, type, duration)
 
     setTimeout(() => {
-      removeToast(toastId);
-    }, duration);
-  };
+      removeToast(toastId)
+    }, duration)
+  }
   const showSuccess = (message, duration = TOAST_DURATION) => {
-    showToast(message, TOAST_TYPES.SUCCESS, duration);
-  };
+    showToast(message, TOAST_TYPES.SUCCESS, duration)
+  }
 
   const showError = (message, duration = TOAST_DURATION) => {
-    showToast(message, TOAST_TYPES.ERROR, duration);
-  };
+    showToast(message, TOAST_TYPES.ERROR, duration)
+  }
   const showInfo = (message, duration = TOAST_DURATION) => {
-    showToast(message, TOAST_TYPES.INFO, duration);
-  };
+    showToast(message, TOAST_TYPES.INFO, duration)
+  }
   const showWarning = (message, duration = TOAST_DURATION) => {
-    showToast(message, TOAST_TYPES.WARNING, duration);
-  };
+    showToast(message, TOAST_TYPES.WARNING, duration)
+  }
 
   return {
     toasts,
@@ -36,5 +36,5 @@ export const useToast = () => {
     showInfo,
     showWarning,
     removeToast,
-  };
-};
+  }
+}

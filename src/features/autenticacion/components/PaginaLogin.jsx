@@ -1,13 +1,13 @@
-import LoginForm from "@/shared/components/LoginForm";
-import Title from "@/shared/components/layout/Title";
-import { Navigate } from "react-router-dom";
-import { useAuthStore } from "@/stores/authStore";
+import LoginForm from '@/shared/components/LoginForm'
+import Title from '@/shared/components/layout/Title'
+import {Navigate} from 'react-router-dom'
+import {useAuthStore} from '@/stores/authStore'
 
-function PaginaLogin() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+function PaginaLogin () {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/dashboard" replace />
   }
 
   return (
@@ -23,7 +23,7 @@ function PaginaLogin() {
         <LoginForm />
       </section>
     </div>
-  );
+  )
 }
 
-export default PaginaLogin;
+export default PaginaLogin

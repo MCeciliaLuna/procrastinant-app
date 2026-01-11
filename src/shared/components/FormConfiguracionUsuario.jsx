@@ -1,77 +1,76 @@
-import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
-import BotonSimple from "@/shared/components/layout/BotonSimple";
-import { useAuthStore } from "@/stores/authStore";
-import { updateProfile } from "@/features/configuracion-usuario/services/userService";
+import {useState, useEffect} from 'react'
+import toast from 'react-hot-toast'
+import BotonSimple from '@/shared/components/layout/BotonSimple'
+import {useAuthStore} from '@/stores/authStore'
+import {updateProfile} from '@/features/configuracion-usuario/services/userService'
 
-function FormConfiguracionUsuario() {
-  const { user, updateUser } = useAuthStore();
-  const [isLoading, setIsLoading] = useState(false);
+function FormConfiguracionUsuario () {
+  const {user, updateUser} = useAuthStore()
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
-    nombre: "",
-    apellido: "",
-    alias: "",
-    email: "",
-  });
+    nombre: '',
+    apellido: '',
+    alias: '',
+    email: '',
+  })
 
   useEffect(() => {
     if (user) {
       setFormData({
-        nombre: user.nombre || "",
-        apellido: user.apellido || "",
-        alias: user.alias || "",
-        email: user.email || "",
-      });
+        nombre: user.nombre || '',
+        apellido: user.apellido || '',
+        alias: user.alias || '',
+        email: user.email || '',
+      })
     }
-  }, [user]);
+  }, [user])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const hasChanges =
       formData.nombre !== user.nombre ||
       formData.apellido !== user.apellido ||
-      formData.alias !== user.alias;
+      formData.alias !== user.alias
 
     if (!hasChanges) {
-      toast("No hay cambios para guardar", { icon: "ℹ️" });
-      return;
+      toast('No hay cambios para guardar', {icon: 'ℹ️'})
+      return
     }
 
-    const updates = {};
-    if (formData.nombre !== user.nombre) updates.nombre = formData.nombre;
-    if (formData.apellido !== user.apellido)
-      updates.apellido = formData.apellido;
-    if (formData.alias !== user.alias) updates.alias = formData.alias;
+    const updates = {}
+    if (formData.nombre !== user.nombre) updates.nombre = formData.nombre
+    if (formData.apellido !== user.apellido) { updates.apellido = formData.apellido }
+    if (formData.alias !== user.alias) updates.alias = formData.alias
 
-    setIsLoading(true);
+    setIsLoading(true)
 
     try {
-      const promise = updateProfile(updates);
+      const promise = updateProfile(updates)
 
       const result = await toast.promise(promise, {
-        loading: "Guardando cambios...",
-        success: "Perfil actualizado exitosamente",
-        error: "Error al actualizar perfil",
-      });
+        loading: 'Guardando cambios...',
+        success: 'Perfil actualizado exitosamente',
+        error: 'Error al actualizar perfil',
+      })
 
       if (result.success && result.data?.user) {
-        updateUser(result.data.user);
+        updateUser(result.data.user)
       }
     } catch (error) {
-      console.error("Error al actualizar perfil:", error);
+      console.error('Error al actualizar perfil:', error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <form
@@ -128,13 +127,13 @@ function FormConfiguracionUsuario() {
         disabled={isLoading}
         className={`bg-orange font-secondary p-3 rounded shadow-xl w-50 transition delay-50 duration-150 ease-in-out text-white ${
           isLoading
-            ? "opacity-50 cursor-not-allowed"
-            : "cursor-pointer hover:shadow-none active:bg-light"
+            ? 'opacity-50 cursor-not-allowed'
+            : 'cursor-pointer hover:shadow-none active:bg-light'
         }`}
       >
-        {isLoading ? "Guardando..." : "Guardar Cambios"}
+        {isLoading ? 'Guardando...' : 'Guardar Cambios'}
       </BotonSimple>
     </form>
-  );
+  )
 }
-export default FormConfiguracionUsuario;
+export default FormConfiguracionUsuario

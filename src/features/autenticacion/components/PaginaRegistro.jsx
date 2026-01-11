@@ -1,13 +1,13 @@
-import Title from "@/shared/components/layout/Title";
-import RegisterForm from "@/shared/components/RegisterForm";
-import { Navigate } from "react-router-dom";
-import { useAuthStore } from "@/stores/authStore";
+import Title from '@/shared/components/layout/Title'
+import RegisterForm from '@/shared/components/RegisterForm'
+import {Navigate} from 'react-router-dom'
+import {useAuthStore} from '@/stores/authStore'
 
-function PaginaRegistro() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+function PaginaRegistro () {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/dashboard" replace />
   }
 
   return (
@@ -23,7 +23,7 @@ function PaginaRegistro() {
         <RegisterForm />
       </section>
     </div>
-  );
+  )
 }
 
-export default PaginaRegistro;
+export default PaginaRegistro

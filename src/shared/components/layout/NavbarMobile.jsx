@@ -1,23 +1,23 @@
-import { useState } from "react";
-import BotonConIcono from "@/shared/components/layout/BotonConIcono";
-import LogoApp from "@/shared/components/layout/LogoApp";
-import { Link, NavLink } from "react-router-dom";
-import MenuIcon from "@/assets/icons/menu-icon.svg";
-import ConfigurationIcon from "@/assets/icons/configuration-icon.svg";
-import CloseIcon from "@/assets/icons/close-icon.svg";
-import DashboardIcon from "@/assets/icons/dashboard-icon.svg";
-import BotonCerrarSesión from "./BotonCerrarSesión";
+import {useState} from 'react'
+import BotonConIcono from '@/shared/components/layout/BotonConIcono'
+import LogoApp from '@/shared/components/layout/LogoApp'
+import {Link, NavLink} from 'react-router-dom'
+import MenuIcon from '@/assets/icons/menu-icon.svg'
+import ConfigurationIcon from '@/assets/icons/configuration-icon.svg'
+import CloseIcon from '@/assets/icons/close-icon.svg'
+import DashboardIcon from '@/assets/icons/dashboard-icon.svg'
+import BotonCerrarSesión from './BotonCerrarSesión'
 
-function NavbarMobile() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+function NavbarMobile () {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+    setIsSidebarOpen(!isSidebarOpen)
+  }
 
   const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };
+    setIsSidebarOpen(false)
+  }
 
   return (
     <>
@@ -40,7 +40,7 @@ function NavbarMobile() {
       )}
       <div
         className={`fixed top-0 right-0 h-full w-70 bg-light z-50 transform transition-transform duration-300 ease-in-out flex flex-col justify-between p-6 ${
-          isSidebarOpen ? "translate-x-0" : "translate-x-full"
+          isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="w-full flex justify-end">
@@ -78,7 +78,7 @@ function NavbarMobile() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default NavbarMobile;
+export default NavbarMobile

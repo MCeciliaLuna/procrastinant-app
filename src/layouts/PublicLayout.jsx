@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom";
-import NavbarPublic from "@/shared/components/layout/NavbarPublic";
-import Footer from "@/shared/components/layout/Footer";
+import {Outlet} from 'react-router-dom'
+import NavbarPublic from '@/shared/components/layout/NavbarPublic'
+import Footer from '@/shared/components/layout/Footer'
 
-function PublicLayout() {
+function PublicLayout () {
   return (
     <div className="min-h-screen flex flex-col">
       <NavbarPublic />
@@ -14,7 +14,7 @@ function PublicLayout() {
       </main>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default PublicLayout;
+export default PublicLayout

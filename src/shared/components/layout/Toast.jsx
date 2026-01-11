@@ -1,31 +1,31 @@
-import { useEffect } from "react";
-import { useUIStore } from "../../../stores/uiStore";
+import {useEffect} from 'react'
+import {useUIStore} from '../../../stores/uiStore'
 
-const ToastItem = ({ toast }) => {
-  const { removeToast } = useUIStore();
+const ToastItem = ({toast}) => {
+  const {removeToast} = useUIStore()
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      removeToast(toast.id);
-    }, toast.duration);
+      removeToast(toast.id)
+    }, toast.duration)
 
-    return () => clearTimeout(timer);
-  }, [toast.id, toast.duration, removeToast]);
+    return () => clearTimeout(timer)
+  }, [toast.id, toast.duration, removeToast])
 
   const getToastClass = () => {
-    const baseClass = "toast-item";
+    const baseClass = 'toast-item'
     switch (toast.type) {
-      case "success":
-        return `${baseClass} toast-success`;
-      case "error":
-        return `${baseClass} toast-error`;
-      case "warning":
-        return `${baseClass} toast-warning`;
-      case "info":
-      default:
-        return `${baseClass} toast-info`;
+    case 'success':
+      return `${baseClass} toast-success`
+    case 'error':
+      return `${baseClass} toast-error`
+    case 'warning':
+      return `${baseClass} toast-warning`
+    case 'info':
+    default:
+      return `${baseClass} toast-info`
     }
-  };
+  }
 
   return (
     <div className={getToastClass()}>
@@ -38,14 +38,14 @@ const ToastItem = ({ toast }) => {
         ×
       </button>
     </div>
-  );
-};
+  )
+}
 
 export const Toast = () => {
-  const { toasts } = useUIStore();
+  const {toasts} = useUIStore()
 
   if (toasts.length === 0) {
-    return null;
+    return null
   }
 
   return (
@@ -54,7 +54,7 @@ export const Toast = () => {
         <ToastItem key={toast.id} toast={toast} />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default Toast;
+export default Toast

@@ -1,12 +1,12 @@
-import {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import BotonConIcono from '@/shared/components/layout/BotonConIcono';
-import MicrofonoIcon from '@/assets/icons/microfono-icon.svg';
-import CrearIcon from '@/assets/icons/crear-icon.svg';
-import useSpeechRecognition from '@/hooks/useSpeechRecognition';
+import {useState, useEffect} from 'react'
+import PropTypes from 'prop-types'
+import BotonConIcono from '@/shared/components/layout/BotonConIcono'
+import MicrofonoIcon from '@/assets/icons/microfono-icon.svg'
+import CrearIcon from '@/assets/icons/crear-icon.svg'
+import useSpeechRecognition from '@/hooks/useSpeechRecognition'
 
-function InputInsertarTarea({onCreate}) {
-  const [value, setValue] = useState('');
+function InputInsertarTarea ({onCreate}) {
+  const [value, setValue] = useState('')
 
   const {
     isListening,
@@ -16,43 +16,43 @@ function InputInsertarTarea({onCreate}) {
     startListening,
     stopListening,
     resetTranscript,
-  } = useSpeechRecognition();
+  } = useSpeechRecognition()
 
   useEffect(() => {
     if (transcript) {
-      setValue(transcript);
+      setValue(transcript)
     }
-  }, [transcript]);
+  }, [transcript])
 
   useEffect(() => {
     if (error) {
-      console.error('Speech Recognition Error:', error);
-      alert(error);
+      console.error('Speech Recognition Error:', error)
+      alert(error)
     }
-  }, [error]);
+  }, [error])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (!value.trim()) return;
+    if (!value.trim()) return
 
-    onCreate(value.trim());
-    setValue('');
-    resetTranscript();
-  };
+    onCreate(value.trim())
+    setValue('')
+    resetTranscript()
+  }
 
   const handleMicrophoneClick = () => {
     if (!isSupported) {
-      alert('Tu navegador no soporta reconocimiento de voz');
-      return;
+      alert('Tu navegador no soporta reconocimiento de voz')
+      return
     }
 
     if (isListening) {
-      stopListening();
+      stopListening()
     } else {
-      startListening();
+      startListening()
     }
-  };
+  }
 
   return (
     <form
@@ -74,11 +74,11 @@ function InputInsertarTarea({onCreate}) {
           icon={MicrofonoIcon}
           onClick={handleMicrophoneClick}
           className={
-            `ml-1 rounded-4xl flex align-center justify-center ` +
+            'ml-1 rounded-4xl flex align-center justify-center ' +
             `w-10 h-10 cursor-pointer transition-colors ${
-              isListening ?
-                'bg-orange hover:bg-orange' :
-                'active:bg-lightsecondary hover:bg-lightsecondary'
+              isListening
+                ? 'bg-orange hover:bg-orange'
+                : 'active:bg-lightsecondary hover:bg-lightsecondary'
             } ${!isSupported && 'opacity-50 cursor-not-allowed'}`
           }
           aria-label={
@@ -96,11 +96,11 @@ function InputInsertarTarea({onCreate}) {
         />
       </div>
     </form>
-  );
+  )
 }
 
 InputInsertarTarea.propTypes = {
   onCreate: PropTypes.func.isRequired,
-};
+}
 
-export default InputInsertarTarea;
+export default InputInsertarTarea

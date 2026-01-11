@@ -1,32 +1,32 @@
-import { useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
+import {useEffect, useRef} from 'react'
+import {createPortal} from 'react-dom'
 
-function Modal({ isOpen, onClose, children, title }) {
-  const modalRef = useRef(null);
-  const closeButtonRef = useRef(null);
+function Modal ({isOpen, onClose, children, title}) {
+  const modalRef = useRef(null)
+  const closeButtonRef = useRef(null)
 
   useEffect(() => {
     if (isOpen) {
-      closeButtonRef.current?.focus();
+      closeButtonRef.current?.focus()
       const handleEsc = (e) => {
-        if (e.key === "Escape") onClose();
-      };
-      document.addEventListener("keydown", handleEsc);
-      document.body.style.overflow = "hidden";
+        if (e.key === 'Escape') onClose()
+      }
+      document.addEventListener('keydown', handleEsc)
+      document.body.style.overflow = 'hidden'
 
       return () => {
-        document.removeEventListener("keydown", handleEsc);
-        document.body.style.overflow = "unset";
-      };
+        document.removeEventListener('keydown', handleEsc)
+        document.body.style.overflow = 'unset'
+      }
     }
-  }, [isOpen]);
+  }, [isOpen])
 
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   const modalContent = (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center"
-      aria-labelledby={title ? "modal-title" : undefined}
+      aria-labelledby={title ? 'modal-title' : undefined}
       aria-modal="true"
       role="dialog"
     >
@@ -75,9 +75,9 @@ function Modal({ isOpen, onClose, children, title }) {
         <div className="mt-2">{children}</div>
       </div>
     </div>
-  );
+  )
 
-  return createPortal(modalContent, document.body);
+  return createPortal(modalContent, document.body)
 }
 
-export default Modal;
+export default Modal

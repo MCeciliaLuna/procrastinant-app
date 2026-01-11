@@ -1,16 +1,16 @@
-import Parrafo from "@/shared/components/layout/Parrafo";
+import Parrafo from '@/shared/components/layout/Parrafo'
 
-function Footer() {
+function Footer () {
   return (
     <footer
       className="relative bg-lightsecondary h-[20vh] flex items-center justify-center"
     >
       <Parrafo className="font-secondary text-center text-[0.8rem]">
-        ¡Vos podés! ✔{" "}
+        ¡Vos podés! ✔{' '}
         <strong className="text-orange font-primary text-lg">
           Procrastinant App
-        </strong>{" "}
-        por{" "}
+        </strong>{' '}
+        por{' '}
         <strong>
           <a
             href="https://mcecilialuna-dev.netlify.app/"
@@ -23,7 +23,7 @@ function Footer() {
         </strong>
       </Parrafo>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

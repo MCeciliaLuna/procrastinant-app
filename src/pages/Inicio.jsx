@@ -1,13 +1,13 @@
-import BotonSimple from "@/shared/components/layout/BotonSimple";
-import Title from "@/shared/components/layout/Title";
-import { Link, Navigate } from "react-router-dom";
-import { useAuthStore } from "@/stores/authStore";
+import BotonSimple from '@/shared/components/layout/BotonSimple'
+import Title from '@/shared/components/layout/Title'
+import {Link, Navigate} from 'react-router-dom'
+import {useAuthStore} from '@/stores/authStore'
 
-function Inicio() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+function Inicio () {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/dashboard" replace />
   }
 
   return (
@@ -33,7 +33,7 @@ function Inicio() {
         </Link>
       </div>
     </div>
-  );
+  )
 }
 
-export default Inicio;
+export default Inicio

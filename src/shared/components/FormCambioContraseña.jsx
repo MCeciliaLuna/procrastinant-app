@@ -1,103 +1,103 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
-import BotonSimple from "@/shared/components/layout/BotonSimple";
-import BotonConIcono from "./layout/BotonConIcono";
-import Modal from "@/shared/components/layout/Modal";
-import VerContraseniaIcon from "@/assets/icons/visibilidad-on-icon.svg";
-import OcultarContraseniaIcon from "@/assets/icons/visibilidad-off-icon.svg";
-import { changePassword } from "@/features/configuracion-usuario/services/userService";
+import {useState} from 'react'
+import toast from 'react-hot-toast'
+import BotonSimple from '@/shared/components/layout/BotonSimple'
+import BotonConIcono from './layout/BotonConIcono'
+import Modal from '@/shared/components/layout/Modal'
+import VerContraseniaIcon from '@/assets/icons/visibilidad-on-icon.svg'
+import OcultarContraseniaIcon from '@/assets/icons/visibilidad-off-icon.svg'
+import {changePassword} from '@/features/configuracion-usuario/services/userService'
 
-function FormCambioContraseña() {
-  const [mostrarContrasenaActual, setMostrarContrasenaActual] = useState(false);
-  const [mostrarNuevaContrasena, setMostrarNuevaContrasena] = useState(false);
+function FormCambioContraseña () {
+  const [mostrarContrasenaActual, setMostrarContrasenaActual] = useState(false)
+  const [mostrarNuevaContrasena, setMostrarNuevaContrasena] = useState(false)
   const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
-    useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+    useState(false)
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const [formData, setFormData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  })
 
   const toggleMostrarContrasenaActual = () => {
-    setMostrarContrasenaActual(!mostrarContrasenaActual);
-  };
+    setMostrarContrasenaActual(!mostrarContrasenaActual)
+  }
 
   const toggleMostrarNuevaContrasena = () => {
-    setMostrarNuevaContrasena(!mostrarNuevaContrasena);
-  };
+    setMostrarNuevaContrasena(!mostrarNuevaContrasena)
+  }
 
   const toggleMostrarConfirmarContrasena = () => {
-    setMostrarConfirmarContrasena(!mostrarConfirmarContrasena);
-  };
+    setMostrarConfirmarContrasena(!mostrarConfirmarContrasena)
+  }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (
       !formData.currentPassword ||
       !formData.newPassword ||
       !formData.confirmPassword
     ) {
-      toast.error("Todos los campos son obligatorios");
-      return;
+      toast.error('Todos los campos son obligatorios')
+      return
     }
 
     if (formData.newPassword !== formData.confirmPassword) {
-      toast.error("Las contraseñas nuevas no coinciden");
-      return;
+      toast.error('Las contraseñas nuevas no coinciden')
+      return
     }
 
     if (formData.newPassword.length < 8) {
-      toast.error("La contraseña debe tener al menos 8 caracteres");
-      return;
+      toast.error('La contraseña debe tener al menos 8 caracteres')
+      return
     }
 
-    setShowConfirmModal(true);
-  };
+    setShowConfirmModal(true)
+  }
 
   const handleConfirmChange = async () => {
-    setShowConfirmModal(false);
-    setIsLoading(true);
+    setShowConfirmModal(false)
+    setIsLoading(true)
 
     try {
       const promise = changePassword(
         formData.currentPassword,
         formData.newPassword,
-        formData.confirmPassword
-      );
+        formData.confirmPassword,
+      )
 
       await toast.promise(promise, {
-        loading: "Cambiando contraseña...",
-        success: "Contraseña actualizada exitosamente",
-        error: (err) => err.message || "Error al cambiar contraseña",
-      });
+        loading: 'Cambiando contraseña...',
+        success: 'Contraseña actualizada exitosamente',
+        error: (err) => err.message || 'Error al cambiar contraseña',
+      })
 
       setFormData({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      })
     } catch (error) {
-      console.error("Error al cambiar contraseña:", error);
+      console.error('Error al cambiar contraseña:', error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const handleCancelChange = () => {
-    setShowConfirmModal(false);
-  };
+    setShowConfirmModal(false)
+  }
 
   return (
     <form
@@ -107,7 +107,7 @@ function FormCambioContraseña() {
       <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
         <input
           className="w-full bg-transparent"
-          type={mostrarContrasenaActual ? "text" : "password"}
+          type={mostrarContrasenaActual ? 'text' : 'password'}
           name="currentPassword"
           value={formData.currentPassword}
           onChange={handleChange}
@@ -128,7 +128,7 @@ function FormCambioContraseña() {
       <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
         <input
           className="w-full bg-transparent"
-          type={mostrarNuevaContrasena ? "text" : "password"}
+          type={mostrarNuevaContrasena ? 'text' : 'password'}
           name="newPassword"
           value={formData.newPassword}
           onChange={handleChange}
@@ -150,7 +150,7 @@ function FormCambioContraseña() {
       <div className="w-full flex justify-between items-center bg-lightsecondary rounded h-10 font-secondary p-3">
         <input
           className="w-full bg-transparent"
-          type={mostrarConfirmarContrasena ? "text" : "password"}
+          type={mostrarConfirmarContrasena ? 'text' : 'password'}
           name="confirmPassword"
           value={formData.confirmPassword}
           onChange={handleChange}
@@ -173,11 +173,11 @@ function FormCambioContraseña() {
         disabled={isLoading}
         className={`bg-orange font-secondary p-3 rounded shadow-xl w-50 transition delay-50 duration-150 ease-in-out text-white ${
           isLoading
-            ? "opacity-50 cursor-not-allowed"
-            : "cursor-pointer hover:shadow-none active:bg-light"
+            ? 'opacity-50 cursor-not-allowed'
+            : 'cursor-pointer hover:shadow-none active:bg-light'
         }`}
       >
-        {isLoading ? "Procesando..." : "Cambiar Contraseña"}
+        {isLoading ? 'Procesando...' : 'Cambiar Contraseña'}
       </BotonSimple>
 
       <Modal
@@ -195,8 +195,8 @@ function FormCambioContraseña() {
               disabled={isLoading}
               className={`bg-light font-secondary px-4 py-2 rounded shadow transition text-dark ${
                 isLoading
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:shadow-none active:bg-lightsecondary"
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:shadow-none active:bg-lightsecondary'
               }`}
             >
               No
@@ -206,16 +206,16 @@ function FormCambioContraseña() {
               disabled={isLoading}
               className={`bg-orange font-secondary px-4 py-2 rounded shadow transition text-white ${
                 isLoading
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:shadow-none active:bg-lightsecondary"
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:shadow-none active:bg-lightsecondary'
               }`}
             >
-              {isLoading ? "Procesando..." : "Sí"}
+              {isLoading ? 'Procesando...' : 'Sí'}
             </BotonSimple>
           </div>
         </div>
       </Modal>
     </form>
-  );
+  )
 }
-export default FormCambioContraseña;
+export default FormCambioContraseña
