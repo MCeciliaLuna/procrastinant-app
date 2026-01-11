@@ -1,31 +1,50 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 import toast from 'react-hot-toast'
 import BotonSimple from '@/shared/components/layout/BotonSimple'
 import BotonConIcono from './layout/BotonConIcono'
+import ErrorDisplay from './layout/ErrorDisplay'
 import VerContraseniaIcon from '@/assets/icons/visibilidad-on-icon.svg'
 import OcultarContraseniaIcon from '@/assets/icons/visibilidad-off-icon.svg'
 import {register as registerService} from '@/features/autenticacion/services/authService'
 import {useAuthStore} from '@/stores/authStore'
+import {useFormPersistence} from '@/hooks/useFormPersistence'
+import {getErrorMessage} from '@/utils/errorMessages'
 import {VALIDATION_MESSAGES, VALIDATION_PATTERNS} from '@/config/constants'
 
 function RegisterForm () {
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
   const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
     useState(false)
+  const [backendError, setBackendError] = useState(null)
   const navigate = useNavigate()
   const loginStore = useAuthStore((state) => state.login)
+  const {formData, saveFormData, clearFormData} = useFormPersistence(
+    'register-form',
+    {nombre: '', apellido: '', alias: '', email: ''},
+    3600000,
+  )
 
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: {errors, isSubmitting},
   } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onChange',
+    defaultValues: formData,
   })
+
+  useEffect(() => {
+    Object.keys(formData).forEach((key) => {
+      if (formData[key]) {
+        setValue(key, formData[key])
+      }
+    })
+  }, [])
 
   const toggleMostrarContrasena = () => {
     setMostrarContrasena(!mostrarContrasena)
@@ -38,8 +57,16 @@ function RegisterForm () {
   const password = watch('password')
 
   const onSubmit = async (data) => {
+    setBackendError(null)
+    saveFormData({
+      nombre: data.nombre,
+      apellido: data.apellido,
+      alias: data.alias,
+      email: data.email,
+    })
+
     try {
-      const promise = registerService({
+      const result = await registerService({
         nombre: data.nombre,
         apellido: data.apellido,
         alias: data.alias,
@@ -47,18 +74,25 @@ function RegisterForm () {
         password: data.password,
       })
 
-      const result = await toast.promise(promise, {
-        loading: 'Creando cuenta...',
-        success: '¡Cuenta creada exitosamente!',
-        error: (err) => err.message || 'Error al registrarse',
-      })
-
       if (result.success && result.data?.user) {
         loginStore(result.data.user)
+        clearFormData()
+        toast.success('¡Cuenta creada exitosamente!')
         navigate('/dashboard', {replace: true})
+      } else {
+        const errorInfo = getErrorMessage(
+          result.message || 'Error al registrarse',
+          'auth',
+        )
+        setBackendError(errorInfo)
       }
     } catch (err) {
       console.error('[RegisterForm] Error:', err)
+      const errorInfo = getErrorMessage(
+        err.message || 'Error de conexión',
+        'auth',
+      )
+      setBackendError(errorInfo)
     }
   }
 
@@ -67,6 +101,12 @@ function RegisterForm () {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-5 bg-light rounded shadow mx-4 py-5 justify-center items-center px-5 w-[90vw] md:w-150"
     >
+      {backendError && (
+        <ErrorDisplay
+          error={backendError}
+          onClear={() => setBackendError(null)}
+        />
+      )}
       <div className="w-full">
         <input
           className={`w-full bg-lightsecondary rounded h-10 font-secondary p-3 ${

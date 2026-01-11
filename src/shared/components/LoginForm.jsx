@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useNavigate, useLocation} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -6,46 +6,73 @@ import BotonSimple from '@/shared/components/layout/BotonSimple'
 import VerContraseniaIcon from '@/assets/icons/visibilidad-on-icon.svg'
 import OcultarContraseniaIcon from '@/assets/icons/visibilidad-off-icon.svg'
 import BotonConIcono from './layout/BotonConIcono'
+import ErrorDisplay from './layout/ErrorDisplay'
 import {login} from '@/features/autenticacion/services/authService'
 import {useAuthStore} from '@/stores/authStore'
+import {useFormPersistence} from '@/hooks/useFormPersistence'
+import {getErrorMessage} from '@/utils/errorMessages'
 import {VALIDATION_MESSAGES, VALIDATION_PATTERNS} from '@/config/constants'
 
 function LoginForm () {
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
+  const [backendError, setBackendError] = useState(null)
   const navigate = useNavigate()
   const location = useLocation()
   const loginStore = useAuthStore((state) => state.login)
+  const {formData, saveFormData, clearFormData} = useFormPersistence(
+    'login-form',
+    {email: ''},
+    3600000,
+  )
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: {errors, isSubmitting},
   } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onChange',
+    defaultValues: formData,
   })
+
+  useEffect(() => {
+    if (formData.email) {
+      setValue('email', formData.email)
+    }
+  }, [])
 
   const toggleMostrarContrasena = () => {
     setMostrarContrasena(!mostrarContrasena)
   }
 
   const onSubmit = async (data) => {
-    try {
-      const promise = login(data.email, data.password)
+    setBackendError(null)
+    saveFormData({email: data.email})
 
-      const result = await toast.promise(promise, {
-        loading: 'Iniciando sesión...',
-        success: '¡Bienvenid@ a Procrastinant!',
-        error: (err) => err.message || 'Error al iniciar sesión',
-      })
+    try {
+      const result = await login(data.email, data.password)
 
       if (result.success && result.data?.user) {
         loginStore(result.data.user)
+        clearFormData()
+        toast.success('¡Bienvenid@ a Procrastinant!')
         const from = location.state?.from?.pathname || '/dashboard'
         navigate(from, {replace: true})
+      } else {
+        const errorInfo = getErrorMessage(
+          result.message || 'Error al iniciar sesión',
+          'auth',
+        )
+        setBackendError(errorInfo)
       }
     } catch (err) {
       console.error('[LoginForm] Error en handleSubmit:', err)
+      const errorInfo = getErrorMessage(
+        err.message || 'Error de conexión',
+        'auth',
+      )
+      setBackendError(errorInfo)
     }
   }
 
@@ -54,6 +81,12 @@ function LoginForm () {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-5 bg-light rounded shadow mx-4 h-50 justify-center items-center px-5 w-[90vw] md:w-150"
     >
+      {backendError && (
+        <ErrorDisplay
+          error={backendError}
+          onClear={() => setBackendError(null)}
+        />
+      )}
       <div className="w-full">
         <input
           className={`w-full bg-lightsecondary rounded h-10 font-secondary p-3 ${

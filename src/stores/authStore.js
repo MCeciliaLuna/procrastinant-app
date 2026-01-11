@@ -1,6 +1,7 @@
 import {create} from 'zustand'
 import {devtools, persist} from 'zustand/middleware'
 import * as authService from '../features/autenticacion/services/authService'
+import {getErrorMessage} from '../utils/errorMessages'
 
 export const useAuthStore = create(
   devtools(
@@ -30,20 +31,28 @@ export const useAuthStore = create(
               })
               return {success: true, data: result.data}
             } else {
+              const errorInfo = getErrorMessage(
+                result.message || 'Error al iniciar sesión',
+                'auth',
+              )
               set({
                 isLoading: false,
-                error: result.message || 'Error al iniciar sesión',
+                error: errorInfo,
               })
               return {success: false, message: result.message}
             }
           } catch (error) {
-            const errorMessage =
-              error.response?.data?.message || 'Error de conexión'
+            const errorInfo = getErrorMessage(
+              error.response?.data?.message ||
+                error.message ||
+                'Error de conexión',
+              'auth',
+            )
             set({
               isLoading: false,
-              error: errorMessage,
+              error: errorInfo,
             })
-            return {success: false, message: errorMessage}
+            return {success: false, message: errorInfo.message}
           }
         },
 
