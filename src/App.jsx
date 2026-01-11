@@ -13,8 +13,6 @@ function App () {
 
   useEffect(() => {
     const checkAuth = async () => {
-      useAuthStore.getState().hydrate()
-
       try {
         const result = await verifyAuth()
 

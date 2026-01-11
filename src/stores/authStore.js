@@ -1,57 +1,124 @@
 import {create} from 'zustand'
-import {saveToken, removeToken, getToken} from '../utils/tokenManager'
+import {devtools, persist} from 'zustand/middleware'
+import * as authService from '../features/autenticacion/services/authService'
 
-export const useAuthStore = create((set) => ({
-  user: {
-    nombre: '',
-    apellido: '',
-    alias: '',
-    email: '',
-  },
-  token: null,
+export const useAuthStore = create(
+  devtools(
+    persist(
+      (set) => ({
+        user: {
+          nombre: '',
+          apellido: '',
+          alias: '',
+          email: '',
+        },
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
 
-  isAuthenticated: false,
+        loginAsync: async (credentials) => {
+          set({isLoading: true, error: null})
+          try {
+            const result = await authService.login(credentials)
 
-  setUser: (user) => set({user, isAuthenticated: true}),
+            if (result.success && result.data?.user) {
+              set({
+                user: result.data.user,
+                isAuthenticated: true,
+                isLoading: false,
+                error: null,
+              })
+              return {success: true, data: result.data}
+            } else {
+              set({
+                isLoading: false,
+                error: result.message || 'Error al iniciar sesión',
+              })
+              return {success: false, message: result.message}
+            }
+          } catch (error) {
+            const errorMessage =
+              error.response?.data?.message || 'Error de conexión'
+            set({
+              isLoading: false,
+              error: errorMessage,
+            })
+            return {success: false, message: errorMessage}
+          }
+        },
 
-  setToken: (token) => {
-    saveToken(token)
-    set({token})
-  },
+        registerAsync: async (userData) => {
+          set({isLoading: true, error: null})
+          try {
+            const result = await authService.register(userData)
 
-  login: (user) => {
-    set({
-      user,
-      isAuthenticated: true,
-    })
-  },
+            if (result.success && result.data?.user) {
+              set({
+                user: result.data.user,
+                isAuthenticated: true,
+                isLoading: false,
+                error: null,
+              })
+              return {success: true, data: result.data}
+            } else {
+              set({
+                isLoading: false,
+                error: result.message || 'Error al registrarse',
+              })
+              return {success: false, message: result.message}
+            }
+          } catch (error) {
+            const errorMessage =
+              error.response?.data?.message || 'Error de conexión'
+            set({
+              isLoading: false,
+              error: errorMessage,
+            })
+            return {success: false, message: errorMessage}
+          }
+        },
 
-  logout: () => {
-    removeToken()
-    set({
-      user: {
-        nombre: '',
-        apellido: '',
-        alias: '',
-        email: '',
+        setUser: (user) => set({user, isAuthenticated: true}),
+
+        login: (user) => {
+          set({
+            user,
+            isAuthenticated: true,
+          })
+        },
+
+        logout: () => {
+          set({
+            user: {
+              nombre: '',
+              apellido: '',
+              alias: '',
+              email: '',
+            },
+            isAuthenticated: false,
+            isLoading: false,
+            error: null,
+          })
+        },
+
+        updateUser: (userData) =>
+          set((state) => ({
+            user: {
+              ...state.user,
+              ...userData,
+            },
+          })),
+
+        clearError: () => set({error: null}),
+      }),
+      {
+        name: 'auth-storage',
+        partialize: (state) => ({
+          user: state.user,
+          isAuthenticated: state.isAuthenticated,
+        }),
       },
-      token: null,
-      isAuthenticated: false,
-    })
-  },
-
-  updateUser: (userData) =>
-    set((state) => ({
-      user: {
-        ...state.user,
-        ...userData,
-      },
-    })),
-
-  hydrate: () => {
-    const token = getToken()
-    if (token) {
-      set({token})
-    }
-  },
-}))
+    ),
+    {name: 'AuthStore'},
+  ),
+)
