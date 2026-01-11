@@ -5,7 +5,7 @@ import Modal from '@/shared/components/layout/Modal'
 import CheckIcono from '@/assets/icons/check-icon.svg'
 import TrashIcono from '@/assets/icons/trash-icon.svg'
 
-function InputTareaCreada ({tarea, onUpdate, onToggle, onDelete}) {
+function InputTareaCreada({tarea, onUpdate, onToggle, onDelete}) {
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(tarea.descripcion)
   const [isCompleted, setIsCompleted] = useState(tarea.listo || false)
@@ -108,15 +108,9 @@ function InputTareaCreada ({tarea, onUpdate, onToggle, onDelete}) {
         </div>
       </div>
 
-      <Modal
-        isOpen={showDeleteModal}
-        onClose={handleCancelDelete}
-        title="Eliminar tarea"
-      >
+      <Modal isOpen={showDeleteModal} onClose={handleCancelDelete} title="Eliminar tarea">
         <div className="flex flex-col gap-4">
-          <p className="font-secondary text-dark">
-            ¿Estás segur@ que deseas eliminarla?
-          </p>
+          <p className="font-secondary text-dark">¿Estás segur@ que deseas eliminarla?</p>
           <div className="flex gap-3 justify-end">
             <BotonSimple
               onClick={handleCancelDelete}

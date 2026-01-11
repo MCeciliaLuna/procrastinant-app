@@ -6,7 +6,7 @@ import {useUIStore} from './stores/uiStore'
 import {useAuthStore} from './stores/authStore'
 import {verifyAuth} from './features/autenticacion/services/authService'
 
-function App () {
+function App() {
   const {isLoading} = useUIStore()
   const {setUser, logout} = useAuthStore()
   const [isCheckingAuth, setIsCheckingAuth] = useState(true)
@@ -16,11 +16,7 @@ function App () {
       try {
         const result = await verifyAuth()
 
-        if (
-          result.success &&
-          result.data?.isAuthenticated &&
-          result.data?.user
-        ) {
+        if (result.success && result.data?.isAuthenticated && result.data?.user) {
           setUser(result.data.user)
         } else {
           logout()
@@ -38,11 +34,7 @@ function App () {
 
   if (isCheckingAuth) {
     return (
-      <div
-        className="h-screen flex items-center justify-center"
-        role="status"
-        aria-live="polite"
-      >
+      <div className="h-screen flex items-center justify-center" role="status" aria-live="polite">
         <div className="spinner" aria-hidden="true"></div>
         <span className="sr-only">Verificando sesión...</span>
       </div>
@@ -52,12 +44,7 @@ function App () {
   return (
     <BrowserRouter>
       {isLoading && (
-        <div
-          className="global-loading"
-          role="status"
-          aria-live="polite"
-          aria-label="Cargando..."
-        >
+        <div className="global-loading" role="status" aria-live="polite" aria-label="Cargando...">
           <div className="spinner" aria-hidden="true"></div>
           <span className="sr-only">Cargando contenido...</span>
         </div>

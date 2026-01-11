@@ -31,10 +31,7 @@ export const useAuthStore = create(
               })
               return {success: true, data: result.data}
             } else {
-              const errorInfo = getErrorMessage(
-                result.message || 'Error al iniciar sesión',
-                'auth',
-              )
+              const errorInfo = getErrorMessage(result.message || 'Error al iniciar sesión', 'auth')
               set({
                 isLoading: false,
                 error: errorInfo,
@@ -43,9 +40,7 @@ export const useAuthStore = create(
             }
           } catch (error) {
             const errorInfo = getErrorMessage(
-              error.response?.data?.message ||
-                error.message ||
-                'Error de conexión',
+              error.response?.data?.message || error.message || 'Error de conexión',
               'auth',
             )
             set({
@@ -77,8 +72,7 @@ export const useAuthStore = create(
               return {success: false, message: result.message}
             }
           } catch (error) {
-            const errorMessage =
-              error.response?.data?.message || 'Error de conexión'
+            const errorMessage = error.response?.data?.message || 'Error de conexión'
             set({
               isLoading: false,
               error: errorMessage,

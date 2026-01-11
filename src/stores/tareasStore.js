@@ -20,9 +20,7 @@ export const useTareasStore = create(
 
         updateTarea: (id, data) =>
           set((state) => ({
-            tareas: state.tareas.map((tarea) =>
-              tarea.id === id ? {...tarea, ...data} : tarea,
-            ),
+            tareas: state.tareas.map((tarea) => (tarea.id === id ? {...tarea, ...data} : tarea)),
           })),
 
         deleteTarea: (id) =>
@@ -63,8 +61,7 @@ export const useTareasStore = create(
               return {success: false, message: result.message}
             }
           } catch (error) {
-            const errorMessage =
-              error.response?.data?.message || 'Error de conexión'
+            const errorMessage = error.response?.data?.message || 'Error de conexión'
             set({
               isLoading: false,
               error: errorMessage,
@@ -93,8 +90,7 @@ export const useTareasStore = create(
               return {success: false, message: result.message}
             }
           } catch (error) {
-            const errorMessage =
-              error.response?.data?.message || 'Error de conexión'
+            const errorMessage = error.response?.data?.message || 'Error de conexión'
             set({
               isLoading: false,
               error: errorMessage,
@@ -125,8 +121,7 @@ export const useTareasStore = create(
               return {success: false, message: result.message}
             }
           } catch (error) {
-            const errorMessage =
-              error.response?.data?.message || 'Error de conexión'
+            const errorMessage = error.response?.data?.message || 'Error de conexión'
             set({
               isLoading: false,
               error: errorMessage,
@@ -155,8 +150,7 @@ export const useTareasStore = create(
               return {success: false, message: result.message}
             }
           } catch (error) {
-            const errorMessage =
-              error.response?.data?.message || 'Error de conexión'
+            const errorMessage = error.response?.data?.message || 'Error de conexión'
             set({
               isLoading: false,
               error: errorMessage,

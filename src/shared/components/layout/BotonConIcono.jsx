@@ -1,4 +1,4 @@
-function BotonConIcono ({
+function BotonConIcono({
   onClick,
   children,
   icon,

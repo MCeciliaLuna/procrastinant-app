@@ -3,11 +3,7 @@ import {TOAST_DURATION, TOAST_TYPES} from '../config/constants'
 export const useToast = () => {
   const {toasts, addToast, removeToast} = useUIStore()
 
-  const showToast = (
-    message,
-    type = TOAST_TYPES.INFO,
-    duration = TOAST_DURATION,
-  ) => {
+  const showToast = (message, type = TOAST_TYPES.INFO, duration = TOAST_DURATION) => {
     const toastId = addToast(message, type, duration)
 
     setTimeout(() => {

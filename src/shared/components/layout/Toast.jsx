@@ -30,11 +30,7 @@ const ToastItem = ({toast}) => {
   return (
     <div className={getToastClass()}>
       <p className="toast-message">{toast.message}</p>
-      <button
-        onClick={() => removeToast(toast.id)}
-        className="toast-close"
-        aria-label="Cerrar"
-      >
+      <button onClick={() => removeToast(toast.id)} className="toast-close" aria-label="Cerrar">
         ×
       </button>
     </div>

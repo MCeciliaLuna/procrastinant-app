@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-orange: #ea9010;
@@ -7,8 +7,8 @@
   --color-lightsecondary: #c9e3ac;
   --color-dark: #37371f;
 
-  --font-family-primary: "Mynerve-Regular", sans-serif;
-  --font-family-secondary: "CourierPrime-Regular", monospace;
+  --font-family-primary: 'Mynerve-Regular', sans-serif;
+  --font-family-secondary: 'CourierPrime-Regular', monospace;
 
   --border-radius: 10px;
   --box-shadow: 0px -1px 21px -3px rgba(0, 0, 0, 0.49);
@@ -17,16 +17,16 @@
 }
 
 @font-face {
-  font-family: "Mynerve-Regular";
-  src: url("./assets/fonts/Mynerve-Regular.ttf") format("truetype");
+  font-family: 'Mynerve-Regular';
+  src: url('./assets/fonts/Mynerve-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "CourierPrime-Regular";
-  src: url("./assets/fonts/CourierPrime-Regular.ttf") format("truetype");
+  font-family: 'CourierPrime-Regular';
+  src: url('./assets/fonts/CourierPrime-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -40,18 +40,18 @@
     background-position: top;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-image: url("./assets/images/background-home.webp");
+    background-image: url('./assets/images/background-home.webp');
     color: #37371f;
   }
 }
 
 @layer utilities {
   .font-primary {
-    font-family: "Mynerve-Regular", sans-serif;
+    font-family: 'Mynerve-Regular', sans-serif;
   }
 
   .font-secondary {
-    font-family: "CourierPrime-Regular", monospace;
+    font-family: 'CourierPrime-Regular', monospace;
   }
 
   .sr-only {

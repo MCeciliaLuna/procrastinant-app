@@ -5,7 +5,7 @@ import MicrofonoIcon from '@/assets/icons/microfono-icon.svg'
 import CrearIcon from '@/assets/icons/crear-icon.svg'
 import useSpeechRecognition from '@/hooks/useSpeechRecognition'
 
-function InputInsertarTarea ({onCreate}) {
+function InputInsertarTarea({onCreate}) {
   const [value, setValue] = useState('')
 
   const {
@@ -81,9 +81,7 @@ function InputInsertarTarea ({onCreate}) {
                 : 'active:bg-lightsecondary hover:bg-lightsecondary'
             } ${!isSupported && 'opacity-50 cursor-not-allowed'}`
           }
-          aria-label={
-            isListening ? 'Detener grabación' : 'Grabar tarea por voz'
-          }
+          aria-label={isListening ? 'Detener grabación' : 'Grabar tarea por voz'}
           type="button"
           disabled={!isSupported}
         />

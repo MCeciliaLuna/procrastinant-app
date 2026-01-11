@@ -81,15 +81,11 @@ const BotonEliminarCuenta = () => {
         Eliminar cuenta
       </BotonConIcono>
 
-      <Modal
-        isOpen={showDeleteModal}
-        onClose={handleCancelDelete}
-        title="Eliminar mi cuenta"
-      >
+      <Modal isOpen={showDeleteModal} onClose={handleCancelDelete} title="Eliminar mi cuenta">
         <div className="flex flex-col gap-4">
           <p className="font-secondary text-dark">
-            Esta acción es irreversible. Para confirmarla, escribe{' '}
-            <strong>ELIMINAR</strong> abajo y tu contraseña:
+            Esta acción es irreversible. Para confirmarla, escribe <strong>ELIMINAR</strong> abajo y
+            tu contraseña:
           </p>
           <input
             type="text"
@@ -119,11 +115,7 @@ const BotonEliminarCuenta = () => {
               aria-label="Mostrar/Ocultar contraseña"
             >
               <img
-                src={
-                  mostrarContrasena
-                    ? OcultarContraseniaIcon
-                    : VerContraseniaIcon
-                }
+                src={mostrarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon}
                 alt=""
                 className="w-5 h-5"
               />
@@ -143,9 +135,7 @@ const BotonEliminarCuenta = () => {
             </BotonSimple>
             <BotonSimple
               onClick={handleConfirmDelete}
-              disabled={
-                deleteConfirmText !== 'ELIMINAR' || !password || isDeleting
-              }
+              disabled={deleteConfirmText !== 'ELIMINAR' || !password || isDeleting}
               className={`font-secondary px-4 py-2 rounded shadow transition text-white ${
                 deleteConfirmText === 'ELIMINAR' && password && !isDeleting
                   ? 'bg-red-500 hover:shadow-none cursor-pointer active:bg-orange'

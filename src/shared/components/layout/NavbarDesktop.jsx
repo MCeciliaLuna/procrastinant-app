@@ -4,7 +4,7 @@ import {Link, NavLink} from 'react-router-dom'
 import ConfigurationIcon from '@/assets/icons/configuration-icon.svg'
 import BotonCerrarSesión from './BotonCerrarSesión'
 
-function NavbarDesktop () {
+function NavbarDesktop() {
   return (
     <nav className="bg-lightsecondary saturate-120 flex items-center justify-between py-4 px-6 w-screen h-[10vh] fixed z-50">
       <Link to="/dashboard">

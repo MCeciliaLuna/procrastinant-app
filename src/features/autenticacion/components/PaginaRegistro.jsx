@@ -3,7 +3,7 @@ import RegisterForm from '@/shared/components/RegisterForm'
 import {Navigate} from 'react-router-dom'
 import {useAuthStore} from '@/stores/authStore'
 
-function PaginaRegistro () {
+function PaginaRegistro() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   if (isAuthenticated) {

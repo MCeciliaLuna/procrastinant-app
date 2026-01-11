@@ -13,10 +13,9 @@ import {useFormPersistence} from '@/hooks/useFormPersistence'
 import {getErrorMessage} from '@/utils/errorMessages'
 import {VALIDATION_MESSAGES, VALIDATION_PATTERNS} from '@/config/constants'
 
-function RegisterForm () {
+function RegisterForm() {
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
-  const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
-    useState(false)
+  const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] = useState(false)
   const [backendError, setBackendError] = useState(null)
   const navigate = useNavigate()
   const loginStore = useAuthStore((state) => state.login)
@@ -80,18 +79,12 @@ function RegisterForm () {
         toast.success('¡Cuenta creada exitosamente!')
         navigate('/dashboard', {replace: true})
       } else {
-        const errorInfo = getErrorMessage(
-          result.message || 'Error al registrarse',
-          'auth',
-        )
+        const errorInfo = getErrorMessage(result.message || 'Error al registrarse', 'auth')
         setBackendError(errorInfo)
       }
     } catch (err) {
       console.error('[RegisterForm] Error:', err)
-      const errorInfo = getErrorMessage(
-        err.message || 'Error de conexión',
-        'auth',
-      )
+      const errorInfo = getErrorMessage(err.message || 'Error de conexión', 'auth')
       setBackendError(errorInfo)
     }
   }
@@ -101,12 +94,7 @@ function RegisterForm () {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-5 bg-light rounded shadow mx-4 py-5 justify-center items-center px-5 w-[90vw] md:w-150"
     >
-      {backendError && (
-        <ErrorDisplay
-          error={backendError}
-          onClear={() => setBackendError(null)}
-        />
-      )}
+      {backendError && <ErrorDisplay error={backendError} onClear={() => setBackendError(null)} />}
       <div className="w-full">
         <input
           className={`w-full bg-lightsecondary rounded h-10 font-secondary p-3 ${
@@ -129,10 +117,7 @@ function RegisterForm () {
           })}
         />
         {errors.nombre && (
-          <span
-            id="nombre-error"
-            className="text-red-500 text-sm mt-1 block px-1"
-          >
+          <span id="nombre-error" className="text-red-500 text-sm mt-1 block px-1">
             {errors.nombre.message}
           </span>
         )}
@@ -160,10 +145,7 @@ function RegisterForm () {
           })}
         />
         {errors.apellido && (
-          <span
-            id="apellido-error"
-            className="text-red-500 text-sm mt-1 block px-1"
-          >
+          <span id="apellido-error" className="text-red-500 text-sm mt-1 block px-1">
             {errors.apellido.message}
           </span>
         )}
@@ -191,10 +173,7 @@ function RegisterForm () {
           })}
         />
         {errors.alias && (
-          <span
-            id="alias-error"
-            className="text-red-500 text-sm mt-1 block px-1"
-          >
+          <span id="alias-error" className="text-red-500 text-sm mt-1 block px-1">
             {errors.alias.message}
           </span>
         )}
@@ -222,10 +201,7 @@ function RegisterForm () {
           })}
         />
         {errors.email && (
-          <span
-            id="email-error"
-            className="text-red-500 text-sm mt-1 block px-1"
-          >
+          <span id="email-error" className="text-red-500 text-sm mt-1 block px-1">
             {errors.email.message}
           </span>
         )}
@@ -241,9 +217,7 @@ function RegisterForm () {
             autoComplete="new-password"
             aria-label="Contraseña"
             aria-invalid={errors.password ? 'true' : 'false'}
-            aria-describedby={
-              errors.password ? 'password-error' : 'password-requirements'
-            }
+            aria-describedby={errors.password ? 'password-error' : 'password-requirements'}
             {...register('password', {
               required: VALIDATION_MESSAGES.required,
               pattern: {
@@ -254,33 +228,21 @@ function RegisterForm () {
           />
           <BotonConIcono
             className="ml-2 cursor-pointer"
-            icon={
-              mostrarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon
-            }
+            icon={mostrarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon}
             onClick={toggleMostrarContrasena}
-            aria-label={
-              mostrarContrasena ? 'Ocultar contraseña' : 'Mostrar contraseña'
-            }
+            aria-label={mostrarContrasena ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             type="button"
           />
         </div>
-        {errors.password
-          ? (
-            <span
-              id="password-error"
-              className="text-red-500 text-sm mt-1 block px-1"
-            >
-              {errors.password.message}
-            </span>
-          )
-          : (
-            <p
-              id="password-requirements"
-              className="text-xs text-dark/70 mt-1 px-1"
-            >
+        {errors.password ? (
+          <span id="password-error" className="text-red-500 text-sm mt-1 block px-1">
+            {errors.password.message}
+          </span>
+        ) : (
+          <p id="password-requirements" className="text-xs text-dark/70 mt-1 px-1">
             Mínimo 8 caracteres, 1 mayúscula y 1 número
-            </p>
-          )}
+          </p>
+        )}
       </div>
 
       <div className="w-full">
@@ -293,22 +255,15 @@ function RegisterForm () {
             autoComplete="new-password"
             aria-label="Confirmar contraseña"
             aria-invalid={errors.confirmPassword ? 'true' : 'false'}
-            aria-describedby={
-              errors.confirmPassword ? 'confirm-password-error' : undefined
-            }
+            aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
             {...register('confirmPassword', {
               required: VALIDATION_MESSAGES.required,
-              validate: (value) =>
-                value === password || VALIDATION_MESSAGES.passwordMatch,
+              validate: (value) => value === password || VALIDATION_MESSAGES.passwordMatch,
             })}
           />
           <BotonConIcono
             className="ml-2 cursor-pointer"
-            icon={
-              mostrarConfirmarContrasena
-                ? OcultarContraseniaIcon
-                : VerContraseniaIcon
-            }
+            icon={mostrarConfirmarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon}
             onClick={toggleMostrarConfirmarContrasena}
             aria-label={
               mostrarConfirmarContrasena
@@ -319,10 +274,7 @@ function RegisterForm () {
           />
         </div>
         {errors.confirmPassword && (
-          <span
-            id="confirm-password-error"
-            className="text-red-500 text-sm mt-1 block px-1"
-          >
+          <span id="confirm-password-error" className="text-red-500 text-sm mt-1 block px-1">
             {errors.confirmPassword.message}
           </span>
         )}

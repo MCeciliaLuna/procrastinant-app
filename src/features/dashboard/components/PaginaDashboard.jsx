@@ -13,7 +13,7 @@ import {
   deleteTarea,
 } from '../services/tareasService'
 
-function PaginaDashboard () {
+function PaginaDashboard() {
   const {user} = useAuthStore()
   const {
     tareas,
@@ -82,8 +82,7 @@ function PaginaDashboard () {
 
       const tareaActualizada = await toast.promise(promise, {
         loading: 'Actualizando estado...',
-        success: (result) =>
-          result.listo ? '¡Tarea completada!' : 'Tarea pendiente',
+        success: (result) => (result.listo ? '¡Tarea completada!' : 'Tarea pendiente'),
         error: 'Error al cambiar estado de tarea',
       })
 
@@ -124,30 +123,26 @@ function PaginaDashboard () {
 
         <InputInsertarTarea onCreate={handleCreateTarea} />
 
-        {isLoading
-          ? (
-            <div className="flex justify-center mt-8">
-              <div className="spinner" aria-hidden="true"></div>
-              <span className="sr-only">Cargando tareas...</span>
-            </div>
-          )
-          : tareas.length === 0
-            ? (
-              <p className="text-center text-dark/70 mt-8 font-primary">
+        {isLoading ? (
+          <div className="flex justify-center mt-8">
+            <div className="spinner" aria-hidden="true"></div>
+            <span className="sr-only">Cargando tareas...</span>
+          </div>
+        ) : tareas.length === 0 ? (
+          <p className="text-center text-dark/70 mt-8 font-primary">
             ¡Todo comienza con un primer paso!
-              </p>
-            )
-            : (
-              tareas.map((tarea) => (
-                <InputTareaCreada
-                  key={tarea.id}
-                  tarea={tarea}
-                  onUpdate={handleUpdateTarea}
-                  onToggle={handleToggleTarea}
-                  onDelete={handleDeleteTarea}
-                />
-              ))
-            )}
+          </p>
+        ) : (
+          tareas.map((tarea) => (
+            <InputTareaCreada
+              key={tarea.id}
+              tarea={tarea}
+              onUpdate={handleUpdateTarea}
+              onToggle={handleToggleTarea}
+              onDelete={handleDeleteTarea}
+            />
+          ))
+        )}
       </section>
     </div>
   )

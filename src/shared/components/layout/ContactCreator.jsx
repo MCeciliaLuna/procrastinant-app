@@ -1,4 +1,4 @@
-function ContactCreator () {
+function ContactCreator() {
   return <div>Contact Creator</div>
 }
 

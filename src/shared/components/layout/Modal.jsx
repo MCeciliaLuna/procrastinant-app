@@ -1,7 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {createPortal} from 'react-dom'
 
-function Modal ({isOpen, onClose, children, title}) {
+function Modal({isOpen, onClose, children, title}) {
   const modalRef = useRef(null)
   const closeButtonRef = useRef(null)
 
@@ -42,10 +42,7 @@ function Modal ({isOpen, onClose, children, title}) {
         onClick={(e) => e.stopPropagation()}
       >
         {title && (
-          <h2
-            id="modal-title"
-            className="text-xl font-primary text-orange mb-4"
-          >
+          <h2 id="modal-title" className="text-xl font-primary text-orange mb-4">
             {title}
           </h2>
         )}

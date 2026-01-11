@@ -32,22 +32,15 @@ apiClient.interceptors.response.use(
     useUIStore.getState().setLoading(false)
     if (error.response) {
       const isAuthEndpoint =
-        error.config?.url?.includes('/auth/login') ||
-        error.config?.url?.includes('/auth/register')
+        error.config?.url?.includes('/auth/login') || error.config?.url?.includes('/auth/register')
 
-      const isDeleteAccountEndpoint =
-        error.config?.url?.includes('/user/account')
+      const isDeleteAccountEndpoint = error.config?.url?.includes('/user/account')
 
-      const isChangePasswordEndpoint =
-        error.config?.url?.includes('/user/password')
+      const isChangePasswordEndpoint = error.config?.url?.includes('/user/password')
 
       switch (error.response.status) {
       case 401:
-        if (
-          !isAuthEndpoint &&
-            !isDeleteAccountEndpoint &&
-            !isChangePasswordEndpoint
-        ) {
+        if (!isAuthEndpoint && !isDeleteAccountEndpoint && !isChangePasswordEndpoint) {
           console.error('Sesión expirada o no autenticado')
           useAuthStore.getState().logout()
         }
@@ -76,9 +69,7 @@ apiClient.interceptors.response.use(
         )
       }
     } else if (error.request) {
-      console.error(
-        'No hay respuesta del servidor. Verifica tu conexión a internet',
-      )
+      console.error('No hay respuesta del servidor. Verifica tu conexión a internet')
     } else {
       console.error('Error al configurar la petición:', error.message)
     }

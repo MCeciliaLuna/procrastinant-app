@@ -18,25 +18,16 @@ export const getProfile = async () => {
 
 export const updateProfile = async (userData) => {
   try {
-    const response = await apiClient.put(
-      API_ENDPOINTS.UPDATE_PROFILE,
-      userData,
-    )
+    const response = await apiClient.put(API_ENDPOINTS.UPDATE_PROFILE, userData)
 
     return response.data
   } catch (error) {
     console.error('Error al actualizar perfil:', error)
-    throw new Error(
-      error.response?.data?.message || 'Error al actualizar perfil',
-    )
+    throw new Error(error.response?.data?.message || 'Error al actualizar perfil')
   }
 }
 
-export const changePassword = async (
-  currentPassword,
-  newPassword,
-  confirmPassword,
-) => {
+export const changePassword = async (currentPassword, newPassword, confirmPassword) => {
   try {
     const response = await apiClient.put(API_ENDPOINTS.CHANGE_PASSWORD, {
       currentPassword,
@@ -47,9 +38,7 @@ export const changePassword = async (
     return response.data
   } catch (error) {
     console.error('Error al cambiar contraseña:', error)
-    throw new Error(
-      error.response?.data?.message || 'Error al cambiar contraseña',
-    )
+    throw new Error(error.response?.data?.message || 'Error al cambiar contraseña')
   }
 }
 
@@ -65,8 +54,6 @@ export const deleteAccount = async (password) => {
     return response.data
   } catch (error) {
     console.error('Error al eliminar cuenta:', error)
-    throw new Error(
-      error.response?.data?.message || 'Error al eliminar cuenta',
-    )
+    throw new Error(error.response?.data?.message || 'Error al eliminar cuenta')
   }
 }

@@ -3,7 +3,7 @@ import Title from '@/shared/components/layout/Title'
 import {Link, Navigate} from 'react-router-dom'
 import {useAuthStore} from '@/stores/authStore'
 
-function Inicio () {
+function Inicio() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   if (isAuthenticated) {

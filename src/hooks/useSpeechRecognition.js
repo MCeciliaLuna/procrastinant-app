@@ -1,10 +1,7 @@
 import {useState, useEffect, useRef} from 'react'
-import {
-  SPEECH_RECOGNITION_CONFIG,
-  SPEECH_RECOGNITION_MESSAGES,
-} from '@/config/constants'
+import {SPEECH_RECOGNITION_CONFIG, SPEECH_RECOGNITION_MESSAGES} from '@/config/constants'
 
-function useSpeechRecognition () {
+function useSpeechRecognition() {
   const [isListening, setIsListening] = useState(false)
   const [isSupported, setIsSupported] = useState(false)
   const [transcript, setTranscript] = useState('')
@@ -14,8 +11,7 @@ function useSpeechRecognition () {
   const silenceTimeoutRef = useRef(null)
 
   useEffect(() => {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
     if (SpeechRecognition) {
       setIsSupported(true)

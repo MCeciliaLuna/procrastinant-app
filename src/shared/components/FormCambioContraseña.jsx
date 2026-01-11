@@ -7,11 +7,10 @@ import VerContraseniaIcon from '@/assets/icons/visibilidad-on-icon.svg'
 import OcultarContraseniaIcon from '@/assets/icons/visibilidad-off-icon.svg'
 import {changePassword} from '@/features/configuracion-usuario/services/userService'
 
-function FormCambioContraseña () {
+function FormCambioContraseña() {
   const [mostrarContrasenaActual, setMostrarContrasenaActual] = useState(false)
   const [mostrarNuevaContrasena, setMostrarNuevaContrasena] = useState(false)
-  const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] =
-    useState(false)
+  const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -44,11 +43,7 @@ function FormCambioContraseña () {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (
-      !formData.currentPassword ||
-      !formData.newPassword ||
-      !formData.confirmPassword
-    ) {
+    if (!formData.currentPassword || !formData.newPassword || !formData.confirmPassword) {
       toast.error('Todos los campos son obligatorios')
       return
     }
@@ -116,11 +111,7 @@ function FormCambioContraseña () {
         />
         <BotonConIcono
           className="ml-2 cursor-pointer"
-          icon={
-            mostrarContrasenaActual
-              ? OcultarContraseniaIcon
-              : VerContraseniaIcon
-          }
+          icon={mostrarContrasenaActual ? OcultarContraseniaIcon : VerContraseniaIcon}
           onClick={toggleMostrarContrasenaActual}
           type="button"
         ></BotonConIcono>
@@ -137,9 +128,7 @@ function FormCambioContraseña () {
         />
         <BotonConIcono
           className="ml-2 cursor-pointer"
-          icon={
-            mostrarNuevaContrasena ? OcultarContraseniaIcon : VerContraseniaIcon
-          }
+          icon={mostrarNuevaContrasena ? OcultarContraseniaIcon : VerContraseniaIcon}
           onClick={toggleMostrarNuevaContrasena}
           type="button"
         ></BotonConIcono>
@@ -159,11 +148,7 @@ function FormCambioContraseña () {
         />
         <BotonConIcono
           className="ml-2 cursor-pointer"
-          icon={
-            mostrarConfirmarContrasena
-              ? OcultarContraseniaIcon
-              : VerContraseniaIcon
-          }
+          icon={mostrarConfirmarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon}
           onClick={toggleMostrarConfirmarContrasena}
           type="button"
         ></BotonConIcono>
@@ -180,15 +165,9 @@ function FormCambioContraseña () {
         {isLoading ? 'Procesando...' : 'Cambiar Contraseña'}
       </BotonSimple>
 
-      <Modal
-        isOpen={showConfirmModal}
-        onClose={handleCancelChange}
-        title="Cambio de contraseña"
-      >
+      <Modal isOpen={showConfirmModal} onClose={handleCancelChange} title="Cambio de contraseña">
         <div className="flex flex-col gap-4">
-          <p className="font-secondary text-dark">
-            ¿Estás segur@ que deseas cambiarla?
-          </p>
+          <p className="font-secondary text-dark">¿Estás segur@ que deseas cambiarla?</p>
           <div className="flex gap-3 justify-end">
             <BotonSimple
               onClick={handleCancelChange}

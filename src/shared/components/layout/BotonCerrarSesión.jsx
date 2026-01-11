@@ -48,9 +48,7 @@ const BotonCerrarSesión = () => {
         title="Cerrar Sesión"
       >
         <div className="flex flex-col gap-4">
-          <p className="font-secondary text-dark">
-            ¿Estás segur@ que quieres cerrar tu sesión?
-          </p>
+          <p className="font-secondary text-dark">¿Estás segur@ que quieres cerrar tu sesión?</p>
           <div className="flex gap-3 justify-end">
             <BotonSimple
               onClick={() => setShowConfirmModal(false)}

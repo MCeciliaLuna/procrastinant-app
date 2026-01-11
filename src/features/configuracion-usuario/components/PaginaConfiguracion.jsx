@@ -3,7 +3,7 @@ import FormConfiguracionUsuario from '@/shared/components/FormConfiguracionUsuar
 import FormCambioContraseña from '@/shared/components/FormCambioContraseña'
 import BotonEliminarCuenta from '@/shared/components/BotonEliminarCuenta'
 
-function PaginaConfiguracion () {
+function PaginaConfiguracion() {
   return (
     <div className="flex flex-col justify-center align-center">
       <Title

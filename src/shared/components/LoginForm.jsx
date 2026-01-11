@@ -13,7 +13,7 @@ import {useFormPersistence} from '@/hooks/useFormPersistence'
 import {getErrorMessage} from '@/utils/errorMessages'
 import {VALIDATION_MESSAGES, VALIDATION_PATTERNS} from '@/config/constants'
 
-function LoginForm () {
+function LoginForm() {
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
   const [backendError, setBackendError] = useState(null)
   const navigate = useNavigate()
@@ -60,18 +60,12 @@ function LoginForm () {
         const from = location.state?.from?.pathname || '/dashboard'
         navigate(from, {replace: true})
       } else {
-        const errorInfo = getErrorMessage(
-          result.message || 'Error al iniciar sesión',
-          'auth',
-        )
+        const errorInfo = getErrorMessage(result.message || 'Error al iniciar sesión', 'auth')
         setBackendError(errorInfo)
       }
     } catch (err) {
       console.error('[LoginForm] Error en handleSubmit:', err)
-      const errorInfo = getErrorMessage(
-        err.message || 'Error de conexión',
-        'auth',
-      )
+      const errorInfo = getErrorMessage(err.message || 'Error de conexión', 'auth')
       setBackendError(errorInfo)
     }
   }
@@ -81,12 +75,7 @@ function LoginForm () {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-5 bg-light rounded shadow mx-4 h-50 justify-center items-center px-5 w-[90vw] md:w-150"
     >
-      {backendError && (
-        <ErrorDisplay
-          error={backendError}
-          onClear={() => setBackendError(null)}
-        />
-      )}
+      {backendError && <ErrorDisplay error={backendError} onClear={() => setBackendError(null)} />}
       <div className="w-full">
         <input
           className={`w-full bg-lightsecondary rounded h-10 font-secondary p-3 ${
@@ -109,10 +98,7 @@ function LoginForm () {
           })}
         />
         {errors.email && (
-          <span
-            id="email-error"
-            className="text-red-500 text-sm mt-1 block px-1"
-          >
+          <span id="email-error" className="text-red-500 text-sm mt-1 block px-1">
             {errors.email.message}
           </span>
         )}
@@ -139,21 +125,14 @@ function LoginForm () {
           />
           <BotonConIcono
             className="ml-2 cursor-pointer"
-            icon={
-              mostrarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon
-            }
+            icon={mostrarContrasena ? OcultarContraseniaIcon : VerContraseniaIcon}
             onClick={toggleMostrarContrasena}
-            aria-label={
-              mostrarContrasena ? 'Ocultar contraseña' : 'Mostrar contraseña'
-            }
+            aria-label={mostrarContrasena ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             type="button"
           />
         </div>
         {errors.password && (
-          <span
-            id="password-error"
-            className="text-red-500 text-sm mt-1 block px-1"
-          >
+          <span id="password-error" className="text-red-500 text-sm mt-1 block px-1">
             {errors.password.message}
           </span>
         )}

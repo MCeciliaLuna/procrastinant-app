@@ -1,10 +1,6 @@
 import {useState, useEffect} from 'react'
 
-export const useFormPersistence = (
-  formKey,
-  defaultValues = {},
-  ttl = 3600000,
-) => {
+export const useFormPersistence = (formKey, defaultValues = {}, ttl = 3600000) => {
   const [formData, setFormData] = useState(() => {
     try {
       const saved = localStorage.getItem(formKey)

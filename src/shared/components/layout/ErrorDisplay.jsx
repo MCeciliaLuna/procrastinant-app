@@ -1,15 +1,13 @@
 import PropTypes from 'prop-types'
 
-export default function ErrorDisplay ({error, onClear}) {
+export default function ErrorDisplay({error, onClear}) {
   if (!error) return null
 
   return (
     <div className="error-display" role="alert" aria-live="polite">
       <div className="error-content">
         <p className="error-message">{error.message}</p>
-        {error.suggestion && (
-          <p className="error-suggestion">{error.suggestion}</p>
-        )}
+        {error.suggestion && <p className="error-suggestion">{error.suggestion}</p>}
       </div>
       {onClear && (
         <button

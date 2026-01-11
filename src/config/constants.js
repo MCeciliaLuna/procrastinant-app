@@ -6,8 +6,7 @@ export const VALIDATION_MESSAGES = {
   email: 'Ingresa un email válido',
   minLength: (min) => `Debe tener al menos ${min} caracteres`,
   maxLength: (max) => `No puede exceder ${max} caracteres`,
-  password:
-    'La contraseña debe tener al menos 8 caracteres, una mayúscula y un número',
+  password: 'La contraseña debe tener al menos 8 caracteres, una mayúscula y un número',
   passwordMatch: 'Las contraseñas no coinciden',
   onlyLetters: 'Solo se permiten letras',
   alphanumeric: 'Solo se permiten letras y números',

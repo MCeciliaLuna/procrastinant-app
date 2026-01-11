@@ -4,7 +4,7 @@ import BotonSimple from '@/shared/components/layout/BotonSimple'
 import {useAuthStore} from '@/stores/authStore'
 import {updateProfile} from '@/features/configuracion-usuario/services/userService'
 
-function FormConfiguracionUsuario () {
+function FormConfiguracionUsuario() {
   const {user, updateUser} = useAuthStore()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -48,7 +48,9 @@ function FormConfiguracionUsuario () {
 
     const updates = {}
     if (formData.nombre !== user.nombre) updates.nombre = formData.nombre
-    if (formData.apellido !== user.apellido) { updates.apellido = formData.apellido }
+    if (formData.apellido !== user.apellido) {
+      updates.apellido = formData.apellido
+    }
     if (formData.alias !== user.alias) updates.alias = formData.alias
 
     setIsLoading(true)

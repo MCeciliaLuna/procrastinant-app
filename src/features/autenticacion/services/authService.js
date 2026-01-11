@@ -22,9 +22,7 @@ export const register = async (userData) => {
     return response.data
   } catch (error) {
     console.error('Error en registro:', error)
-    throw new Error(
-      error.response?.data?.message || 'Error al registrar usuario',
-    )
+    throw new Error(error.response?.data?.message || 'Error al registrar usuario')
   }
 }
 
@@ -42,8 +40,6 @@ export const verifyAuth = async () => {
     return response.data
   } catch (error) {
     console.error('Error en verifyAuth:', error)
-    throw new Error(
-      error.response?.data?.message || 'Error al verificar autenticación',
-    )
+    throw new Error(error.response?.data?.message || 'Error al verificar autenticación')
   }
 }

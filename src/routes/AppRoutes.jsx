@@ -30,7 +30,7 @@ const PaginaConfiguracion = lazy(() =>
   })),
 )
 
-function AppRoutes () {
+function AppRoutes() {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>

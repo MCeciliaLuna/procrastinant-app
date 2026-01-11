@@ -8,7 +8,7 @@ import CloseIcon from '@/assets/icons/close-icon.svg'
 import DashboardIcon from '@/assets/icons/dashboard-icon.svg'
 import BotonCerrarSesión from './BotonCerrarSesión'
 
-function NavbarMobile () {
+function NavbarMobile() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const toggleSidebar = () => {
@@ -44,10 +44,7 @@ function NavbarMobile () {
         }`}
       >
         <div className="w-full flex justify-end">
-          <BotonConIcono
-            icon={CloseIcon}
-            onClick={closeSidebar}
-          ></BotonConIcono>
+          <BotonConIcono icon={CloseIcon} onClick={closeSidebar}></BotonConIcono>
         </div>
         <div className="flex flex-col gap-4">
           <NavLink

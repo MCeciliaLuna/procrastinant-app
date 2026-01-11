@@ -3,7 +3,7 @@ import Title from '@/shared/components/layout/Title'
 import {Navigate} from 'react-router-dom'
 import {useAuthStore} from '@/stores/authStore'
 
-function PaginaLogin () {
+function PaginaLogin() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   if (isAuthenticated) {

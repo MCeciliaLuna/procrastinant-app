@@ -11,8 +11,7 @@ export const getErrorMessage = (error, context = 'general') => {
     },
     'auth/invalid-credentials': {
       message: '¡Ups! Parece que el email o la contraseña no son correctos',
-      suggestion:
-        'Revisa que hayas escrito bien tus datos e intenta nuevamente.',
+      suggestion: 'Revisa que hayas escrito bien tus datos e intenta nuevamente.',
       code: 'auth/invalid-credentials',
     },
     'auth/user-not-found': {
@@ -86,8 +85,7 @@ export const getErrorMessage = (error, context = 'general') => {
     },
   }
 
-  const errorInfo =
-    errorMap[errorCode] || errorMap[error?.message] || errorMap.unknown
+  const errorInfo = errorMap[errorCode] || errorMap[error?.message] || errorMap.unknown
 
   return {
     message: errorInfo.message,
