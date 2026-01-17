@@ -5,6 +5,7 @@ import {AppRoutes} from './routes'
 import {useUIStore} from './stores/uiStore'
 import {useAuthStore} from './stores/authStore'
 import {verifyAuth} from './features/autenticacion/services/authService'
+import ErrorBoundary from './shared/components/ErrorBoundary'
 
 function App() {
   const {isLoading} = useUIStore()
@@ -42,40 +43,42 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      {isLoading && (
-        <div className="global-loading" role="status" aria-live="polite" aria-label="Cargando...">
-          <div className="spinner" aria-hidden="true"></div>
-          <span className="sr-only">Cargando contenido...</span>
-        </div>
-      )}
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: 'var(--color-light)',
-            color: 'var(--color-dark)',
-            fontSize: '1rem',
-            fontFamily: 'inherit',
-          },
-          success: {
-            iconTheme: {
-              primary: 'var(--color-green)',
-              secondary: 'var(--color-light)',
+    <ErrorBoundary>
+      <BrowserRouter>
+        {isLoading && (
+          <div className="global-loading" role="status" aria-live="polite" aria-label="Cargando...">
+            <div className="spinner" aria-hidden="true"></div>
+            <span className="sr-only">Cargando contenido...</span>
+          </div>
+        )}
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: 'var(--color-light)',
+              color: 'var(--color-dark)',
+              fontSize: '1rem',
+              fontFamily: 'inherit',
             },
-          },
-          error: {
-            iconTheme: {
-              primary: '#ef4444',
-              secondary: '#fff',
+            success: {
+              iconTheme: {
+                primary: 'var(--color-green)',
+                secondary: 'var(--color-light)',
+              },
             },
-          },
-        }}
-      />
-      <AppRoutes />
-    </BrowserRouter>
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
+        <AppRoutes />
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }
 
