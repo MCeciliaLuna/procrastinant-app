@@ -20,13 +20,13 @@ Este proyecto utiliza **React 18.3.1** en lugar de React 19 debido a una vulnera
 - **React DOM**: 18.3.1
 - **Vite**: 6.0.5
 - **Tailwind CSS**: 4.1.18 con @tailwindcss/vite
-- **React Router DOM**: 6.30.2
+- **React Router DOM**: 6.30.3
 - **ESLint**: 8.57.1 con configuración Standard Style
 
 ### Bibliotecas de Gestión de Estado y UI
 
-- **Zustand**: 5.0.9 (gestión de estado global)
-- **React Hook Form**: 7.69.0 (manejo de formularios)
+- **Zustand**: 5.0.10 (gestión de estado global)
+- **React Hook Form**: 7.71.1 (manejo de formularios)
 - **react-hot-toast**: 2.6.0 (sistema de notificaciones)
 - **Axios**: 1.13.2 (cliente HTTP)
 
@@ -137,7 +137,7 @@ const fetchData = async () => {
 
 ### Zustand - Gestión de Estado
 
-**Versión**: 5.0.9
+**Versión**: 5.0.10
 
 Zustand es la solución de gestión de estado global del proyecto. Se utilizan múltiples stores pequeños para mejor organización.
 
@@ -199,7 +199,7 @@ toast.loading('Cargando...')
 
 ### React Hook Form - Manejo de Formularios
 
-**Versión**: Última estable
+**Versión**: 7.71.1
 
 React Hook Form se utiliza para todos los formularios de la aplicación con validación nativa.
 

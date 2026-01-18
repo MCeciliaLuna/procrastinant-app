@@ -5,6 +5,8 @@ function Modal({isOpen, onClose, children, title}) {
   const modalRef = useRef(null)
   const closeButtonRef = useRef(null)
 
+  // onClose is a prop callback and should not trigger re-runs
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isOpen) {
       closeButtonRef.current?.focus()

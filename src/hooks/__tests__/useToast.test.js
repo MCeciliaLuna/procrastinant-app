@@ -197,14 +197,12 @@ describe('useToast', () => {
     it('debe eliminar toast manualmente', () => {
       const {result} = renderHook(() => useToast())
 
-      let toastId
-
       act(() => {
         result.current.showSuccess('Test')
       })
 
       const uiStoreBefore = useUIStore.getState()
-      toastId = uiStoreBefore.toasts[0].id
+      const toastId = uiStoreBefore.toasts[0].id
       expect(uiStoreBefore.toasts).toHaveLength(1)
 
       act(() => {

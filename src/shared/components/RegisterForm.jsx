@@ -37,6 +37,8 @@ function RegisterForm() {
     defaultValues: formData,
   })
 
+  // Restore persisted form data on mount only
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     Object.keys(formData).forEach((key) => {
       if (formData[key]) {

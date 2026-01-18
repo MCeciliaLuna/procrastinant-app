@@ -36,6 +36,8 @@ function LoginForm() {
     defaultValues: formData,
   })
 
+  // Restore persisted form data on mount only
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (formData.email) {
       setValue('email', formData.email)
